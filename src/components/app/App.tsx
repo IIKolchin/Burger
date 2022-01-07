@@ -1,14 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
+import data from '../../utils/data'
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header'
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 
 function App() {
   return (
-    <div className="App">
+    <div >
       
      <AppHeader />
-     <h1 className={styles.title}>Соберите бургер</h1>
+     
+     <BurgerIngredients data={data}/>
       
     </div>
   );
