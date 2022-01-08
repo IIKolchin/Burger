@@ -1,0 +1,29 @@
+.section {
+    width: 600px;
+}
+
+.group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+}
+
+.constructor {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    height: 464px;
+    overflow-y: scroll;
+}
+
+.order {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.price {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
