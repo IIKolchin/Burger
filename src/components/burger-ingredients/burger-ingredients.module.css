@@ -1,60 +1,51 @@
 .ingredients {
-    width: 600px;
-    height: 716px;
-    overflow-y: scroll;
-    
-    
+  width: 600px;
+  height: 716px;
+  overflow-y: scroll;
 }
 
 .title {
-    font-family: 'Jet Brains Mono';
-    font-style: normal;
-    font-weight: bold;
-    font-size: 36px;
-    line-height: 40px;
-    
-  }
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 40px;
+}
 
-  .subtitle {
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 30px;
-  }
+.subtitle {
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+}
 
-  .subtitle:first-of-type {
-      margin-top: 0;
-  }
+.subtitle:first-of-type {
+  margin-top: 0;
+}
 
+.ul {
+  list-style: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 0;
+}
 
-  .ul {
-      list-style: none;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px 0;
-      
-  }
+.counter {
+  display: none;
+}
 
-  .counter {
-      display: none;
-  }
+.li:nth-child(2n + 1) {
+  margin-left: 0;
+  position: relative;
+}
 
-  .li:nth-child(2n+1) {
-      margin-left: 0;
-      position: relative;
-  }
+.price {
+  display: flex;
+  justify-content: center;
+}
 
-  .price {
-      display: flex;
-      justify-content: center;
-      
-  }
-
-  .text {
-      text-align: center;
-  }
-
-
-
+.text {
+  text-align: center;
+}

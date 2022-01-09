@@ -1,29 +1,33 @@
 .section {
-    width: 600px;
+  width: 600px;
 }
 
 .group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.group:last-of-type {
+  margin-bottom: 0;
 }
 
 .constructor {
-    margin-top: 6px;
-    margin-bottom: 6px;
-    height: 464px;
-    overflow-y: scroll;
+  height: 464px;
+  overflow-y: scroll;
 }
 
 .order {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
-.price {
-    display: flex;
-    align-items: center;
-    margin-right: 40px;
+.icon {
+  width: 33px;
+  height: 33px;
+  background-image: url(../../images/Subtract.svg);
+  background-position: center;
+  margin-right: 40px;
 }

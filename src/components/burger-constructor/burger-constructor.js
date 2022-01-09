@@ -3,9 +3,9 @@ import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
   DragIcon,
-  CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 function BurgerConstructor(props) {
   return (
@@ -14,7 +14,7 @@ function BurgerConstructor(props) {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: "16px",
           marginLeft: "16px",
         }}
       >
@@ -29,78 +29,19 @@ function BurgerConstructor(props) {
         </div>
 
         <section className={styles.constructor}>
-        <div className={styles.group + " mb-4"}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Соус традиционный галактический"
-            price={30}
-            thumbnail={"https://code.s3.yandex.net/react/code/sauce-03.png"}
-          />
-        </div>
-
-        <div className={styles.group + " mb-4"}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Мясо бессмертных моллюсков Protostomia"
-            price={200}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-02.png"}
-          />
-        </div>
-
-        <div className={styles.group + " mb-4"}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Плоды Фалленианского дерева"
-            price={80}
-            thumbnail={"https://code.s3.yandex.net/react/code/sp_1.png"}
-          />
-        </div>
-
-        <div className={styles.group + " mb-4"}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Хрустящие минеральные кольца"
-            price={80}
-            thumbnail={
-              "https://code.s3.yandex.net/react/code/mineral_rings.png"
-            }
-          />
-        </div>
-
-        <div className={styles.group + " mb-4"}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Хрустящие минеральные кольца"
-            price={80}
-            thumbnail={
-              "https://code.s3.yandex.net/react/code/mineral_rings.png"
-            }
-          />
-        </div>
-
-        <div className={styles.group + " mb-4"}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Кристаллы марсианских альфа-сахаридов"
-            price={80}
-            thumbnail={
-              "https://code.s3.yandex.net/react/code/core.png"
-            }
-          />
-        </div>
-
-        <div className={styles.group}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text="Соус с шипами Антарианского плоскоходца"
-            price={80}
-            thumbnail={
-              "https://code.s3.yandex.net/react/code/sauce-01.png"
-            }
-          />
-        </div>
-
-
+          {props.data.map((data) => {
+            if (data.type == "main" || data.type == "sauce")
+              return (
+                <div key={data._id} className={styles.group}>
+                  <DragIcon type="primary" />
+                  <ConstructorElement
+                    text={data.name}
+                    price={data.price}
+                    thumbnail={data.image}
+                  />
+                </div>
+              );
+          })}
         </section>
 
         <div className="ml-8">
@@ -114,18 +55,27 @@ function BurgerConstructor(props) {
         </div>
       </div>
 
-      <div className={styles.order + " mt-10 mr-4"} >
-<div className={styles.price}>
-      <p className="text text_type_digits-medium mr-2">610</p>
-      <CurrencyIcon type="primary" />
-      </div>  
-      <Button type="primary" size="medium">
-  Оформить заказ
-</Button>
-
+      <div className={styles.order + " mt-10 mr-4"}>
+        <p className="text text_type_digits-medium mr-2">610</p>
+        <div className={styles.icon}></div>
+        <Button type="primary" size="large">
+          Оформить заказ
+        </Button>
       </div>
     </section>
   );
 }
+
+const dataPropTypes = PropTypes.shape({
+  _id: PropTypes.string,
+  type: PropTypes.string,
+  image: PropTypes.string,
+  price: PropTypes.number,
+  name: PropTypes.string,
+});
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes.isRequired),
+};
 
 export default BurgerConstructor;
