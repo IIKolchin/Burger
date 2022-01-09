@@ -11,14 +11,7 @@ import { dataPropTypes } from "../../utils/data";
 function BurgerConstructor(props) {
   return (
     <section className={styles.section + " mt-25 ml-10"}>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-          marginLeft: "16px",
-        }}
-      >
+      <div className={styles.component}>
         <div className="ml-8">
           <ConstructorElement
             type="top"

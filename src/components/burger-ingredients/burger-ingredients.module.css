@@ -12,6 +12,10 @@
   line-height: 40px;
 }
 
+.tab {
+    display: flex;
+}
+
 .subtitle {
   font-weight: bold;
   font-size: 24px;

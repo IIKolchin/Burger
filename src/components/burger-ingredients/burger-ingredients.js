@@ -13,7 +13,7 @@ function BurgerIngredients(props) {
   return (
     <section>
       <h1 className={"mt-10 mb-5 " + styles.title}>Соберите </h1>
-      <div style={{ display: "flex" }}>
+      <div className={styles.tab}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
           Булки
         </Tab>
