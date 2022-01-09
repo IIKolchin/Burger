@@ -6,6 +6,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { dataPropTypes } from "../../utils/data";
 
 function BurgerIngredients(props) {
   const [current, setCurrent] = React.useState("one");
@@ -71,14 +72,6 @@ function BurgerIngredients(props) {
     </section>
   );
 }
-
-const dataPropTypes = PropTypes.shape({
-  _id: PropTypes.string,
-  type: PropTypes.string,
-  image: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string,
-});
 
 BurgerIngredients.propTypes = {
   data: PropTypes.arrayOf(dataPropTypes.isRequired),

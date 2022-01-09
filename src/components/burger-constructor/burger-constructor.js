@@ -6,6 +6,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
+import { dataPropTypes } from "../../utils/data";
 
 function BurgerConstructor(props) {
   return (
@@ -65,14 +66,6 @@ function BurgerConstructor(props) {
     </section>
   );
 }
-
-const dataPropTypes = PropTypes.shape({
-  _id: PropTypes.string,
-  type: PropTypes.string,
-  image: PropTypes.string,
-  price: PropTypes.number,
-  name: PropTypes.string,
-});
 
 BurgerConstructor.propTypes = {
   data: PropTypes.arrayOf(dataPropTypes.isRequired),

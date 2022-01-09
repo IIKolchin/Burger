@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const data = [
   {
     _id: "60666c42cc7b410027a1a9b1",
@@ -213,4 +215,12 @@ const data = [
   },
 ];
 
-export default data;
+const dataPropTypes = PropTypes.shape({
+  _id: PropTypes.string,
+  type: PropTypes.string,
+  image: PropTypes.string,
+  price: PropTypes.number,
+  name: PropTypes.string,
+});
+
+export { data, dataPropTypes };
