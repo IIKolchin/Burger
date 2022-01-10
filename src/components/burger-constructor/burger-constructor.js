@@ -12,19 +12,26 @@ function BurgerConstructor(props) {
   return (
     <section className={styles.section + " mt-25 ml-10"}>
       <div className={styles.component}>
-        <div className="ml-8">
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={20}
-            thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-          />
-        </div>
+        {props.data
+          .filter((item) => item.name.includes("Краторная булка N-200i"))
+          .map((data) => {
+            return (
+              <div key={data._id} className="ml-8">
+                <ConstructorElement
+                  type="top"
+                  isLocked={true}
+                  text={data.name + " (верх)"}
+                  price={data.price}
+                  thumbnail={data.image}
+                />
+              </div>
+            );
+          })}
 
-        <section className={styles.constructor}>
-          {props.data.map((data) => {
-            if (data.type == "main" || data.type == "sauce")
+        <div className={styles.constructor}>
+          {props.data
+            .filter((item) => item.type.includes("main" || "sauce"))
+            .map((data) => {
               return (
                 <div key={data._id} className={styles.group}>
                   <DragIcon type="primary" />
@@ -35,18 +42,24 @@ function BurgerConstructor(props) {
                   />
                 </div>
               );
-          })}
-        </section>
-
-        <div className="ml-8">
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={20}
-            thumbnail={"https://code.s3.yandex.net/react/code/bun-02.png"}
-          />
+            })}
         </div>
+
+        {props.data
+          .filter((item) => item.name.includes("Краторная булка N-200i"))
+          .map((data) => {
+            return (
+              <div key={data._id} className="ml-8">
+                <ConstructorElement
+                  type="bottom"
+                  isLocked={true}
+                  text={data.name + " (низ)"}
+                  price={data.price}
+                  thumbnail={data.image}
+                />
+              </div>
+            );
+          })}
       </div>
 
       <div className={styles.order + " mt-10 mr-4"}>
@@ -61,7 +74,7 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes.isRequired),
+  data: PropTypes.arrayOf(dataPropTypes).isRequired,
 };
 
 export default BurgerConstructor;

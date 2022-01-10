@@ -33,11 +33,15 @@
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px 0;
+  gap: 32px 24px;
 }
 
 .counter {
   display: none;
+}
+
+.li {
+  width: 272px;
 }
 
 .li:nth-child(2n + 1) {

@@ -13,16 +13,17 @@ function AppHeader() {
       <nav className={styles.nav}>
         <ul className={styles.menu}>
           <li className={styles.constructor}>
-            <BurgerIcon type="primary" />
             <a href="#" className={styles.link}>
+              <BurgerIcon type="primary" />
               <p className="text text_type_main-default ml-2 mr-10 mr-2">
                 Конструктор
               </p>
             </a>
-            <div className={styles.burger}>
-              <ListIcon type="secondary" />
-            </div>
+
             <a href="#" className={styles.link}>
+              <div className={styles.burger}>
+                <ListIcon type="secondary" />
+              </div>
               <p className="text text_type_main-default text_color_inactive ml-2">
                 Лента заказов
               </p>
