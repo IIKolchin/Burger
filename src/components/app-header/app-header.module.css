@@ -1,0 +1,50 @@
+.header {
+  background: #1c1c21;
+}
+
+.nav {
+  margin: 0 auto;
+  width: 1240px;
+  min-height: 88px;
+}
+
+.link {
+  display: flex;
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  transition: 1s;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.item {
+  padding-left: 49px;
+}
+
+.menu {
+  display: flex;
+
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+.constructor {
+  display: flex;
+  margin-top: 32px;
+}
+
+.burger {
+  margin-left: 8px;
+}
+
+.logo {
+  margin: 19px 310px 12px 130px;
+}
+
+.profile {
+  display: flex;
+  margin-top: 32px;
+}
