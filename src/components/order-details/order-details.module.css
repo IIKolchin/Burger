@@ -1,0 +1,47 @@
+.container {
+  
+  
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.done {
+  background-image: url(../../images/done.png);
+  width: 120px;
+  height: 120px;
+  background-size: cover;
+}
+
+.text_one {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.text_two {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.text_three {
+font-family: 'JetBrains Mono';
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 24px;
+color: #8585AD;
+margin-top: 0;
+}

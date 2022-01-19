@@ -9,6 +9,10 @@ function ModalOverlay(props) {
 
 React.useEffect(() => {
     document.body.appendChild(el);
+
+    return () => {
+        document.body.removeChild(el);
+    }
 })
 
     return (
