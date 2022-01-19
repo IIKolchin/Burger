@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
-
-
+const url = "https://norma.nomoreparties.space/api/ingredients";
 
 const dataPropTypes = PropTypes.shape({
   _id: PropTypes.string,
