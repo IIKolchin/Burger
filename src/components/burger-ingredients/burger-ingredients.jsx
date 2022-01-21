@@ -23,20 +23,6 @@ function BurgerIngredients(props) {
     setId(e.currentTarget.id);
   }
 
-  function handleKeyDown(e) {
-    if (e.keyCode === 27) {
-      handleHide();
-    }
-  }
-
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  });
-
   function handleHide() {
     setState({ ...state, showModal: false });
   }

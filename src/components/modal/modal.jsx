@@ -10,11 +10,19 @@ const el = document.createElement("div");
 function Modal(props) {
   React.useEffect(() => {
     document.body.appendChild(el);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.removeChild(el);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   });
+
+  function handleKeyDown(e) {
+    if (e.keyCode === 27) {
+      props.handleHide();
+    }
+  }
 
   const style = {
     width: 720,

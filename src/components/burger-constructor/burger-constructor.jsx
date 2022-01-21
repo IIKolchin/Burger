@@ -15,25 +15,12 @@ function BurgerConstructor(props) {
     showModal: false,
   });
 
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  });
-
   function handleShow() {
     setState({ ...state, showModal: true });
   }
 
   function handleHide() {
     setState({ ...state, showModal: false });
-  }
-  function handleKeyDown(e) {
-    if (e.keyCode === 27) {
-      handleHide();
-    }
   }
 
   return (
