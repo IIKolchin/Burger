@@ -1,18 +1,41 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
+const el = document.createElement("div");
+
 function Modal(props) {
-  return (
-    <div className={styles.modal}>
-      <button onClick={props.handleHide} className={styles.close}>
-        <CloseIcon />
-      </button>
-      <ModalOverlay>
-        <div className={styles.overlay} onClick={props.handleHide}></div>
-      </ModalOverlay>
-    </div>
+  
+  React.useEffect(() => {
+    document.body.appendChild(el);
+
+    return () => {
+      document.body.removeChild(el);
+    };
+  });
+
+  const style = {
+    width: 720,
+  };
+
+  return ReactDOM.createPortal(
+    <>
+      {props.showHeading ? (style.height = 539) : null}
+      <div className={styles.modal} style={style}>
+        {props.showHeading && (
+          <h3 className={styles.heading + " ml-10"}>Детали ингредиента</h3>
+        )}
+        <button onClick={props.handleHide} className={styles.close}>
+          <CloseIcon />
+        </button>
+
+        {props.children}
+      </div>
+      <ModalOverlay handleHide={props.handleHide} />
+    </>,
+    el
   );
 }
 

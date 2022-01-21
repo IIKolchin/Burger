@@ -1,34 +1,31 @@
-.modal {   
-    width: 720px;
-    height: 718px;
-    border-radius: 40px;
-    background-color: #1C1C21;
-    z-index: 10;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+.modal {
+  
+  height: 718px;
+  border-radius: 40px;
+  background-color: #1c1c21;
+  z-index: 10;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.heading {
+  margin-bottom: 0;
+  margin-top: 50px;
+  font-family: "Jet Brains Mono";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 36px;
+  line-height: 40px;
 }
 
 
-.overlay {
-    background-color: #000;
-    opacity: 60%;
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-  }
 
-  .close {
-    all: unset;
-    position: absolute;
-    top: 60px;
-    right: 40px;
-    z-index: 999;
-  }
+.close {
+  all: unset;
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  cursor: pointer;
+}

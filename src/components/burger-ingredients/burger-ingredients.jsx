@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import {
   Tab,
@@ -7,8 +8,32 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
+import IngredientDetails from "../ingredient-details/ingredient-details"
 
 function BurgerIngredients(props) {
+  const [state, setState] = useState({
+    showModal: false,
+    showHeading: false,
+  })
+
+  const [id, setId] = useState()
+
+  
+
+  function handleShow(e) {
+    setState({ ...state, showModal: true, showHeading: true });
+   setId(e.currentTarget.id)
+ 
+
+  }
+
+  
+
+  function handleHide() {
+    setState({ ...state, showModal: false });
+  }
+
+
   const buns = props.data.filter((item) => item.type === "bun")
   const sauces = props.data.filter((item) => item.type === "sauce")
   const mains = props.data.filter((item) => item.type === "main")
@@ -32,7 +57,7 @@ function BurgerIngredients(props) {
         <ul className={styles.ul + " ml-4"}>
           {buns.map((data) => {
               return (
-                <li key={data._id} className={styles.li}>
+                <li key={data._id} id={data._id} className={styles.li} onClick={handleShow}>
                   {data._id === "60666c42cc7b410027a1a9b1" ? (
                     <Counter count={1} size="default" />
                   ) : null}
@@ -53,7 +78,7 @@ function BurgerIngredients(props) {
         <ul className={styles.ul + " ml-4"}>
           {sauces.map((data) => {
               return (
-                <li key={data._id} className={styles.li}>
+                <li key={data._id} id={data._id} className={styles.li} onClick={handleShow}>
                   {data._id === "60666c42cc7b410027a1a9b9" ? (
                     <Counter count={1} size="default" />
                   ) : null}
@@ -74,7 +99,7 @@ function BurgerIngredients(props) {
         <ul className={styles.ul + " ml-4"}>
           {mains.map((data) => {
               return (
-                <li key={data._id} className={styles.li}>
+                <li key={data._id} id={data._id} className={styles.li} onClick={handleShow}>
                   <img className="ml-4 mr-4" src={data.image} alt={data.name} />
                   <div className={styles.price}>
                     <p className="text text_type_digits-default mr-2">
@@ -88,12 +113,14 @@ function BurgerIngredients(props) {
             })}
         </ul>
       </div>
+     
+      {state.showModal ? <IngredientDetails id={id} data={props.data} handleHide={handleHide} showHeading={state.showHeading}/> : null}
     </section>
   );
 }
 
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(dataPropTypes).isRequired,
-// };
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+};
 
 export default BurgerIngredients;

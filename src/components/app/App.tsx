@@ -8,6 +8,7 @@ import BurgerConstructor from "../burger-constructor/burger-constructor";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
   const [state, setState] = useState({
@@ -32,13 +33,6 @@ function App() {
       });
   }
 
-  function handleShow() {
-    setState({ ...state, showModal: true });
-  }
-
-  function handleHide() {
-    setState({ ...state, showModal: false });
-  }
 
   return (
     <>
@@ -47,8 +41,8 @@ function App() {
         <BurgerIngredients data={data} />
         <BurgerConstructor data={data} />
       </main>
-      <button onClick={handleShow} className={styles.button}></button>
-      {state.showModal ? <OrderDetails handleHide={handleHide} /> : null}
+     
+  
 
       
     </>

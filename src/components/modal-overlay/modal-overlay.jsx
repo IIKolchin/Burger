@@ -1,27 +1,8 @@
 import React from "react";
-import ReactDOM from 'react-dom';
 import styles from "./modal-overlay.module.css";
 
-
 function ModalOverlay(props) {
-    const modalRoot = document.getElementById('modal-root');
-    const el = document.createElement('div');
-
-React.useEffect(() => {
-    document.body.appendChild(el);
-
-    return () => {
-        document.body.removeChild(el);
-    }
-})
-
-    return (
-        ReactDOM.createPortal(props.children, el)
-        )
-    
+  return <div className={styles.overlay} onClick={props.handleHide}></div>;
 }
 
-
-
-
-export default ModalOverlay
+export default ModalOverlay;
