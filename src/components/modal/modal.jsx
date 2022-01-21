@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
+import PropTypes from "prop-types";
 
 const el = document.createElement("div");
 
 function Modal(props) {
-  
   React.useEffect(() => {
     document.body.appendChild(el);
 
@@ -38,5 +38,10 @@ function Modal(props) {
     el
   );
 }
+
+Modal.propTypes = {
+  showHeading: PropTypes.bool,
+  handleHide: PropTypes.func.isRequired,
+};
 
 export default Modal;

@@ -5,16 +5,11 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
   const [state, setState] = useState({
     hasError: false,
     data: [],
-    showModal: false,
   });
 
   const { data, hasError } = state;
@@ -33,7 +28,6 @@ function App() {
       });
   }
 
-
   return (
     <>
       <AppHeader />
@@ -41,10 +35,6 @@ function App() {
         <BurgerIngredients data={data} />
         <BurgerConstructor data={data} />
       </main>
-     
-  
-
-      
     </>
   );
 }

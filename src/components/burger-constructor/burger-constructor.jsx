@@ -11,10 +11,17 @@ import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 
 function BurgerConstructor(props) {
-
   const [state, setState] = useState({
     showModal: false,
-  })
+  });
+
+  React.useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  });
 
   function handleShow() {
     setState({ ...state, showModal: true });
@@ -22,6 +29,11 @@ function BurgerConstructor(props) {
 
   function handleHide() {
     setState({ ...state, showModal: false });
+  }
+  function handleKeyDown(e) {
+    if (e.keyCode === 27) {
+      handleHide();
+    }
   }
 
   return (
@@ -85,18 +97,13 @@ function BurgerConstructor(props) {
         </Button>
       </div>
 
-
-
       {state.showModal ? <OrderDetails handleHide={handleHide} /> : null}
     </section>
-
-
-
   );
 }
 
-// BurgerConstructor.propTypes = {
-//   data: PropTypes.arrayOf(dataPropTypes).isRequired,
-// };
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+};
 
 export default BurgerConstructor;

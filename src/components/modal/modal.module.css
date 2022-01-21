@@ -1,5 +1,4 @@
 .modal {
-  
   height: 718px;
   border-radius: 40px;
   background-color: #1c1c21;
@@ -19,8 +18,6 @@
   font-size: 36px;
   line-height: 40px;
 }
-
-
 
 .close {
   all: unset;
