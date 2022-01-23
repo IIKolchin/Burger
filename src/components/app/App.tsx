@@ -26,7 +26,7 @@ function App() {
         setState((prevState) => ({ ...prevState, data: data.data }))
       )
       .catch((err) => {
-        setState({ ...state, hasError: true });
+        setState((prevState) => ({ ...prevState, hasError: true }));
         console.log(err);
       });
   }

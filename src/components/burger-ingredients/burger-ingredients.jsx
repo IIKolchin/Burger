@@ -28,7 +28,7 @@ function BurgerIngredients(props) {
     setState({ ...state, showModal: false });
   }
 
-  const ingredient = props.data.filter((item) => item._id.includes(id))[0];
+  const ingredient = props.data.find((item) => item._id.includes(id));
   const buns = props.data.filter((item) => item.type === "bun");
   const sauces = props.data.filter((item) => item.type === "sauce");
   const mains = props.data.filter((item) => item.type === "main");
