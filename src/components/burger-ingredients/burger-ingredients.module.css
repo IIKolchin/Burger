@@ -13,7 +13,7 @@
 }
 
 .tab {
-    display: flex;
+  display: flex;
 }
 
 .subtitle {
@@ -40,20 +40,4 @@
   display: none;
 }
 
-.li {
-  width: 272px;
-}
 
-.li:nth-child(2n + 1) {
-  margin-left: 0;
-  position: relative;
-}
-
-.price {
-  display: flex;
-  justify-content: center;
-}
-
-.text {
-  text-align: center;
-}
