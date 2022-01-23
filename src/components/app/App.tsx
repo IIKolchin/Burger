@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { url } from "../../utils/data";
+import { URL, checkResponse } from "../../utils/data";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -20,11 +20,14 @@ function App() {
 
   function getIngredients() {
     setState({ ...state, hasError: false });
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setState({ ...state, data: data.data }))
-      .catch((e) => {
+    fetch(`${URL}ingredients`)
+      .then(checkResponse)
+      .then((data) =>
+        setState((prevState) => ({ ...prevState, data: data.data }))
+      )
+      .catch((err) => {
         setState({ ...state, hasError: true });
+        console.log(err);
       });
   }
 

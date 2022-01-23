@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-const url = "https://norma.nomoreparties.space/api/ingredients";
+const URL = "https://norma.nomoreparties.space/api/";
 
 const dataPropTypes = PropTypes.shape({
   _id: PropTypes.string,
@@ -8,6 +8,18 @@ const dataPropTypes = PropTypes.shape({
   image: PropTypes.string,
   price: PropTypes.number,
   name: PropTypes.string,
+  image_large: PropTypes.string,
+  calories: PropTypes.number,
+  proteins: PropTypes.number,
+  fat: PropTypes.number,
+  carbohydrates: PropTypes.number,
 });
 
-export { url, dataPropTypes };
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Ошибка: ${res.status}`);
+};
+
+export { URL, dataPropTypes, checkResponse };

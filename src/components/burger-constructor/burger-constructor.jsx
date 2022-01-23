@@ -7,6 +7,7 @@ import {
   DragIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from "../modal/modal";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 
@@ -84,7 +85,11 @@ function BurgerConstructor(props) {
         </Button>
       </div>
 
-      {state.showModal ? <OrderDetails handleHide={handleHide} /> : null}
+      {state.showModal && (
+        <Modal handleHide={handleHide}>
+          <OrderDetails />
+        </Modal>
+      )}
     </section>
   );
 }

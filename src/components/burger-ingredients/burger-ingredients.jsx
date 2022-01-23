@@ -3,23 +3,24 @@ import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
 import {
   Tab,
-  CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
+import Ingredient from "../ingredient/ingredient";
 
 function BurgerIngredients(props) {
   const [state, setState] = useState({
     showModal: false,
-    showHeading: false,
+    shortModal: false,
   });
 
   const [id, setId] = useState();
 
   function handleShow(e) {
-    setState({ ...state, showModal: true, showHeading: true });
+    setState({ ...state, showModal: true, shortModal: true });
     setId(e.currentTarget.id);
   }
 
@@ -27,10 +28,12 @@ function BurgerIngredients(props) {
     setState({ ...state, showModal: false });
   }
 
+  const ingredient = props.data.filter((item) => item._id.includes(id))[0];
   const buns = props.data.filter((item) => item.type === "bun");
   const sauces = props.data.filter((item) => item.type === "sauce");
   const mains = props.data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
+
   return (
     <section>
       <h1 className={"mt-10 mb-5 " + styles.title}>Соберите бургер</h1>
@@ -50,24 +53,11 @@ function BurgerIngredients(props) {
         <ul className={styles.ul + " ml-4"}>
           {buns.map((data) => {
             return (
-              <li
-                key={data._id}
-                id={data._id}
-                className={styles.li}
-                onClick={handleShow}
-              >
-                {data._id === "60666c42cc7b410027a1a9b1" ? (
+              <Ingredient key={data._id} data={data} handleShow={handleShow}>
+                {data._id === "60d3b41abdacab0026a733c6" ? (
                   <Counter count={1} size="default" />
                 ) : null}
-                <img className="ml-4 mr-4" src={data.image} alt={data.name} />
-                <div className={styles.price}>
-                  <p className="text text_type_digits-default mr-2">
-                    {data.price}
-                  </p>
-                  <CurrencyIcon />
-                </div>
-                <p className={styles.text + " mb-6"}>{data.name}</p>
-              </li>
+              </Ingredient>
             );
           })}
         </ul>
@@ -76,24 +66,11 @@ function BurgerIngredients(props) {
         <ul className={styles.ul + " ml-4"}>
           {sauces.map((data) => {
             return (
-              <li
-                key={data._id}
-                id={data._id}
-                className={styles.li}
-                onClick={handleShow}
-              >
-                {data._id === "60666c42cc7b410027a1a9b9" ? (
+              <Ingredient key={data._id} data={data} handleShow={handleShow}>
+                {data._id === "60d3b41abdacab0026a733ce" ? (
                   <Counter count={1} size="default" />
                 ) : null}
-                <img className="ml-4 mr-4" src={data.image} alt={data.name} />
-                <div className={styles.price}>
-                  <p className="text text_type_digits-default mr-2">
-                    {data.price}
-                  </p>
-                  <CurrencyIcon />
-                </div>
-                <p className={styles.text + " mb-6"}>{data.name}</p>
-              </li>
+              </Ingredient>
             );
           })}
         </ul>
@@ -102,34 +79,21 @@ function BurgerIngredients(props) {
         <ul className={styles.ul + " ml-4"}>
           {mains.map((data) => {
             return (
-              <li
-                key={data._id}
-                id={data._id}
-                className={styles.li}
-                onClick={handleShow}
-              >
-                <img className="ml-4 mr-4" src={data.image} alt={data.name} />
-                <div className={styles.price}>
-                  <p className="text text_type_digits-default mr-2">
-                    {data.price}
-                  </p>
-                  <CurrencyIcon />
-                </div>
-                <p className={styles.text + " mb-6"}>{data.name}</p>
-              </li>
+              <Ingredient key={data._id} data={data} handleShow={handleShow} />
             );
           })}
         </ul>
       </div>
 
-      {state.showModal ? (
-        <IngredientDetails
-          id={id}
-          data={props.data}
+      {state.showModal && (
+        <Modal
+          header="Детали ингредиента"
+          shortModal={state.shortModal}
           handleHide={handleHide}
-          showHeading={state.showHeading}
-        />
-      ) : null}
+        >
+          <IngredientDetails data={ingredient} />
+        </Modal>
+      )}
     </section>
   );
 }
