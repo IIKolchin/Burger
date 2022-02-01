@@ -5,6 +5,7 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { DataContext } from "../../services/dataContext";
 
 function App() {
   const [state, setState] = useState({
@@ -31,12 +32,15 @@ function App() {
       });
   }
 
+
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={data} />
-        <BurgerConstructor data={data} />
+        <DataContext.Provider value={data}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DataContext.Provider>
       </main>
     </>
   );

@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
+
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
@@ -10,11 +10,14 @@ import {
 import Modal from "../modal/modal";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
+import { DataContext } from "../../services/dataContext";
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
   const [state, setState] = useState({
     showModal: false,
   });
+
+  const data = useContext(DataContext);
 
   function handleShow() {
     setState({ ...state, showModal: true });
@@ -24,27 +27,26 @@ function BurgerConstructor(props) {
     setState({ ...state, showModal: false });
   }
 
+  const bun = data.find((item) => item.type.includes("bun"));
+
+
   return (
     <section className={styles.section + " mt-25 ml-10"}>
       <div className={styles.component}>
-        {props.data
-          .filter((item) => item.name.includes("Краторная булка N-200i"))
-          .map((data) => {
-            return (
-              <div key={data._id} className="ml-8">
-                <ConstructorElement
-                  type="top"
-                  isLocked={true}
-                  text={data.name + " (верх)"}
-                  price={data.price}
-                  thumbnail={data.image}
-                />
-              </div>
-            );
-          })}
+        {bun && (
+          <div className="ml-8">
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={bun.name + " (верх)"}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        )}
 
         <div className={styles.constructor}>
-          {props.data
+          {data
             .filter((item) => item.type.includes("main" || "sauce"))
             .map((data) => {
               return (
@@ -60,21 +62,17 @@ function BurgerConstructor(props) {
             })}
         </div>
 
-        {props.data
-          .filter((item) => item.name.includes("Краторная булка N-200i"))
-          .map((data) => {
-            return (
-              <div key={data._id} className="ml-8">
-                <ConstructorElement
-                  type="bottom"
-                  isLocked={true}
-                  text={data.name + " (низ)"}
-                  price={data.price}
-                  thumbnail={data.image}
-                />
-              </div>
-            );
-          })}
+        {bun && (
+          <div className="ml-8">
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={bun.name + " (низ)"}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        )}
       </div>
 
       <div className={styles.order + " mt-10 mr-4"}>
@@ -94,8 +92,8 @@ function BurgerConstructor(props) {
   );
 }
 
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired,
-};
+// BurgerConstructor.propTypes = {
+//   data: PropTypes.arrayOf(dataPropTypes).isRequired,
+// };
 
 export default BurgerConstructor;

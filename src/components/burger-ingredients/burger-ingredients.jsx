@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./burger-ingredients.module.css";
 import {
   Tab,
@@ -10,12 +9,15 @@ import { dataPropTypes } from "../../utils/data";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
+import { DataContext } from "../../services/dataContext";
 
-function BurgerIngredients(props) {
+function BurgerIngredients() {
   const [state, setState] = useState({
     showModal: false,
     shortModal: false,
   });
+
+  const data = useContext(DataContext)
 
   const [id, setId] = useState();
 
@@ -28,11 +30,13 @@ function BurgerIngredients(props) {
     setState({ ...state, showModal: false });
   }
 
-  const ingredient = props.data.find((item) => item._id.includes(id));
-  const buns = props.data.filter((item) => item.type === "bun");
-  const sauces = props.data.filter((item) => item.type === "sauce");
-  const mains = props.data.filter((item) => item.type === "main");
+  const ingredient = data.find((item) => item._id.includes(id));
+  const buns = data.filter((item) => item.type === "bun");
+  const sauces = data.filter((item) => item.type === "sauce");
+  const mains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
+
+
 
   return (
     <section>
@@ -98,8 +102,8 @@ function BurgerIngredients(props) {
   );
 }
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes).isRequired,
-};
+// BurgerIngredients.propTypes = {
+//   data: PropTypes.arrayOf(dataPropTypes).isRequired,
+// };
 
 export default BurgerIngredients;
