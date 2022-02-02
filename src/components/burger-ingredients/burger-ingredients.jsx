@@ -9,7 +9,7 @@ import { dataPropTypes } from "../../utils/data";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
-import { DataContext } from "../../services/dataContext";
+import { DataContext } from "../../services/appContext";
 
 function BurgerIngredients() {
   const [state, setState] = useState({

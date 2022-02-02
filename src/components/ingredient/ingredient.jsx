@@ -18,10 +18,10 @@ function Ingredient({ children, data, handleShow }) {
   );
 }
 
-Ingredient.propTypes = {
-  children: PropTypes.element,
-  data: dataPropTypes.isRequired,
-  handleShow: PropTypes.func.isRequired,
-};
+// Ingredient.propTypes = {
+//   children: PropTypes.element,
+//   data: dataPropTypes.isRequired,
+//   handleShow: PropTypes.func.isRequired,
+// };
 
 export default Ingredient;

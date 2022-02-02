@@ -6,8 +6,8 @@ function ModalOverlay(props) {
   return <div className={styles.overlay} onClick={props.handleHide}></div>;
 }
 
-ModalOverlay.propTypes = {
-  handleHide: PropTypes.func.isRequired,
-};
+// ModalOverlay.propTypes = {
+//   handleHide: PropTypes.func.isRequired,
+// };
 
 export default ModalOverlay;

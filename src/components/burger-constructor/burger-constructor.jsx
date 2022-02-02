@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-
+import React, { useState, useContext, useEffect } from "react";
+import { URL, checkResponse } from "../../utils/data";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
@@ -10,16 +10,46 @@ import {
 import Modal from "../modal/modal";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
-import { DataContext } from "../../services/dataContext";
+import { DataContext, TotalPriceContext } from "../../services/appContext";
 
 function BurgerConstructor() {
+  
   const [state, setState] = useState({
     showModal: false,
   });
-
+  const [order, setOrder] = useState(null);
   const data = useContext(DataContext);
+  const { totalPrice, priceDispatch } = useContext(TotalPriceContext);
+
+  const bun = data.find((item) => item.type.includes("bun"));
+  const sauce = data.filter((item) => item.type.includes("sauce"));
+  const main = data.filter((item) => item.type.includes("main"));
+  const ingredients = main.concat(sauce);
+  ingredients.push(bun, bun);
+
+  let id;
+  if (ingredients.length > 3) {
+    id = ingredients.map((item) => item._id);
+  }
 
   function handleShow() {
+    fetch(`${URL}orders`, {
+      method: "POST",
+      body: JSON.stringify({
+        ingredients: id,
+      }),
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    })
+      .then(checkResponse)
+      .then((res) => {
+        setOrder(res.order);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     setState({ ...state, showModal: true });
   }
 
@@ -27,8 +57,15 @@ function BurgerConstructor() {
     setState({ ...state, showModal: false });
   }
 
-  const bun = data.find((item) => item.type.includes("bun"));
+  useEffect(() => {
+    let total = 0;
 
+    if (ingredients.length > 3) {
+      ingredients.map((item) => (total += item.price));
+    }
+
+    priceDispatch({ type: "set", payload: total });
+  }, [ingredients, priceDispatch]);
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>
@@ -46,20 +83,31 @@ function BurgerConstructor() {
         )}
 
         <div className={styles.constructor}>
-          {data
-            .filter((item) => item.type.includes("main" || "sauce"))
-            .map((data) => {
-              return (
-                <div key={data._id} className={styles.group}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={data.name}
-                    price={data.price}
-                    thumbnail={data.image}
-                  />
-                </div>
-              );
-            })}
+          {main.map((data) => {
+            return (
+              <div key={data._id} className={styles.group}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={data.name}
+                  price={data.price}
+                  thumbnail={data.image}
+                />
+              </div>
+            );
+          })}
+
+          {sauce.map((data) => {
+            return (
+              <div key={data._id} className={styles.group}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                  text={data.name}
+                  price={data.price}
+                  thumbnail={data.image}
+                />
+              </div>
+            );
+          })}
         </div>
 
         {bun && (
@@ -76,7 +124,7 @@ function BurgerConstructor() {
       </div>
 
       <div className={styles.order + " mt-10 mr-4"}>
-        <p className="text text_type_digits-medium mr-2">610</p>
+        <p className="text text_type_digits-medium mr-2">{totalPrice}</p>
         <div className={styles.icon}></div>
         <Button onClick={handleShow} type="primary" size="large">
           Оформить заказ
@@ -85,7 +133,7 @@ function BurgerConstructor() {
 
       {state.showModal && (
         <Modal handleHide={handleHide}>
-          <OrderDetails />
+          <OrderDetails order={order} />
         </Modal>
       )}
     </section>
