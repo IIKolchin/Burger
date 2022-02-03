@@ -8,9 +8,8 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/data";
 import { DataContext, TotalPriceContext } from "../../services/appContext";
+import { OrderContext } from "../../services/orderContext";
 
 function BurgerConstructor() {
   
@@ -39,7 +38,7 @@ function BurgerConstructor() {
         ingredients: id,
       }),
       headers: {
-        "Content-Type": "application/json; charset=UTF-8",
+        "Content-Type": "application/json",
       },
     })
       .then(checkResponse)
@@ -133,15 +132,13 @@ function BurgerConstructor() {
 
       {state.showModal && (
         <Modal handleHide={handleHide}>
-          <OrderDetails order={order} />
+          <OrderContext.Provider value={order}>
+            <OrderDetails />
+          </OrderContext.Provider>
         </Modal>
       )}
     </section>
   );
 }
-
-// BurgerConstructor.propTypes = {
-//   data: PropTypes.arrayOf(dataPropTypes).isRequired,
-// };
 
 export default BurgerConstructor;

@@ -35,8 +35,8 @@ function IngredientDetails({ data }) {
   );
 }
 
-// IngredientDetails.propTypes = {
-//   data: dataPropTypes.isRequired,
-// };
+IngredientDetails.propTypes = {
+  data: dataPropTypes.isRequired,
+};
 
 export default IngredientDetails;

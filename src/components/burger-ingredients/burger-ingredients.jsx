@@ -4,20 +4,19 @@ import {
   Tab,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/data";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
 import { DataContext } from "../../services/appContext";
 
 function BurgerIngredients() {
+  
   const [state, setState] = useState({
     showModal: false,
     shortModal: false,
   });
 
-  const data = useContext(DataContext)
+  const data = useContext(DataContext);
 
   const [id, setId] = useState();
 
@@ -35,8 +34,6 @@ function BurgerIngredients() {
   const sauces = data.filter((item) => item.type === "sauce");
   const mains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
-
-
 
   return (
     <section>
@@ -101,9 +98,5 @@ function BurgerIngredients() {
     </section>
   );
 }
-
-// BurgerIngredients.propTypes = {
-//   data: PropTypes.arrayOf(dataPropTypes).isRequired,
-// };
 
 export default BurgerIngredients;

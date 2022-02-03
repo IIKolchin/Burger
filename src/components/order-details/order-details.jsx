@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./order-details.module.css";
+import { OrderContext } from "../../services/orderContext";
 
-function OrderDetails({order}) {
- 
+function OrderDetails() {
+  
+  const order = useContext(OrderContext);
+
   return (
     <div className={styles.container}>
       <p className={styles.number + " text text_type_digits-large mt-20"}>
