@@ -43,11 +43,11 @@ function Modal(props) {
   );
 }
 
-// Modal.propTypes = {
-//   shortModal: PropTypes.bool,
-//   handleHide: PropTypes.func.isRequired,
-//   children: PropTypes.element.isRequired,
-//   header: PropTypes.string,
-// };
+Modal.propTypes = {
+  shortModal: PropTypes.bool,
+  handleHide: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired,
+  header: PropTypes.string,
+};
 
 export default Modal;

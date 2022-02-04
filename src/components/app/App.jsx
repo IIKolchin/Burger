@@ -1,22 +1,10 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useState } from "react";
 import { URL, checkResponse } from "../../utils/data";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { DataContext, TotalPriceContext } from "../../services/appContext";
-
-const initialPrice = 0;
-
-function reducer(totalPrice, action) {
-  console.log();
-  switch (action.type) {
-    case "set":
-      return action.payload;
-    default:
-      throw new Error(`Wrong type of action: ${action.type}`);
-  }
-}
+import { DataContext } from "../../services/appContext";
 
 function App() {
   const [state, setState] = useState({
@@ -25,8 +13,6 @@ function App() {
   });
 
   const { data, hasError } = state;
-
-  const [totalPrice, priceDispatch] = useReducer(reducer, initialPrice);
 
   React.useEffect(() => {
     getIngredients();
@@ -51,9 +37,7 @@ function App() {
       <main className={styles.main}>
         <DataContext.Provider value={data}>
           <BurgerIngredients />
-          <TotalPriceContext.Provider value={{ totalPrice, priceDispatch }}>
-            <BurgerConstructor />
-          </TotalPriceContext.Provider>
+          <BurgerConstructor />
         </DataContext.Provider>
       </main>
     </>

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { URL, checkResponse } from "../../utils/data";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
@@ -8,17 +8,16 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import { DataContext, TotalPriceContext } from "../../services/appContext";
+import { DataContext } from "../../services/appContext";
 import { OrderContext } from "../../services/orderContext";
 
 function BurgerConstructor() {
-  
+
   const [state, setState] = useState({
     showModal: false,
   });
   const [order, setOrder] = useState(null);
   const data = useContext(DataContext);
-  const { totalPrice, priceDispatch } = useContext(TotalPriceContext);
 
   const bun = data.find((item) => item.type.includes("bun"));
   const sauce = data.filter((item) => item.type.includes("sauce"));
@@ -27,11 +26,11 @@ function BurgerConstructor() {
   ingredients.push(bun, bun);
 
   let id;
-  if (ingredients.length > 3) {
-    id = ingredients.map((item) => item._id);
-  }
 
   function handleShow() {
+    if (ingredients.length > 3) {
+      id = ingredients.map((item) => item._id);
+    }
     fetch(`${URL}orders`, {
       method: "POST",
       body: JSON.stringify({
@@ -44,27 +43,24 @@ function BurgerConstructor() {
       .then(checkResponse)
       .then((res) => {
         setOrder(res.order);
+        setState({ ...state, showModal: true });
       })
       .catch((err) => {
         console.log(err);
       });
-
-    setState({ ...state, showModal: true });
   }
 
   function handleHide() {
     setState({ ...state, showModal: false });
   }
 
-  useEffect(() => {
+  const totalPrice = useMemo(() => {
     let total = 0;
-
     if (ingredients.length > 3) {
       ingredients.map((item) => (total += item.price));
     }
-
-    priceDispatch({ type: "set", payload: total });
-  }, [ingredients, priceDispatch]);
+    return total;
+  }, [ingredients]);
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>
