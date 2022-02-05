@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./order-details.module.css";
+import { OrderContext } from "../../services/orderContext";
 
 function OrderDetails() {
+  
+  const order = useContext(OrderContext);
+
   return (
     <div className={styles.container}>
       <p className={styles.number + " text text_type_digits-large mt-20"}>
-        034536
+        {order && order.number}
       </p>
       <p className={styles.text_one + " mt-8 mb-15"}>идентификатор заказа</p>
       <div className={styles.done}></div>

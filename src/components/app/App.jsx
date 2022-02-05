@@ -1,10 +1,10 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { URL, checkResponse } from "../../utils/data";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
+import { DataContext } from "../../services/appContext";
 
 function App() {
   const [state, setState] = useState({
@@ -35,8 +35,10 @@ function App() {
     <>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients data={data} />
-        <BurgerConstructor data={data} />
+        <DataContext.Provider value={data}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DataContext.Provider>
       </main>
     </>
   );
