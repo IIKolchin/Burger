@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import Item from "../item/item";
 
-import { ADD_ITEM, ADD_BUN, UPDATE_POSITION_ITEM } from "../../services/actions/ingredients";
+import { ADD_ITEM, ADD_BUN, UPDATE_POSITION_ITEM, DELETE_ITEM } from "../../services/actions/ingredients";
 
 function BurgerConstructor() {
   // const [state, setState] = useState({
@@ -97,7 +97,7 @@ const updateItem = (dragIndex, hoverIndex) => {
     // useDrag - the list item is draggable
 
 
-
+ 
 
 
 
@@ -146,14 +146,20 @@ const updateItem = (dragIndex, hoverIndex) => {
   // function handleHide() {
   //   setState({ ...state, showModal: false });
   // }
+const items = constructor.concat(bun);
+items.push(bun)
 
-  // const totalPrice = useMemo(() => {
-  //   let total = 0;
-  //   if (ingredients.length > 3) {
-  //     ingredients.map((item) => (total += item.price));
-  //   }
-  //   return total;
-  // }, [ingredients]);
+
+
+  const totalPrice = useMemo(() => {
+    let total = 0;
+  
+      items.map((item) => (total += item.price));
+
+    return total ? total : 0;
+  }, [items]);
+
+
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>
@@ -169,6 +175,7 @@ const updateItem = (dragIndex, hoverIndex) => {
               thumbnail={bun.image}
               
             />
+           
           </div>
         )
        }
@@ -179,7 +186,7 @@ const updateItem = (dragIndex, hoverIndex) => {
             return (
 
           <Item index={index} key={index} data={data} updateItem={updateItem}/>
-
+         
               // <div key={index} className={styles.group} ref={dragDropRef} style={{ opacity }}>
               //   <DragIcon type="primary" />
               //   <ConstructorElement
@@ -231,6 +238,7 @@ const updateItem = (dragIndex, hoverIndex) => {
               text={bun.name + " (низ)"}
               price={bun.price}
               thumbnail={bun.image}
+              
             />
           </div>
         )}
@@ -238,7 +246,7 @@ const updateItem = (dragIndex, hoverIndex) => {
 
       <div className={styles.order + " mt-10 mr-4"}>
         <p className="text text_type_digits-medium mr-2">
-          {/* {totalPrice} */}
+          {totalPrice}
         </p>
         <div className={styles.icon}></div>
         <Button /* onClick={handleShow} */ type="primary" size="large">

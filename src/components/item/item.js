@@ -7,6 +7,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './item.module.css';
 import { useDrag, useDrop } from "react-dnd";
+import {DELETE_ITEM} from "../../services/actions/ingredients";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Item({ data, index, updateItem }) {
   const [{ isDragging }, dragRef] = useDrag({
@@ -16,6 +18,8 @@ export default function Item({ data, index, updateItem }) {
       isDragging: monitor.isDragging(),
     }),
   });
+
+  const dispatch = useDispatch();
 
   const [spec, dropRef] = useDrop({
     accept: "item",
@@ -42,6 +46,17 @@ export default function Item({ data, index, updateItem }) {
 
   const opacity = isDragging ? 0 : 1;
 
+  const id = data._id
+
+    const onDelete = () => {
+      dispatch({
+        type: DELETE_ITEM,
+        index
+        
+      });
+    };
+
+
   return (
     <div className={styles.group} ref={dragDropRef} style={{ opacity }}>
       <DragIcon type="primary" />
@@ -49,6 +64,7 @@ export default function Item({ data, index, updateItem }) {
         text={data.name}
         price={data.price}
         thumbnail={data.image}
+        handleClose={(e) => onDelete(e.target)}
       />
     </div>
   );

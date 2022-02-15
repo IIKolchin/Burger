@@ -3,6 +3,7 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
   ADD_ITEM,
+  DELETE_ITEM,
   ADD_BUN,
   UPDATE_POSITION_ITEM
 } from "../actions/ingredients";
@@ -44,6 +45,9 @@ export const ingredientsReducer = (state = initialState, action) => {
         ],
       };
     }
+    case DELETE_ITEM: {
+        return { ...state, constructor: [...state.constructor].filter((item, index)=> index !== action.index) };
+      }
     case ADD_BUN: {
         return {
             ...state,
