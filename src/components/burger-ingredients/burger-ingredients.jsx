@@ -17,14 +17,14 @@ function BurgerIngredients() {
   //   showModal: false,
   //   shortModal: false,
   // });
-  const data = useSelector(store => store.data)
+  const data = useSelector(store => store.items.data)
   const dispatch = useDispatch();
   
   useEffect(() => { 
     dispatch(getIngredients())
   }, [dispatch])
 
-  console.log(data)
+  
   // const data = useContext(DataContext);
 
   
