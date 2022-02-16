@@ -7,6 +7,9 @@ export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM"
 export const ADD_BUN = "ADD_BUN";
 export const UPDATE_POSITION_ITEM = "UPDATE_POSITION_ITEM";
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";
+
 
 export function getIngredients() {
   return function (dispatch) {

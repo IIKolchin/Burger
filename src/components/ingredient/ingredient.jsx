@@ -19,9 +19,8 @@ const id = data._id;
   })
   });
 
- 
 
-console.log()
+
 
   return ( !isDrag && 
     <li id={data._id} className={styles.li} onClick={handleShow} ref={dragRef}>

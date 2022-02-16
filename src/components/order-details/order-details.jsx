@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import styles from "./order-details.module.css";
 import { OrderContext } from "../../services/orderContext";
 
-function OrderDetails() {
+function OrderDetails({order}) {
   
-  const order = useContext(OrderContext);
+ 
 
   return (
     <div className={styles.container}>

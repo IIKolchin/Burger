@@ -14,6 +14,7 @@ import { useDrag, useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 import Item from "../item/item";
+import {SHOW_ORDER, CLOSE_ORDER, getOrder} from "../../services/actions/order"
 
 import { ADD_ITEM, ADD_BUN, UPDATE_POSITION_ITEM, DELETE_ITEM } from "../../services/actions/ingredients";
 
@@ -31,6 +32,8 @@ function BurgerConstructor() {
   const bun = useSelector((store) => store.items.bun)
   const dispatch = useDispatch();
 
+  const showOrder = useSelector((store) => store.orderDetails.showOrder);
+  const order = useSelector((store) => store.orderDetails.order);
   const ingredients = ['sauce', 'main']
 
   const [, dropTarget] = useDrop({
@@ -44,7 +47,7 @@ function BurgerConstructor() {
     
   });
 
-
+console.log(order)
 
 
 
@@ -54,28 +57,17 @@ function BurgerConstructor() {
       dispatch({
         type: ADD_BUN,
         ...item,
-        
+       
       });
-    
+      console.log(item)
     },
   });
-
-  
-
-  console.log(constructor);
-
-
-
-const id = constructor._id
 
 
 const moveListItem = useCallback(
   () => {
-
           
         dispatch(updateItem())
-          
-    
 
          },[dispatch]
 )
@@ -94,23 +86,6 @@ const updateItem = (dragIndex, hoverIndex) => {
           }) 
 }
 
-    // useDrag - the list item is draggable
-
-
- 
-
-
-
-  
- 
-
-//  moveItem()
-
-  // useEffect(() => {
-  //   dispatch(getIngredients())
-  // }, [dispatch])
-
-
   //const buns = bun.type === 'bun' ? bun : null
   //bun = bun.find((item) => item.type.includes("bun"));
   // const sauce = constructor.filter((item) => item.type.includes("sauce"));
@@ -118,36 +93,28 @@ const updateItem = (dragIndex, hoverIndex) => {
   // const ingredients = main.concat(sauce);
   // ingredients.push(bun, bun);
 
-  // let id;
 
-  // function handleShow() {
-  //   if (ingredients.length > 3) {
-  //     id = ingredients.map((item) => item._id);
-  //   }
-  //   fetch(`${URL}orders`, {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       ingredients: id,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   })
-  //     .then(checkResponse)
-  //     .then((res) => {
-  //       setOrder(res.order);
-  //       setState({ ...state, showModal: true });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }
 
-  // function handleHide() {
-  //   setState({ ...state, showModal: false });
-  // }
-const items = constructor.concat(bun);
-items.push(bun)
+  const items = constructor.concat(bun);
+  items.push(bun)
+
+const id = items.map((item) => item._id);
+
+
+  function handleShow() {
+    
+    dispatch(getOrder(id))
+    dispatch({type: SHOW_ORDER})
+    
+  }
+
+  function handleHide() {
+ 
+    dispatch({type: CLOSE_ORDER})
+  }
+
+
+
 
 
 
@@ -187,48 +154,9 @@ items.push(bun)
 
           <Item index={index} key={index} data={data} updateItem={updateItem}/>
          
-              // <div key={index} className={styles.group} ref={dragDropRef} style={{ opacity }}>
-              //   <DragIcon type="primary" />
-              //   <ConstructorElement
-              //     text={data.name}
-              //     price={data.price}
-              //     thumbnail={data.image}
-              //   />
-              // </div>
             );
           })}
-
-          {/* {sauce.map((data, index) => {
-            return (
-              <div key={index} className={styles.group}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={data.name}
-                  price={data.price}
-                  thumbnail={data.image}
-                />
-              </div>
-            );
-          })} */}
         </div>
-
-        {/* <div className={styles.bun + " ml-8"} >
-       {bun.map((bun, index) => {
-         return ( <div className=" ml-8" key={index}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={bun.name + " (верх)"}
-              price={bun.price}
-              thumbnail={bun.image}
-              
-            />
-          </div>
-        )
-       })}
-</div>  */}
-
-
 
         {bun && (
           <div className="ml-8" >
@@ -249,18 +177,18 @@ items.push(bun)
           {totalPrice}
         </p>
         <div className={styles.icon}></div>
-        <Button /* onClick={handleShow} */ type="primary" size="large">
+        <Button onClick={handleShow} type="primary" size="large">
           Оформить заказ
         </Button>
       </div>
 
-      {/* {state.showModal && (
+      {showOrder && (
         <Modal handleHide={handleHide}>
-          <OrderContext.Provider value={order}>
-            <OrderDetails />
-          </OrderContext.Provider>
+         
+            <OrderDetails order={order}/>
+          
         </Modal>
-      )} */}
+      )}
     </section>
   );
 }

@@ -8,47 +8,57 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
 import { DataContext } from "../../services/appContext";
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/ingredients'
+import { useSelector, useDispatch } from "react-redux";
+import { getIngredients } from "../../services/actions/ingredients";
+import { SHOW_MODAL, HIDE_MODAL } from "../../services/actions/ingredients";
 
 function BurgerIngredients() {
-  
   // const [state, setState] = useState({
   //   showModal: false,
   //   shortModal: false,
   // });
-  const data = useSelector(store => store.items.data)
+  const data = useSelector((store) => store.items.data);
   const dispatch = useDispatch();
-  
-  useEffect(() => { 
-    dispatch(getIngredients())
-  }, [dispatch])
 
-  
+ 
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
+
   // const data = useContext(DataContext);
 
-  
-  
-
+  const showModal = useSelector((state) => state.items.showModal);
+  const shortModal = useSelector((state) => state.items.shortModal);
 
 
 
   const [id, setId] = useState();
 
-  // function handleShow(e) {
-  //   setState({ ...state, showModal: true, shortModal: true });
-  //   setId(e.currentTarget.id);
-  // }
+  const handleShow = (e) => {
 
-  // function handleHide() {
-  //   setState({ ...state, showModal: false });
-  // }
+    setId(e.currentTarget.id);
+
+    dispatch({
+      type: SHOW_MODAL,
+     
+    });
+ 
+  }
+
+  const handleHide = () => {
+
+    dispatch({ type: HIDE_MODAL});
+  }
 
   const ingredient = data.find((item) => item._id.includes(id));
+
   const buns = data.filter((item) => item.type === "bun");
   const sauces = data.filter((item) => item.type === "sauce");
   const mains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
+
+  const ingredientCount = () => {};
 
   return (
     <section>
@@ -69,7 +79,7 @@ function BurgerIngredients() {
         <ul className={styles.ul + " ml-4"}>
           {buns.map((data) => {
             return (
-               <Ingredient key={data._id} data={data} /*handleShow={handleShow}*/>
+              <Ingredient key={data._id} data={data} handleShow={handleShow}>
                 {data._id === "60d3b41abdacab0026a733c6" ? (
                   <Counter count={1} size="default" />
                 ) : null}
@@ -82,7 +92,7 @@ function BurgerIngredients() {
         <ul className={styles.ul + " ml-4"}>
           {sauces.map((data) => {
             return (
-              <Ingredient key={data._id} data={data} /* handleShow={handleShow} */>
+              <Ingredient key={data._id} data={data} handleShow={handleShow}>
                 {data._id === "60d3b41abdacab0026a733ce" ? (
                   <Counter count={1} size="default" />
                 ) : null}
@@ -95,21 +105,21 @@ function BurgerIngredients() {
         <ul className={styles.ul + " ml-4"}>
           {mains.map((data) => {
             return (
-              <Ingredient key={data._id} data={data} /* handleShow={handleShow} */ />
+              <Ingredient key={data._id} data={data} handleShow={handleShow} />
             );
           })}
         </ul>
       </div>
 
-      {/* {state.showModal && (
+      {showModal && (
         <Modal
           header="Детали ингредиента"
-          shortModal={state.shortModal}
+          shortModal={shortModal}
           handleHide={handleHide}
         >
           <IngredientDetails data={ingredient} />
         </Modal>
-      )} */}
+      )}
     </section>
   );
 }
