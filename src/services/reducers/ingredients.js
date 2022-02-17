@@ -8,6 +8,7 @@ import {
   UPDATE_POSITION_ITEM,
   SHOW_MODAL,
   HIDE_MODAL,
+
 } from "../actions/ingredients";
 
 const initialState = {
@@ -18,6 +19,8 @@ const initialState = {
   dataFailed: false,
   showModal: false,
   shortModal: false,
+  ingredient: {}
+
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -78,6 +81,8 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         showModal: true,
         shortModal: true,
+        ingredient: state.data.find(
+            (item) => item._id === action.id)
       };
     }
 
