@@ -9,6 +9,7 @@ import {
   SHOW_MODAL,
   HIDE_MODAL,
 
+ 
 } from "../actions/ingredients";
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
   dataFailed: false,
   showModal: false,
   shortModal: false,
-  ingredient: {}
+  ingredient: {},
+  countBun: [],
 
 };
 
@@ -52,6 +54,8 @@ export const ingredientsReducer = (state = initialState, action) => {
             (item) => item._id === action.id && item.type !== "bun"
           ),
         ],
+
+        
       };
     }
     case DELETE_ITEM: {
@@ -68,6 +72,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         bun: state.data.find(
           (item) => item._id === action.id && item.type === "bun"
         ),
+        countBun: action.id,
       };
     }
     case UPDATE_POSITION_ITEM: {
@@ -81,8 +86,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         ...state,
         showModal: true,
         shortModal: true,
-        ingredient: state.data.find(
-            (item) => item._id === action.id)
+        ingredient: state.data.find((item) => item._id === action.id),
       };
     }
 
@@ -93,6 +97,7 @@ export const ingredientsReducer = (state = initialState, action) => {
         shortModal: false,
       };
     }
+
     default: {
       return state;
     }

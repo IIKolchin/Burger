@@ -1,6 +1,7 @@
 .li {
     width: 272px;
     cursor: pointer;
+    position: relative;
   }
   
   .li:nth-child(2n + 1) {

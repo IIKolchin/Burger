@@ -6,11 +6,6 @@ import { dataPropTypes } from "../../utils/data";
 
 function IngredientDetails({ data }) {
 
-  
-
-
-
-
 
   return (
     <>

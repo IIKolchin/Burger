@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
@@ -19,19 +19,24 @@ import {
   ADD_ITEM,
   ADD_BUN,
   UPDATE_POSITION_ITEM,
+
 } from "../../services/actions/ingredients";
 
 function BurgerConstructor() {
+
+
   const data = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.items.constructor);
-  const typeConstructor = constructor.find((item) => item.type);
-
   const bun = useSelector((store) => store.items.bun);
-  const dispatch = useDispatch();
-
   const showOrder = useSelector((store) => store.orderDetails.showOrder);
   const order = useSelector((store) => store.orderDetails.order);
   const ingredients = ["sauce", "main"];
+  const items = constructor.concat(bun);
+  items.push(bun);
+  const id = items.map((item) => item._id);
+
+  const dispatch = useDispatch();
+
 
   const [, dropTarget] = useDrop({
     accept: ingredients,
@@ -65,10 +70,9 @@ function BurgerConstructor() {
     });
   };
 
-  const items = constructor.concat(bun);
-  items.push(bun);
+ 
 
-  const id = items.map((item) => item._id);
+  
 
   function handleShow() {
     dispatch(getOrder(id));

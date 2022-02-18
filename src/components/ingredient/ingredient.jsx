@@ -1,18 +1,24 @@
-import React, { Children } from "react";
+import React, { Children, useEffect, useMemo } from "react";
 import styles from "./ingredient.module.css";
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 import { useDrag } from "react-dnd";
 import {
   SHOW_MODAL,
 
+
 } from "../../services/actions/ingredients";
 import { useSelector, useDispatch } from "react-redux";
 
 function Ingredient({ children, data}) {
 
+  
+  const countBun = useSelector(state => state.items.countBun)
+  const constructor = useSelector((store) => store.items.constructor);
+  const count = constructor.map(item => item._id)
   const dispatch = useDispatch();
+  const id = data._id;
 
   const handleShow = () => {
  
@@ -23,8 +29,23 @@ function Ingredient({ children, data}) {
  
   }
 
+ 
 
-  const id = data._id;
+console.log(count)
+
+const counter = useMemo(() => {
+  
+
+  const countIngredients = count.reduce((acc, value) => ({
+    ...acc,
+    [value]: (acc[value] || 0) + 1
+  }), {});
+   
+  const numberIngredient = countIngredients[`${id}`]
+
+  return numberIngredient
+}, [constructor])
+
 
   const [{ isDrag }, dragRef] = useDrag({
     type: data.type,
@@ -50,6 +71,8 @@ function Ingredient({ children, data}) {
           <CurrencyIcon />
         </div>
         <p className={styles.text + " mb-6"}>{data.name}</p>
+        { countBun.includes(data._id) ? <Counter count={1} size="default" /> : null}
+       { count.includes(data._id) && <Counter count={counter} size="default" /> }
       </li>
     )
   );

@@ -90,9 +90,9 @@ function BurgerIngredients() {
           {buns.map((data) => {
             return (
               <Ingredient key={data._id} data={data}>
-                {data._id === "60d3b41abdacab0026a733c6" ? (
+                {/* {data._id === "60d3b41abdacab0026a733c6" ? (
                   <Counter count={1} size="default" />
-                ) : null}
+                ) : null} */}
               </Ingredient>
             );
           })}
@@ -108,9 +108,9 @@ function BurgerIngredients() {
           {sauces.map((data) => {
             return (
               <Ingredient key={data._id} data={data}>
-                {data._id === "60d3b41abdacab0026a733ce" ? (
+                {/* {data._id === "60d3b41abdacab0026a733ce" ? (
                   <Counter count={1} size="default" />
-                ) : null}
+                ) : null} */}
               </Ingredient>
             );
           })}
