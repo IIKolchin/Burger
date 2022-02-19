@@ -1,9 +1,6 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import styles from "./burger-ingredients.module.css";
-import {
-  Tab,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
@@ -11,25 +8,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { HIDE_MODAL, getIngredients } from "../../services/actions/ingredients";
 
 function BurgerIngredients() {
+  
   const data = useSelector((store) => store.items.data);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   const showModal = useSelector((state) => state.items.showModal);
   const shortModal = useSelector((state) => state.items.shortModal);
   const ingedientModal = useSelector((state) => state.items.ingredient);
+  const buns = data.filter((item) => item.type === "bun");
+  const sauces = data.filter((item) => item.type === "sauce");
+  const mains = data.filter((item) => item.type === "main");
+  const [current, setCurrent] = React.useState("one");
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
   };
 
-  const buns = data.filter((item) => item.type === "bun");
-  const sauces = data.filter((item) => item.type === "sauce");
-  const mains = data.filter((item) => item.type === "main");
-  const [current, setCurrent] = React.useState("one");
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   // const bun = useRef();
   // const sauce = useRef();
@@ -88,13 +84,7 @@ function BurgerIngredients() {
         </h2>
         <ul className={styles.ul + " ml-4"}>
           {buns.map((data) => {
-            return (
-              <Ingredient key={data._id} data={data}>
-                {/* {data._id === "60d3b41abdacab0026a733c6" ? (
-                  <Counter count={1} size="default" />
-                ) : null} */}
-              </Ingredient>
-            );
+            return <Ingredient key={data._id} data={data} />;
           })}
         </ul>
 
@@ -106,13 +96,7 @@ function BurgerIngredients() {
         </h2>
         <ul className={styles.ul + " ml-4"}>
           {sauces.map((data) => {
-            return (
-              <Ingredient key={data._id} data={data}>
-                {/* {data._id === "60d3b41abdacab0026a733ce" ? (
-                  <Counter count={1} size="default" />
-                ) : null} */}
-              </Ingredient>
-            );
+            return <Ingredient key={data._id} data={data} />;
           })}
         </ul>
 

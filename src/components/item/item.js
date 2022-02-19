@@ -1,16 +1,19 @@
-import React, {useRef} from "react";
-
+import React, { useRef } from "react";
+import PropTypes from "prop-types";
+import { dataPropTypes } from "../../utils/data";
 import {
   ConstructorElement,
   DragIcon,
-  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from './item.module.css';
+import styles from "./item.module.css";
 import { useDrag, useDrop } from "react-dnd";
-import {DELETE_ITEM} from "../../services/actions/ingredients";
-import { useSelector, useDispatch } from "react-redux";
+import { DELETE_ITEM } from "../../services/actions/ingredients";
+import { useDispatch } from "react-redux";
 
-export default function Item({ data, index, updateItem }) {
+function Item({ data, index, updateItem }) {
+  
+  const id = data._id;
+
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
     item: { index },
@@ -21,7 +24,7 @@ export default function Item({ data, index, updateItem }) {
 
   const dispatch = useDispatch();
 
-  const [spec, dropRef] = useDrop({
+  const [, dropRef] = useDrop({
     accept: "item",
     hover: (item, monitor) => {
       const dragIndex = item.index;
@@ -30,8 +33,6 @@ export default function Item({ data, index, updateItem }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
-
-
       if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
 
       if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
@@ -46,16 +47,12 @@ export default function Item({ data, index, updateItem }) {
 
   const opacity = isDragging ? 0 : 1;
 
-  const id = data._id
-
-    const onDelete = () => {
-      dispatch({
-        type: DELETE_ITEM,
-        index
-        
-      });
-    };
-
+  const onDelete = () => {
+    dispatch({
+      type: DELETE_ITEM,
+      index,
+    });
+  };
 
   return (
     <div className={styles.group} ref={dragDropRef} style={{ opacity }}>
@@ -69,3 +66,11 @@ export default function Item({ data, index, updateItem }) {
     </div>
   );
 }
+
+Item.propTypes = {
+  data: dataPropTypes.isRequired,
+  index: PropTypes.number,
+  updateItem: PropTypes.func,
+};
+
+export default Item;

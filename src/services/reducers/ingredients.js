@@ -8,8 +8,6 @@ import {
   UPDATE_POSITION_ITEM,
   SHOW_MODAL,
   HIDE_MODAL,
-
- 
 } from "../actions/ingredients";
 
 const initialState = {
@@ -22,7 +20,6 @@ const initialState = {
   shortModal: false,
   ingredient: {},
   countBun: [],
-
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -54,8 +51,6 @@ export const ingredientsReducer = (state = initialState, action) => {
             (item) => item._id === action.id && item.type !== "bun"
           ),
         ],
-
-        
       };
     }
     case DELETE_ITEM: {

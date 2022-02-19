@@ -1,12 +1,9 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 
-
 function IngredientDetails({ data }) {
-
-
+  
   return (
     <>
       <div className={styles.container}>
@@ -38,8 +35,8 @@ function IngredientDetails({ data }) {
   );
 }
 
-// IngredientDetails.propTypes = {
-//   data: dataPropTypes.isRequired,
-// };
+IngredientDetails.propTypes = {
+  data: dataPropTypes.isRequired,
+};
 
 export default IngredientDetails;

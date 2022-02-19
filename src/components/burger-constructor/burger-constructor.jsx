@@ -1,5 +1,4 @@
-import React, { useEffect, useMemo } from "react";
-
+import React, { useMemo } from "react";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
@@ -19,26 +18,22 @@ import {
   ADD_ITEM,
   ADD_BUN,
   UPDATE_POSITION_ITEM,
-
 } from "../../services/actions/ingredients";
 
 function BurgerConstructor() {
-
-
-  const data = useSelector((store) => store.items.data);
+  
   const constructor = useSelector((store) => store.items.constructor);
   const bun = useSelector((store) => store.items.bun);
   const showOrder = useSelector((store) => store.orderDetails.showOrder);
   const order = useSelector((store) => store.orderDetails.order);
   const ingredients = ["sauce", "main"];
-  const items = constructor.concat(bun);
-  items.push(bun);
+  const items = constructor.concat(bun, bun);
+
   const id = items.map((item) => item._id);
 
   const dispatch = useDispatch();
 
-
-  const [, dropTarget] = useDrop({
+  const [{ Hover }, dropTarget] = useDrop({
     accept: ingredients,
     drop(item) {
       dispatch({
@@ -46,9 +41,12 @@ function BurgerConstructor() {
         ...item,
       });
     },
+    collect: (monitor) => ({
+      Hover: monitor.isOver(),
+    }),
   });
 
-  const [, drop] = useDrop({
+  const [{ isHover }, drop] = useDrop({
     accept: "bun",
     drop(item) {
       dispatch({
@@ -56,7 +54,12 @@ function BurgerConstructor() {
         ...item,
       });
     },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
   });
+
+  const borderColor = isHover || Hover ? "#4C4CFF" : "transparent";
 
   const updateItem = (dragIndex, hoverIndex) => {
     const dragItem = constructor[dragIndex];
@@ -70,10 +73,6 @@ function BurgerConstructor() {
     });
   };
 
- 
-
-  
-
   function handleShow() {
     dispatch(getOrder(id));
     dispatch({ type: SHOW_ORDER });
@@ -85,16 +84,16 @@ function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     let total = 0;
-
+    let main = 0;
     items.map((item) => (total += item.price));
-
-    return total ? total : 0;
+    constructor.map((item) => (main += item.price));
+    return total ? total : main ? main : 0;
   }, [items]);
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>
-      <div className={styles.component} ref={drop}>
-        {bun && (
+      <div className={styles.component} ref={drop} style={{ borderColor }}>
+        {bun.type && (
           <div className="ml-8">
             <ConstructorElement
               type="top"
@@ -119,7 +118,7 @@ function BurgerConstructor() {
           })}
         </div>
 
-        {bun && (
+        {bun.type && (
           <div className="ml-8">
             <ConstructorElement
               type="bottom"
@@ -140,7 +139,7 @@ function BurgerConstructor() {
         </Button>
       </div>
 
-      {showOrder && (
+      {showOrder && order && bun.type && (
         <Modal handleHide={handleHide}>
           <OrderDetails order={order} />
         </Modal>

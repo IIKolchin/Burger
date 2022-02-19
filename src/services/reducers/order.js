@@ -7,7 +7,7 @@ import {
 } from "../actions/order";
 
 const orderInitialState = {
-  order: 0,
+  order: null,
   showOrder: false,
   orderRequest: false,
   orderFailed: false,
@@ -46,7 +46,7 @@ export const orderReducer = (state = orderInitialState, action) => {
       };
     }
     default: {
-        return state;
-      }
+      return state;
+    }
   }
 };

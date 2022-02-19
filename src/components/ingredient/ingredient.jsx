@@ -1,51 +1,43 @@
-import React, { Children, useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import styles from "./ingredient.module.css";
-import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  CurrencyIcon,
+  Counter,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 import { useDrag } from "react-dnd";
-import {
-  SHOW_MODAL,
-
-
-} from "../../services/actions/ingredients";
+import { SHOW_MODAL } from "../../services/actions/ingredients";
 import { useSelector, useDispatch } from "react-redux";
 
-function Ingredient({ children, data}) {
-
+function Ingredient({ children, data }) {
   
-  const countBun = useSelector(state => state.items.countBun)
+  const countBun = useSelector((state) => state.items.countBun);
   const constructor = useSelector((store) => store.items.constructor);
-  const count = constructor.map(item => item._id)
+  const count = constructor.map((item) => item._id);
   const dispatch = useDispatch();
   const id = data._id;
 
   const handleShow = () => {
- 
     dispatch({
       type: SHOW_MODAL,
-     id
+      id,
     });
- 
-  }
+  };
 
- 
+  const counter = useMemo(() => {
+    const countIngredients = count.reduce(
+      (acc, value) => ({
+        ...acc,
+        [value]: (acc[value] || 0) + 1,
+      }),
+      {}
+    );
 
-console.log(count)
+    const numberIngredient = countIngredients[`${id}`];
 
-const counter = useMemo(() => {
-  
-
-  const countIngredients = count.reduce((acc, value) => ({
-    ...acc,
-    [value]: (acc[value] || 0) + 1
-  }), {});
-   
-  const numberIngredient = countIngredients[`${id}`]
-
-  return numberIngredient
-}, [constructor])
-
+    return numberIngredient;
+  }, [constructor]);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: data.type,
@@ -60,7 +52,6 @@ const counter = useMemo(() => {
       <li
         id={data._id}
         className={styles.li}
-        
         onClick={handleShow}
         ref={dragRef}
       >
@@ -71,17 +62,18 @@ const counter = useMemo(() => {
           <CurrencyIcon />
         </div>
         <p className={styles.text + " mb-6"}>{data.name}</p>
-        { countBun.includes(data._id) ? <Counter count={1} size="default" /> : null}
-       { count.includes(data._id) && <Counter count={counter} size="default" /> }
+        {countBun.includes(data._id) ? (
+          <Counter count={2} size="default" />
+        ) : null}
+        {count.includes(data._id) && <Counter count={counter} size="default" />}
       </li>
     )
   );
 }
 
-// Ingredient.propTypes = {
-//   children: PropTypes.element,
-//   data: dataPropTypes.isRequired,
-//   handleShow: PropTypes.func.isRequired,
-// };
+Ingredient.propTypes = {
+  children: PropTypes.element,
+  data: dataPropTypes.isRequired,
+};
 
 export default Ingredient;
