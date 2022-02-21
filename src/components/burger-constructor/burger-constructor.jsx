@@ -1,4 +1,5 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
+import update from "immutability-helper";
 import { v4 as uuidv4 } from "uuid";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
@@ -15,67 +16,39 @@ import {
   CLOSE_ORDER,
   getOrder,
 } from "../../services/actions/order";
-// import {
-//   ADD_ITEM,
-//   ADD_BUN,
-//   GENERATE_ID,
-//   UPDATE_POSITION_ITEM,
-// } from "../../services/actions/ingredients";
-
 import {
   ADD_ITEM,
   ADD_BUN,
   GENERATE_ID,
   UPDATE_POSITION_ITEM,
+  RESET_CONSTRUCTOR,
 } from "../../services/actions/constructor";
 
 function BurgerConstructor() {
-
+  
   const data = useSelector((store) => store.items.data);
-
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
   const generateId = useSelector((store) => store.element.generateId);
   const showOrder = useSelector((store) => store.orderDetails.showOrder);
   const order = useSelector((store) => store.orderDetails.order);
   const ingredients = ["sauce", "main"];
-  const items = constructor.concat(bun, bun);
-
-  
-
+  const items = [bun, bun, ...constructor];
   const id = items.map((item) => item._id);
-
   const dispatch = useDispatch();
-
-
-  // const addIngredient = (item) => {
-  //   data.filter((item) => item.id === item.id)
-  // }
-
-  // const addBun = () => {
-  //   data.find((item) => item._id === data._id)
-  // }
-
-
-  console.log(generateId[0])
-  // console.log(addIngredient)
- console.log(constructor)
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
     drop(item) {
-      console.log(item)
       dispatch({
         type: GENERATE_ID,
         payload: uuidv4(),
-      })
+      });
       dispatch({
         type: ADD_ITEM,
         ...item,
-        payload: data.find((el) => el._id === item.id)
-        // payload: uuidv4(),
+        payload: data.find((el) => el._id === item.id),
       });
-     
     },
     collect: (monitor) => ({
       ingredientHover: monitor.isOver(),
@@ -85,12 +58,10 @@ function BurgerConstructor() {
   const [{ bunHover }, drop] = useDrop({
     accept: "bun",
     drop(item) {
-      
       dispatch({
         type: ADD_BUN,
         ...item,
         payload: data.find((el) => el._id === item.id),
-        // payload: addBun(item.id)
       });
     },
     collect: (monitor) => ({
@@ -100,17 +71,20 @@ function BurgerConstructor() {
 
   const borderColor = bunHover || ingredientHover ? "#4C4CFF" : "transparent";
 
-  const updateItem = (dragIndex, hoverIndex) => {
-    const dragItem = constructor[dragIndex];
-    const hoverItem = constructor[hoverIndex];
-    const updatedItems = [...constructor];
-    updatedItems[dragIndex] = hoverItem;
-    updatedItems[hoverIndex] = dragItem;
-    dispatch({
-      type: UPDATE_POSITION_ITEM,
-      constructor: updatedItems,
-    });
-  };
+  const updateItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch({
+        type: UPDATE_POSITION_ITEM,
+        payload: update([...constructor], {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, constructor[dragIndex]],
+          ],
+        }),
+      });
+    },
+    [constructor, dispatch]
+  );
 
   function handleShow() {
     dispatch(getOrder(id));
@@ -119,6 +93,7 @@ function BurgerConstructor() {
 
   function handleHide() {
     dispatch({ type: CLOSE_ORDER });
+    dispatch({ type: RESET_CONSTRUCTOR });
   }
 
   const totalPrice = useMemo(() => {

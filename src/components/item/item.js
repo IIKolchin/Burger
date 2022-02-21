@@ -11,6 +11,7 @@ import { DELETE_ITEM } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 
 function Item({ data, index, updateItem }) {
+  
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
     item: { index },
@@ -23,16 +24,22 @@ function Item({ data, index, updateItem }) {
 
   const [, dropRef] = useDrop({
     accept: "item",
-    hover: (item, monitor) => {
+    hover(item, monitor) {
+      if (!ref.current) {
+        return;
+      }
       const dragIndex = item.index;
       const hoverIndex = index;
+      if (dragIndex === hoverIndex) return;
+
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
       updateItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
@@ -42,7 +49,7 @@ function Item({ data, index, updateItem }) {
   const ref = useRef(null);
   const dragDropRef = dragRef(dropRef(ref));
 
-  const opacity = isDragging ? 0 : 1;
+  const opacity = isDragging ? 0.5 : 1;
 
   const onDelete = () => {
     dispatch({

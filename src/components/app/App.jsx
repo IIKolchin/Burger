@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
@@ -9,14 +9,12 @@ import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
-
+  
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-
 
   return (
     <>

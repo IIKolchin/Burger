@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styles from "./ingredient.module.css";
 import {
   CurrencyIcon,
@@ -11,11 +11,13 @@ import { SHOW_MODAL } from "../../services/actions/modalIngredient";
 import { useSelector, useDispatch } from "react-redux";
 
 function Ingredient({ children, data }) {
-
-   const dat = useSelector((store) => store.items.data);
-  const countBun = useSelector((state) => state.element.countBun);
+  
+  const dataItems = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
-  const count = constructor.map((item) => item._id);
+  const bun = useSelector((store) => store.element.bun);
+  const burgerItems = [bun, bun, ...constructor];
+  const count = burgerItems.filter((item) => item._id === data._id).length;
+
   const dispatch = useDispatch();
   const id = data._id;
 
@@ -23,23 +25,9 @@ function Ingredient({ children, data }) {
     dispatch({
       type: SHOW_MODAL,
       id,
-      payload: dat.find((el) => el._id === id),
+      payload: dataItems.find((el) => el._id === id),
     });
   };
-
-  const counter = useMemo(() => {
-    const countIngredients = count.reduce(
-      (acc, value) => ({
-        ...acc,
-        [value]: (acc[value] || 0) + 1,
-      }),
-      {}
-    );
-
-    const numberIngredient = countIngredients[`${id}`];
-
-    return numberIngredient;
-  }, [constructor]);
 
   const [{ isDrag }, dragRef] = useDrag({
     type: data.type,
@@ -64,10 +52,7 @@ function Ingredient({ children, data }) {
           <CurrencyIcon />
         </div>
         <p className={styles.text + " mb-6"}>{data.name}</p>
-        {countBun.includes(data._id) ? (
-          <Counter count={2} size="default" />
-        ) : null}
-        {count.includes(data._id) && <Counter count={counter} size="default" />}
+        {count ? <Counter count={count} size="default" /> : null}
       </li>
     )
   );

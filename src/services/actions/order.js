@@ -6,7 +6,6 @@ export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
 export const SHOW_ORDER = "SHOW_ORDER";
 export const CLOSE_ORDER = "CLOSE_ORDER";
 
-
 export function getOrder(id) {
   return function (dispatch) {
     dispatch({

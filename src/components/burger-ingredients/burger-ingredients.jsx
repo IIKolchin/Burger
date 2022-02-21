@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { HIDE_MODAL } from "../../services/actions/modalIngredient";
 
 function BurgerIngredients() {
+  
   const data = useSelector((store) => store.items.data);
   const dispatch = useDispatch();
   const showModal = useSelector((state) => state.modal.showModal);

@@ -43,6 +43,7 @@ export const orderReducer = (state = orderInitialState, action) => {
       return {
         ...state,
         showOrder: false,
+        order: null,
       };
     }
     default: {
