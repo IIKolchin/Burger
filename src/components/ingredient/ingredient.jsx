@@ -7,13 +7,14 @@ import {
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 import { useDrag } from "react-dnd";
-import { SHOW_MODAL } from "../../services/actions/ingredients";
+import { SHOW_MODAL } from "../../services/actions/modalIngredient";
 import { useSelector, useDispatch } from "react-redux";
 
 function Ingredient({ children, data }) {
-  
-  const countBun = useSelector((state) => state.items.countBun);
-  const constructor = useSelector((store) => store.items.constructor);
+
+   const dat = useSelector((store) => store.items.data);
+  const countBun = useSelector((state) => state.element.countBun);
+  const constructor = useSelector((store) => store.element.constructor);
   const count = constructor.map((item) => item._id);
   const dispatch = useDispatch();
   const id = data._id;
@@ -22,6 +23,7 @@ function Ingredient({ children, data }) {
     dispatch({
       type: SHOW_MODAL,
       id,
+      payload: dat.find((el) => el._id === id),
     });
   };
 

@@ -22,7 +22,9 @@ function OrderDetails({ order }) {
 }
 
 OrderDetails.propTypes = {
-  order: PropTypes.object.isRequired,
+  order: PropTypes.shape({
+    number: PropTypes.number.isRequired,
+  }),
 };
 
 export default OrderDetails;

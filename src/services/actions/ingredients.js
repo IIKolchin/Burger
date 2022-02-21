@@ -9,6 +9,7 @@ export const ADD_BUN = "ADD_BUN";
 export const UPDATE_POSITION_ITEM = "UPDATE_POSITION_ITEM";
 export const SHOW_MODAL = "SHOW_MODAL";
 export const HIDE_MODAL = "HIDE_MODAL";
+export const GENERATE_ID = "GENERATE_ID";
 
 
 export function getIngredients() {
@@ -20,7 +21,7 @@ export function getIngredients() {
     fetch(`${URL}ingredients`)
       .then(checkResponse)
       .then((res) => {
-        if (checkResponse) {
+        if (res && res.success) {
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
             data: res.data,

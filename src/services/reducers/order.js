@@ -31,7 +31,7 @@ export const orderReducer = (state = orderInitialState, action) => {
       };
     }
     case GET_ORDER_FAILED: {
-      return { ...state, orderFailed: true, orderRequest: false };
+      return { ...state, order: null, orderFailed: true, orderRequest: false };
     }
     case SHOW_ORDER: {
       return {

@@ -23,7 +23,7 @@ export function getOrder(id) {
     })
       .then(checkResponse)
       .then((res) => {
-        if (checkResponse) {
+        if (res && res.success) {
           dispatch({
             type: GET_ORDER_SUCCESS,
             order: res.order,

@@ -11,9 +11,6 @@ import { DELETE_ITEM } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 
 function Item({ data, index, updateItem }) {
-  
-  const id = data._id;
-
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
     item: { index },
@@ -69,8 +66,8 @@ function Item({ data, index, updateItem }) {
 
 Item.propTypes = {
   data: dataPropTypes.isRequired,
-  index: PropTypes.number,
-  updateItem: PropTypes.func,
+  index: PropTypes.number.isRequired,
+  updateItem: PropTypes.func.isRequired,
 };
 
 export default Item;

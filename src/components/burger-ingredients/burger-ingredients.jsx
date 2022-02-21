@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
 import { useSelector, useDispatch } from "react-redux";
-import { HIDE_MODAL, getIngredients } from "../../services/actions/ingredients";
+import { HIDE_MODAL } from "../../services/actions/modalIngredient";
 
 function BurgerIngredients() {
-  
   const data = useSelector((store) => store.items.data);
   const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.items.showModal);
-  const shortModal = useSelector((state) => state.items.shortModal);
-  const ingedientModal = useSelector((state) => state.items.ingredient);
+  const showModal = useSelector((state) => state.modal.showModal);
+  const shortModal = useSelector((state) => state.modal.shortModal);
+  const ingedientModal = useSelector((state) => state.modal.ingredient);
   const buns = data.filter((item) => item.type === "bun");
   const sauces = data.filter((item) => item.type === "sauce");
   const mains = data.filter((item) => item.type === "main");
@@ -23,27 +22,16 @@ function BurgerIngredients() {
     dispatch({ type: HIDE_MODAL });
   };
 
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  // const bun = useRef();
-  // const sauce = useRef();
-  // const main = useRef();
-
   const set1 = () => {
     setCurrent("one");
-    // bun.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const set2 = () => {
     setCurrent("two");
-    // sauce.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const set3 = () => {
     setCurrent("three");
-    // main.current.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleScroll = (e) => {
@@ -79,7 +67,7 @@ function BurgerIngredients() {
         </a>
       </div>
       <div className={styles.ingredients + " mt-10"} onScroll={handleScroll}>
-        <h2 className={styles.subtitle + " mb-6"} id={"1"} /* ref={bun} */>
+        <h2 className={styles.subtitle + " mb-6"} id={"1"}>
           Булки
         </h2>
         <ul className={styles.ul + " ml-4"}>
@@ -88,10 +76,7 @@ function BurgerIngredients() {
           })}
         </ul>
 
-        <h2
-          className={styles.subtitle + " mt-10 mb-6"}
-          id={"2"} /*  ref={sauce} */
-        >
+        <h2 className={styles.subtitle + " mt-10 mb-6"} id={"2"}>
           Соусы
         </h2>
         <ul className={styles.ul + " ml-4"}>
@@ -100,10 +85,7 @@ function BurgerIngredients() {
           })}
         </ul>
 
-        <h2
-          className={styles.subtitle + " mt-10 mb-6"}
-          id={"3"} /* ref={main} */
-        >
+        <h2 className={styles.subtitle + " mt-10 mb-6"} id={"3"}>
           Начинки
         </h2>
         <ul className={styles.ul + " ml-4"}>

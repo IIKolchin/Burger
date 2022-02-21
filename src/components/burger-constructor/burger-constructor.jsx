@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { v4 as uuidv4 } from "uuid";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
@@ -14,52 +15,90 @@ import {
   CLOSE_ORDER,
   getOrder,
 } from "../../services/actions/order";
+// import {
+//   ADD_ITEM,
+//   ADD_BUN,
+//   GENERATE_ID,
+//   UPDATE_POSITION_ITEM,
+// } from "../../services/actions/ingredients";
+
 import {
   ADD_ITEM,
   ADD_BUN,
+  GENERATE_ID,
   UPDATE_POSITION_ITEM,
-} from "../../services/actions/ingredients";
+} from "../../services/actions/constructor";
 
 function BurgerConstructor() {
-  
-  const constructor = useSelector((store) => store.items.constructor);
-  const bun = useSelector((store) => store.items.bun);
+
+  const data = useSelector((store) => store.items.data);
+
+  const constructor = useSelector((store) => store.element.constructor);
+  const bun = useSelector((store) => store.element.bun);
+  const generateId = useSelector((store) => store.element.generateId);
   const showOrder = useSelector((store) => store.orderDetails.showOrder);
   const order = useSelector((store) => store.orderDetails.order);
   const ingredients = ["sauce", "main"];
   const items = constructor.concat(bun, bun);
 
+  
+
   const id = items.map((item) => item._id);
 
   const dispatch = useDispatch();
 
-  const [{ Hover }, dropTarget] = useDrop({
+
+  // const addIngredient = (item) => {
+  //   data.filter((item) => item.id === item.id)
+  // }
+
+  // const addBun = () => {
+  //   data.find((item) => item._id === data._id)
+  // }
+
+
+  console.log(generateId[0])
+  // console.log(addIngredient)
+ console.log(constructor)
+
+  const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
     drop(item) {
+      console.log(item)
+      dispatch({
+        type: GENERATE_ID,
+        payload: uuidv4(),
+      })
       dispatch({
         type: ADD_ITEM,
         ...item,
+        payload: data.find((el) => el._id === item.id)
+        // payload: uuidv4(),
       });
+     
     },
     collect: (monitor) => ({
-      Hover: monitor.isOver(),
+      ingredientHover: monitor.isOver(),
     }),
   });
 
-  const [{ isHover }, drop] = useDrop({
+  const [{ bunHover }, drop] = useDrop({
     accept: "bun",
     drop(item) {
+      
       dispatch({
         type: ADD_BUN,
         ...item,
+        payload: data.find((el) => el._id === item.id),
+        // payload: addBun(item.id)
       });
     },
     collect: (monitor) => ({
-      isHover: monitor.isOver(),
+      bunHover: monitor.isOver(),
     }),
   });
 
-  const borderColor = isHover || Hover ? "#4C4CFF" : "transparent";
+  const borderColor = bunHover || ingredientHover ? "#4C4CFF" : "transparent";
 
   const updateItem = (dragIndex, hoverIndex) => {
     const dragItem = constructor[dragIndex];
@@ -109,8 +148,8 @@ function BurgerConstructor() {
           {constructor.map((data, index) => {
             return (
               <Item
+                key={generateId[index]}
                 index={index}
-                key={index}
                 data={data}
                 updateItem={updateItem}
               />
