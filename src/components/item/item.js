@@ -58,7 +58,7 @@ function Item({ data, index, updateItem }) {
     });
   };
 
-  return (
+  return ( 
     <div className={styles.group} ref={dragDropRef} style={{ opacity }}>
       <DragIcon type="primary" />
       <ConstructorElement

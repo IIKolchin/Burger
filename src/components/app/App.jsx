@@ -1,30 +1,44 @@
-import React, { useEffect } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from "./app.module.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useDispatch } from "react-redux";
-import { getIngredients } from "../../services/actions/ingredients";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ResetPasswordPage
+} from "../../pages";
 
 function App() {
-  
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   return (
     <>
       <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
+      <Router>
+        <Switch>
+          <Route path="/nn" exact={true}>
+            <HomePage />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/с" exact={true}>
+            <LoginPage />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/v" exact={true}>
+            <RegisterPage />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/x" exact={true}>
+            <ForgotPasswordPage />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/" exact={true}>
+            <ResetPasswordPage />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }

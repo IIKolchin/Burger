@@ -37,6 +37,10 @@ function BurgerConstructor() {
   const id = items.map((item) => item._id);
   const dispatch = useDispatch();
 
+const newOrder = {...order}
+
+
+
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
     drop(item) {
@@ -95,13 +99,15 @@ function BurgerConstructor() {
     dispatch({ type: CLOSE_ORDER });
     dispatch({ type: RESET_CONSTRUCTOR });
   }
-
+console.log(items)
   const totalPrice = useMemo(() => {
+
+    // const total = [...items, ...constr]
     let total = 0;
     let main = 0;
-    items.map((item) => (total += item.price));
-    constructor.map((item) => (main += item.price));
-    return total ? total : main ? main : 0;
+    items.map((item) => (total += item.price || 0));
+    // constructor.map((item) => (main += item.price));
+    return total ? total : 0;
   }, [items]);
 
   return (
