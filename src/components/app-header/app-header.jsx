@@ -6,19 +6,30 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+
+
 
 function AppHeader() {
+
+  const isAuth = useSelector((store) => store.authorization.isAuth)
+  console.log(isAuth)
+
+
+
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <ul className={styles.menu}>
           <li className={styles.constructor}>
-            <a href="#" className={styles.link}>
+            <Link to='/' className={styles.link}>
               <BurgerIcon type="primary" />
               <p className="text text_type_main-default ml-2 mr-10 mr-2">
                 Конструктор
               </p>
-            </a>
+            </Link>
 
             <a href="#" className={styles.link}>
               <div className={styles.burger}>
@@ -35,11 +46,11 @@ function AppHeader() {
 
           <li className={styles.profile}>
             <ProfileIcon type="secondary" />
-            <a href="#" className={styles.link}>
-              <p className="text text_type_main-default text_color_inactive ml-2">
+            <Link to={{ pathname: isAuth ? '/profile' : '/' }} className={styles.link}>
+              <p  className="text text_type_main-default text_color_inactive ml-2">
                 Личный кабинет
               </p>
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

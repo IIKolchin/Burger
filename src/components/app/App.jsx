@@ -5,37 +5,43 @@ import {
   LoginPage,
   RegisterPage,
   ForgotPasswordPage,
-  ResetPasswordPage
+  ResetPasswordPage,
+  Profile
 } from "../../pages";
 
 function App() {
   return (
     <>
+    <Router>
       <AppHeader />
-      <Router>
         <Switch>
-          <Route path="/nn" exact={true}>
+          <Route path="/" exact={true}>
             <HomePage />
           </Route>
         </Switch>
         <Switch>
-          <Route path="/с" exact={true}>
+          <Route path="/login" exact={true}>
             <LoginPage />
           </Route>
         </Switch>
         <Switch>
-          <Route path="/v" exact={true}>
+          <Route path="/register" exact={true}>
             <RegisterPage />
           </Route>
         </Switch>
         <Switch>
-          <Route path="/x" exact={true}>
+          <Route path="/forgot-password" exact={true}>
             <ForgotPasswordPage />
           </Route>
         </Switch>
         <Switch>
-          <Route path="/" exact={true}>
+          <Route path="/reset-password" exact={true}>
             <ResetPasswordPage />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/profile" exact={true}>
+            <Profile />
           </Route>
         </Switch>
       </Router>

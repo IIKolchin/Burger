@@ -6,6 +6,8 @@ import {
   } from "@ya.praktikum/react-developer-burger-ui-components";
   import React, { useCallback, useState } from "react";
   import styles from "./login.module.css";
+  import { Link } from 'react-router-dom';
+  import { URL } from '../utils/data'
   
   export function ForgotPasswordPage() {
     const [form, setValue] = useState({ email: "", password: "" });
@@ -13,6 +15,18 @@ import {
     const onChange = (e) => {
       setValue({ ...form, [e.target.name]: e.target.value });
     };
+
+    const onClick = () => {
+      fetch(`${URL}password-reset`, {
+        method: "POST",
+        body: JSON.stringify({
+          "email": ""
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    }
   
     return (
       <div className={styles.container}>
@@ -22,11 +36,11 @@ import {
        
         
         </div>
-        <Button type="primary" size="medium">
+        <Button onClick={onClick} type="primary" size="medium">
         Восстановить
         </Button>
   
-        <p className={styles.p + " mt-20 mb-4"}>Вспомнили пароль? <a className={styles.a}>Войти</a></p>
+        <p className={styles.p + " mt-20 mb-4"}>Вспомнили пароль? <Link to='/login' className={styles.a}>Войти</Link></p>
         
       </div>
     );

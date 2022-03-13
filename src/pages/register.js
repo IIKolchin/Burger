@@ -7,28 +7,47 @@ import {
   } from "@ya.praktikum/react-developer-burger-ui-components";
   import React, { useCallback, useState } from "react";
   import styles from "./login.module.css";
+  import { Link } from 'react-router-dom';
+  import { useSelector, useDispatch } from "react-redux";
+  import { register } from "../services/actions/register";
+  import { SET_REGISTER } from "../services/actions/register"
   
   export function RegisterPage() {
-    const [form, setValue] = useState({ email: "", password: "", name:"" });
+
+
+const form = useSelector((store) => store.register.form)
+
+console.log(form)
+
+    const dispatch = useDispatch();
   
     const onChange = (e) => {
-      setValue({ ...form, [e.target.name]: e.target.value });
-    };
+      dispatch({ 
+        type: SET_REGISTER,
+        payload: {...form, [e.target.name]: e.target.value }
+    });
+  }
+        
+const onClick = (e) => {
+  e.preventDefault();
+  dispatch(register(form))
+
+}
+
   
     return (
-      <div className={styles.container}>
+      <form className={styles.container}>
         <h2 className={styles.heading}>Регистрация</h2>
         <div className="mb-6">
         <Input
       type={'text'}
       placeholder={'Имя'}
-      onChange={e => setValue(e.target.value)}
+      onChange={onChange}
       
       value={form.name}
       name={'name'}
       error={false}
-    //   ref={inputRef}
-    //   onIconClick={onIconClick}
+
       errorText={'Ошибка'}
       size={'default'}
     />
@@ -41,13 +60,13 @@ import {
           name={"password"}
         />
         </div>
-        <Button type="primary" size="medium">
+        <Button onClick={onClick} type="primary" size="medium">
         Зарегистрироваться
         </Button>
   
-        <p className={styles.p + " mt-20 mb-4"}>Уже зарегистрированы? <a className={styles.a}>Войти</a></p>
+        <p className={styles.p + " mt-20 mb-4"}>Уже зарегистрированы? <Link to='/login' className={styles.a}>Войти</Link></p>
         
-      </div>
+      </form>
     );
   }
   

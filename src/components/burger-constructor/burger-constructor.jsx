@@ -99,12 +99,12 @@ const newOrder = {...order}
     dispatch({ type: CLOSE_ORDER });
     dispatch({ type: RESET_CONSTRUCTOR });
   }
-console.log(items)
+
   const totalPrice = useMemo(() => {
 
     // const total = [...items, ...constr]
     let total = 0;
-    let main = 0;
+    // let main = 0;
     items.map((item) => (total += item.price || 0));
     // constructor.map((item) => (main += item.price));
     return total ? total : 0;
