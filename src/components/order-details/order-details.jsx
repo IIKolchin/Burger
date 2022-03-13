@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./order-details.module.css";
-import { OrderContext } from "../../services/orderContext";
+import PropTypes from "prop-types";
 
-function OrderDetails() {
-  
-  const order = useContext(OrderContext);
+function OrderDetails({ order }) {
 
   return (
     <div className={styles.container}>
@@ -22,5 +20,11 @@ function OrderDetails() {
     </div>
   );
 }
+
+OrderDetails.propTypes = {
+  order: PropTypes.shape({
+    number: PropTypes.number.isRequired,
+  }),
+};
 
 export default OrderDetails;

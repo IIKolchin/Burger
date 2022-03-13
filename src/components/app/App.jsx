@@ -1,44 +1,29 @@
-import React, { useState } from "react";
-import { URL, checkResponse } from "../../utils/data";
+import React, { useEffect } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { DataContext } from "../../services/appContext";
+import { useDispatch } from "react-redux";
+import { getIngredients } from "../../services/actions/ingredients";
 
 function App() {
-  const [state, setState] = useState({
-    hasError: false,
-    data: [],
-  });
+  
+  const dispatch = useDispatch();
 
-  const { data, hasError } = state;
-
-  React.useEffect(() => {
-    getIngredients();
-  }, []);
-
-  function getIngredients() {
-    setState({ ...state, hasError: false });
-    fetch(`${URL}ingredients`)
-      .then(checkResponse)
-      .then((data) =>
-        setState((prevState) => ({ ...prevState, data: data.data }))
-      )
-      .catch((err) => {
-        setState((prevState) => ({ ...prevState, hasError: true }));
-        console.log(err);
-      });
-  }
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <DataContext.Provider value={data}>
+        <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />
-        </DataContext.Provider>
+        </DndProvider>
       </main>
     </>
   );

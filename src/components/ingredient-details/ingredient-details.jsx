@@ -1,9 +1,9 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 
 function IngredientDetails({ data }) {
+  
   return (
     <>
       <div className={styles.container}>

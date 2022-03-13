@@ -25,8 +25,8 @@ function Modal(props) {
 
   const style = {
     width: 720,
-    height: props.shortModal ? 539 : 718
-  }
+    height: props.shortModal ? 539 : 718,
+  };
 
   return ReactDOM.createPortal(
     <>

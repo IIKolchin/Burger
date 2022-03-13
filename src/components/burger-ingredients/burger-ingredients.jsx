@@ -1,98 +1,108 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import styles from "./burger-ingredients.module.css";
-import {
-  Tab,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
-import { DataContext } from "../../services/appContext";
+import { useSelector, useDispatch } from "react-redux";
+import { HIDE_MODAL } from "../../services/actions/modalIngredient";
 
 function BurgerIngredients() {
   
-  const [state, setState] = useState({
-    showModal: false,
-    shortModal: false,
-  });
-
-  const data = useContext(DataContext);
-
-  const [id, setId] = useState();
-
-  function handleShow(e) {
-    setState({ ...state, showModal: true, shortModal: true });
-    setId(e.currentTarget.id);
-  }
-
-  function handleHide() {
-    setState({ ...state, showModal: false });
-  }
-
-  const ingredient = data.find((item) => item._id.includes(id));
+  const data = useSelector((store) => store.items.data);
+  const dispatch = useDispatch();
+  const showModal = useSelector((state) => state.modal.showModal);
+  const shortModal = useSelector((state) => state.modal.shortModal);
+  const ingedientModal = useSelector((state) => state.modal.ingredient);
   const buns = data.filter((item) => item.type === "bun");
   const sauces = data.filter((item) => item.type === "sauce");
   const mains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
 
+  const handleHide = () => {
+    dispatch({ type: HIDE_MODAL });
+  };
+
+  const set1 = () => {
+    setCurrent("one");
+  };
+
+  const set2 = () => {
+    setCurrent("two");
+  };
+
+  const set3 = () => {
+    setCurrent("three");
+  };
+
+  const handleScroll = (e) => {
+    let element = e.target;
+    if (element.scrollTop > 0 && element.scrollTop < 290) {
+      set1();
+    } else if (element.scrollTop > 290 && element.scrollTop < 850) {
+      set2();
+    } else if (element.scrollTop > 850) {
+      set3();
+    }
+  };
+
   return (
     <section>
       <h1 className={"mt-10 mb-5 " + styles.title}>Соберите бургер</h1>
       <div className={styles.tab}>
-        <Tab value="one" active={current === "one"} onClick={setCurrent}>
-          Булки
-        </Tab>
-        <Tab value="two" active={current === "two"} onClick={setCurrent}>
-          Соусы
-        </Tab>
-        <Tab value="three" active={current === "three"} onClick={setCurrent}>
-          Начинки
-        </Tab>
+        <a className={styles.a} href="#1">
+          <Tab value="one" active={current === "one"} onClick={set1}>
+            Булки
+          </Tab>
+        </a>
+        <a className={styles.a} href="#2">
+          <Tab value="two" active={current === "two"} onClick={set2}>
+            Соусы
+          </Tab>
+        </a>
+
+        <a className={styles.a} href="#3">
+          <Tab value="three" active={current === "three"} onClick={set3}>
+            Начинки
+          </Tab>
+        </a>
       </div>
-      <div className={styles.ingredients + " mt-10"}>
-        <h2 className={styles.subtitle + " mb-6"}>Булки</h2>
+      <div className={styles.ingredients + " mt-10"} onScroll={handleScroll}>
+        <h2 className={styles.subtitle + " mb-6"} id={"1"}>
+          Булки
+        </h2>
         <ul className={styles.ul + " ml-4"}>
           {buns.map((data) => {
-            return (
-              <Ingredient key={data._id} data={data} handleShow={handleShow}>
-                {data._id === "60d3b41abdacab0026a733c6" ? (
-                  <Counter count={1} size="default" />
-                ) : null}
-              </Ingredient>
-            );
+            return <Ingredient key={data._id} data={data} />;
           })}
         </ul>
 
-        <h2 className={styles.subtitle + " mt-10 mb-6"}>Соусы</h2>
+        <h2 className={styles.subtitle + " mt-10 mb-6"} id={"2"}>
+          Соусы
+        </h2>
         <ul className={styles.ul + " ml-4"}>
           {sauces.map((data) => {
-            return (
-              <Ingredient key={data._id} data={data} handleShow={handleShow}>
-                {data._id === "60d3b41abdacab0026a733ce" ? (
-                  <Counter count={1} size="default" />
-                ) : null}
-              </Ingredient>
-            );
+            return <Ingredient key={data._id} data={data} />;
           })}
         </ul>
 
-        <h2 className={styles.subtitle + " mt-10 mb-6"}>Начинки</h2>
+        <h2 className={styles.subtitle + " mt-10 mb-6"} id={"3"}>
+          Начинки
+        </h2>
         <ul className={styles.ul + " ml-4"}>
           {mains.map((data) => {
-            return (
-              <Ingredient key={data._id} data={data} handleShow={handleShow} />
-            );
+            return <Ingredient key={data._id} data={data} />;
           })}
         </ul>
       </div>
 
-      {state.showModal && (
+      {showModal && (
         <Modal
           header="Детали ингредиента"
-          shortModal={state.shortModal}
+          shortModal={shortModal}
           handleHide={handleHide}
         >
-          <IngredientDetails data={ingredient} />
+          <IngredientDetails data={ingedientModal} />
         </Modal>
       )}
     </section>

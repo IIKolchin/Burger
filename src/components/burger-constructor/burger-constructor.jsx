@@ -1,71 +1,113 @@
-import React, { useState, useContext, useMemo } from "react";
-import { URL, checkResponse } from "../../utils/data";
+import React, { useMemo, useCallback } from "react";
+import update from "immutability-helper";
+import { v4 as uuidv4 } from "uuid";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
-  DragIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
-import { DataContext } from "../../services/appContext";
-import { OrderContext } from "../../services/orderContext";
+import { useDrop } from "react-dnd";
+import { useSelector, useDispatch } from "react-redux";
+import Item from "../item/item";
+import {
+  SHOW_ORDER,
+  CLOSE_ORDER,
+  getOrder,
+} from "../../services/actions/order";
+import {
+  ADD_ITEM,
+  ADD_BUN,
+  GENERATE_ID,
+  UPDATE_POSITION_ITEM,
+  RESET_CONSTRUCTOR,
+} from "../../services/actions/constructor";
 
 function BurgerConstructor() {
+  
+  const data = useSelector((store) => store.items.data);
+  const constructor = useSelector((store) => store.element.constructor);
+  const bun = useSelector((store) => store.element.bun);
+  const generateId = useSelector((store) => store.element.generateId);
+  const showOrder = useSelector((store) => store.orderDetails.showOrder);
+  const order = useSelector((store) => store.orderDetails.order);
+  const ingredients = ["sauce", "main"];
+  const items = [bun, bun, ...constructor];
+  const id = items.map((item) => item._id);
+  const dispatch = useDispatch();
 
-  const [state, setState] = useState({
-    showModal: false,
+  const [{ ingredientHover }, dropTarget] = useDrop({
+    accept: ingredients,
+    drop(item) {
+      dispatch({
+        type: GENERATE_ID,
+        payload: uuidv4(),
+      });
+      dispatch({
+        type: ADD_ITEM,
+        ...item,
+        payload: data.find((el) => el._id === item.id),
+      });
+    },
+    collect: (monitor) => ({
+      ingredientHover: monitor.isOver(),
+    }),
   });
-  const [order, setOrder] = useState(null);
-  const data = useContext(DataContext);
 
-  const bun = data.find((item) => item.type.includes("bun"));
-  const sauce = data.filter((item) => item.type.includes("sauce"));
-  const main = data.filter((item) => item.type.includes("main"));
-  const ingredients = main.concat(sauce);
-  ingredients.push(bun, bun);
+  const [{ bunHover }, drop] = useDrop({
+    accept: "bun",
+    drop(item) {
+      dispatch({
+        type: ADD_BUN,
+        ...item,
+        payload: data.find((el) => el._id === item.id),
+      });
+    },
+    collect: (monitor) => ({
+      bunHover: monitor.isOver(),
+    }),
+  });
 
-  let id;
+  const borderColor = bunHover || ingredientHover ? "#4C4CFF" : "transparent";
+
+  const updateItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      dispatch({
+        type: UPDATE_POSITION_ITEM,
+        payload: update([...constructor], {
+          $splice: [
+            [dragIndex, 1],
+            [hoverIndex, 0, constructor[dragIndex]],
+          ],
+        }),
+      });
+    },
+    [constructor, dispatch]
+  );
 
   function handleShow() {
-    if (ingredients.length > 3) {
-      id = ingredients.map((item) => item._id);
-    }
-    fetch(`${URL}orders`, {
-      method: "POST",
-      body: JSON.stringify({
-        ingredients: id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(checkResponse)
-      .then((res) => {
-        setOrder(res.order);
-        setState({ ...state, showModal: true });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(getOrder(id));
+    dispatch({ type: SHOW_ORDER });
   }
 
   function handleHide() {
-    setState({ ...state, showModal: false });
+    dispatch({ type: CLOSE_ORDER });
+    dispatch({ type: RESET_CONSTRUCTOR });
   }
 
   const totalPrice = useMemo(() => {
     let total = 0;
-    if (ingredients.length > 3) {
-      ingredients.map((item) => (total += item.price));
-    }
-    return total;
-  }, [ingredients]);
+    let main = 0;
+    items.map((item) => (total += item.price));
+    constructor.map((item) => (main += item.price));
+    return total ? total : main ? main : 0;
+  }, [items]);
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>
-      <div className={styles.component}>
-        {bun && (
+      <div className={styles.component} ref={drop} style={{ borderColor }}>
+        {bun.type && (
           <div className="ml-8">
             <ConstructorElement
               type="top"
@@ -77,35 +119,20 @@ function BurgerConstructor() {
           </div>
         )}
 
-        <div className={styles.constructor}>
-          {main.map((data) => {
+        <div className={styles.constructor} ref={dropTarget}>
+          {constructor.map((data, index) => {
             return (
-              <div key={data._id} className={styles.group}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={data.name}
-                  price={data.price}
-                  thumbnail={data.image}
-                />
-              </div>
-            );
-          })}
-
-          {sauce.map((data) => {
-            return (
-              <div key={data._id} className={styles.group}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                  text={data.name}
-                  price={data.price}
-                  thumbnail={data.image}
-                />
-              </div>
+              <Item
+                key={generateId[index]}
+                index={index}
+                data={data}
+                updateItem={updateItem}
+              />
             );
           })}
         </div>
 
-        {bun && (
+        {bun.type && (
           <div className="ml-8">
             <ConstructorElement
               type="bottom"
@@ -126,11 +153,9 @@ function BurgerConstructor() {
         </Button>
       </div>
 
-      {state.showModal && (
+      {showOrder && order && bun.type && (
         <Modal handleHide={handleHide}>
-          <OrderContext.Provider value={order}>
-            <OrderDetails />
-          </OrderContext.Provider>
+          <OrderDetails order={order} />
         </Modal>
       )}
     </section>
