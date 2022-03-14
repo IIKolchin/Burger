@@ -7,27 +7,43 @@ import {
 import React, { useCallback, useState } from "react";
 import styles from "./login.module.css";
 import { Link } from "react-router-dom";
-import { URL } from '../utils/data'
+import { URL } from '../utils/data';
+import { useSelector, useDispatch } from "react-redux";
+import { SET_NEW_PASSWORD, getNewPassword } from "../services/actions/newPassword";
+import { Redirect } from 'react-router-dom';
+
 
 export function ResetPasswordPage() {
-  const [form, setValue] = useState({ email: "", password: "" });
+  
 
-  const onChange = (e) => {
-    setValue({ ...form, [e.target.name]: e.target.value });
-  };
+const isNewPasswordSuccess = useSelector((store) => store.newPassword.isNewPasswordSuccess)
+const form = useSelector((store) => store.newPassword.form)
+
+console.log(form)
+
+    const dispatch = useDispatch();
+  
+    const onChange = (e) => {
+      dispatch({ 
+        type: SET_NEW_PASSWORD,
+        payload: {...form, [e.target.name]: e.target.value }
+    });
+  }
 
   const onClick = () => {
-    fetch(`${URL}password-reset/reset`, {
-      method: "POST",
-      body: JSON.stringify({
-        password: "",
-        token: "",
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+dispatch(getNewPassword(form))
   };
+
+  if (isNewPasswordSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/login'
+        }}
+      />
+    );
+  }
+
 
   return (
     <div className={styles.container}>
@@ -35,13 +51,10 @@ export function ResetPasswordPage() {
       <Input
         type={"text"}
         placeholder={"Введите новый пароль"}
-        onChange={(e) => setValue(e.target.value)}
-        //   icon={'CurrencyIcon'}
+        onChange={onChange}
         value={form.password}
         name={"password"}
         error={false}
-        //   ref={inputRef}
-        //   onIconClick={onIconClick}
         errorText={"Ошибка"}
         size={"default"}
       />
@@ -49,13 +62,10 @@ export function ResetPasswordPage() {
         <Input
           type={"text"}
           placeholder={"Введите код из письма"}
-          onChange={(e) => setValue(e.target.value)}
-          //   icon={'CurrencyIcon'}
-          value={form.password}
-          name={"password"}
+          onChange={onChange}
+          value={form.token}
+          name={"token"}
           error={false}
-          //   ref={inputRef}
-          //   onIconClick={onIconClick}
           errorText={"Ошибка"}
           size={"default"}
         />

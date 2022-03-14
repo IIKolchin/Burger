@@ -24,7 +24,6 @@ export function updateTokenRequest() {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
-            console.log(res.user)
           dispatch({
             type: UPDATE_TOKEN_SUCCESS,
             // form: res.user

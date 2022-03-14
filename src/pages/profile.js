@@ -14,13 +14,18 @@ import { logoutRequest } from "../services/actions/logout";
 import { useHistory } from 'react-router-dom';
 import { SET_REGISTER } from "../services/actions/register";
 import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization"
+import { updateTokenRequest } from "../services/actions/updateToken";
+
 
   export function Profile() {
+
+
     const dispatch = useDispatch();
-    // const history = useHistory();
+
     const accessToken = useSelector((store) => store.authorization.accessToken)
     const form = useSelector((store) => store.register.form);
     const isAuth = useSelector((store) => store.authorization.isAuth)
+    
 
     const onChange = (e) => {
       dispatch({ 
@@ -44,18 +49,24 @@ import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization"
           deleteCookie('token')
         };
 
-  const onClick = () => 
-      fetch(`${URL}auth/user`, {
+
+const newT = () => {
+
+    dispatch(updateTokenRequest())
+  
+}
+
+
+  const user = () => {
+
+  
+
+    return  fetch(`${URL}auth/user`, {
       method: 'GET',
-      // mode: 'cors',
-      // cache: 'no-cache',
-      // credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
         Authorization: accessToken
       },
-      // redirect: 'follow',
-      // referrerPolicy: 'no-referrer'
     })
       .then(res => res.json())
       .then((data) => {
@@ -63,7 +74,7 @@ import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization"
         form.email = data.user.email
       
       });
- 
+    }
       const logout = useCallback(
         () => {
           signOut()
@@ -111,7 +122,7 @@ console.log(data)
           
 <div className={styles.container}>
 <nav className={styles.nav}>
-    <button onClick={onClick} className={styles.a + ' mb-8'}>Профиль</button>
+    <button onClick={user} className={styles.a + ' mb-8'}>Профиль</button>
     <button className={styles.a + ' mb-8'}>История заказов</button>
     <button onClick={logout}className={styles.a}>Выход</button>
 </nav>
@@ -124,12 +135,9 @@ console.log(data)
       type={'text'}
       placeholder={'Имя'}
       onChange={onChange}
-    //   icon={'CurrencyIcon'}
       value={form.name}
       name={'name'}
       error={false}
-    //   ref={inputRef}
-    //   onIconClick={onIconClick}
       errorText={'Ошибка'}
       size={'default'}
     />
@@ -140,12 +148,9 @@ console.log(data)
       type={'text'}
       placeholder={'Логин'}
       onChange={onChange}
-    //   icon={'CurrencyIcon'}
       value={form.email}
       name={'email'}
       error={false}
-    //   ref={inputRef}
-    //   onIconClick={onIconClick}
       errorText={'Ошибка'}
       size={'default'}
     />
@@ -173,7 +178,7 @@ console.log(data)
         </Button>
         </div> 
 <div>
-        <Button type="primary" size="medium">
+        <Button onClick={newT} type="primary" size="medium">
         Отмена
         </Button>
         </div>  

@@ -23,6 +23,7 @@ import {
   UPDATE_POSITION_ITEM,
   RESET_CONSTRUCTOR,
 } from "../../services/actions/constructor";
+import { useHistory } from 'react-router-dom';
 
 function BurgerConstructor() {
   
@@ -36,8 +37,9 @@ function BurgerConstructor() {
   const items = [bun, bun, ...constructor];
   const id = items.map((item) => item._id);
   const dispatch = useDispatch();
-
-const newOrder = {...order}
+  const isAuth = useSelector((store) => store.authorization.isAuth)
+  const history = useHistory();
+// const newOrder = {...order}
 
 
 
@@ -91,8 +93,12 @@ const newOrder = {...order}
   );
 
   function handleShow() {
+if(isAuth){
     dispatch(getOrder(id));
     dispatch({ type: SHOW_ORDER });
+  } else {
+    history.replace({ pathname: '/login' });
+  }
   }
 
   function handleHide() {

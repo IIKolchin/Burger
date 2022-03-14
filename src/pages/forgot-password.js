@@ -7,24 +7,50 @@ import {
   import React, { useCallback, useState } from "react";
   import styles from "./login.module.css";
   import { Link } from 'react-router-dom';
-  import { URL } from '../utils/data'
+  import { URL, checkResponse } from '../utils/data';
+  import { useHistory } from 'react-router-dom';
+  import { Redirect } from 'react-router-dom';
+  import { useSelector, useDispatch } from "react-redux";
+  import { SET_REGISTER } from "../services/actions/register"
   
   export function ForgotPasswordPage() {
-    const [form, setValue] = useState({ email: "", password: "" });
+   
+
+
+    const form = useSelector((store) => store.register.form)
+
+console.log(form)
+
+    const dispatch = useDispatch();
   
     const onChange = (e) => {
-      setValue({ ...form, [e.target.name]: e.target.value });
-    };
+      dispatch({ 
+        type: SET_REGISTER,
+        payload: {...form, [e.target.name]: e.target.value }
+    });
+  }
+    const history = useHistory();
 
-    const onClick = () => {
-      fetch(`${URL}password-reset`, {
+
+
+    const resetPassword = () => {
+    return fetch(`${URL}password-reset`, {
         method: "POST",
         body: JSON.stringify({
-          "email": ""
+          "email": form.email
         }),
         headers: {
           "Content-Type": "application/json",
         },
+      })
+      .then(checkResponse)
+      .then((res) => {
+        if (res && res.success) {
+            console.log(res)
+            history.replace({ pathname: '/reset-password' });
+        
+      
+        }    
       })
     }
   
@@ -36,7 +62,7 @@ import {
        
         
         </div>
-        <Button onClick={onClick} type="primary" size="medium">
+        <Button onClick={resetPassword} type="primary" size="medium">
         Восстановить
         </Button>
   
