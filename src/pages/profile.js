@@ -68,7 +68,7 @@ import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization"
         () => {
           signOut()
           
-          // history.replace({ pathname: '/login' });
+
      
         },
         [ ]
@@ -85,7 +85,25 @@ import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization"
       }
 
 
-console.log()
+console.log(form)
+
+
+const updateUser = () => 
+  fetch(`${URL}auth/user`, {
+    method: 'PATCH',  
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: accessToken
+    },
+    body: JSON.stringify(form),
+
+  })
+    .then(res => res.json())
+    .then((data) => {
+console.log(data)
+    
+    });
+
 
 
       return (
@@ -148,6 +166,18 @@ console.log()
       size={'default'}
     />
     </div>
+<div className={styles.buttons + " mt-6 mr-2"}>
+  <div>
+    <Button onClick={updateUser} type="primary" size="medium">
+        Сохранить
+        </Button>
+        </div> 
+<div>
+        <Button type="primary" size="medium">
+        Отмена
+        </Button>
+        </div>  
+        </div>    
     </div>
 </div>
       )
