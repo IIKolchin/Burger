@@ -41,6 +41,7 @@ import {
           
           authorizationFailed: true,
           authorizationRequest: false,
+          isAuth: false,
         };
       }
       case SET_AUTHORIZATION: {

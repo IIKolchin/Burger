@@ -2,7 +2,8 @@ import {
   GET_REGISTER_REQUEST,
   GET_REGISTER_SUCCESS,
   GET_REGISTER_FAILED,
-  SET_REGISTER
+  SET_REGISTER,
+
 } from "../actions/register";
 
 const registerInitialState = {
@@ -11,6 +12,7 @@ const registerInitialState = {
     name: "",
     password: "",
   },
+
   registerRequest: false,
   registerFailed: false,
 };
@@ -28,14 +30,13 @@ export const registerReducer = (state = registerInitialState, action) => {
       return {
         ...state,
         registerFailed: false,
-
+        form: action.payload,
         registerRequest: false,
       };
     }
     case GET_REGISTER_FAILED: {
       return {
         ...state,
-        order: null,
         registerFailed: true,
         registerRequest: false,
       };

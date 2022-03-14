@@ -6,19 +6,46 @@ import {
   } from "@ya.praktikum/react-developer-burger-ui-components";
   import React, { useCallback, useState } from "react";
   import styles from "./profile.module.css";
-  import { Link } from 'react-router-dom';
+  import { Link, Redirect } from 'react-router-dom';
   import { useSelector, useDispatch } from "react-redux";
 import { URL, checkResponse } from "../utils/data";
-import { getCookie } from "../utils/cookie"
+import { deleteCookie } from "../utils/cookie";
+import { logoutRequest } from "../services/actions/logout";
+import { useHistory } from 'react-router-dom';
+import { SET_REGISTER } from "../services/actions/register";
+import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization"
 
   export function Profile() {
-
-
+    const dispatch = useDispatch();
+    // const history = useHistory();
     const accessToken = useSelector((store) => store.authorization.accessToken)
+    const form = useSelector((store) => store.register.form);
+    const isAuth = useSelector((store) => store.authorization.isAuth)
+
+    const onChange = (e) => {
+      dispatch({ 
+        type: SET_REGISTER,
+        payload: {...form, [e.target.name]: e.target.value }
+    });
+  }
+        
+// const onClick = (e) => {
+//   e.preventDefault();
+//   dispatch({type: SET_REGISTER})
+
+// }
 
 
-  const onClick = async () => 
-     await fetch(`${URL}auth/user`, {
+
+
+    const signOut = () => {
+       dispatch(logoutRequest());
+        dispatch({type: GET_AUTHORIZATION_FAILED})  
+          deleteCookie('token')
+        };
+
+  const onClick = () => 
+      fetch(`${URL}auth/user`, {
       method: 'GET',
       // mode: 'cors',
       // cache: 'no-cache',
@@ -31,10 +58,34 @@ import { getCookie } from "../utils/cookie"
       // referrerPolicy: 'no-referrer'
     })
       .then(res => res.json())
-      .then((data) => console.log(data.user));
-  
+      .then((data) => {
+        form.name = data.user.name
+        form.email = data.user.email
+      
+      });
+ 
+      const logout = useCallback(
+        () => {
+          signOut()
+          
+          // history.replace({ pathname: '/login' });
+     
+        },
+        [ ]
+      );  
+      
+      if (!isAuth) {
+        return (
+          <Redirect
+            to={{
+              pathname: '/login'
+            }}
+          />
+        );
+      }
 
-console.log(getCookie('token'))
+
+console.log()
 
 
       return (
@@ -44,7 +95,7 @@ console.log(getCookie('token'))
 <nav className={styles.nav}>
     <button onClick={onClick} className={styles.a + ' mb-8'}>Профиль</button>
     <button className={styles.a + ' mb-8'}>История заказов</button>
-    <button className={styles.a}>Выход</button>
+    <button onClick={logout}className={styles.a}>Выход</button>
 </nav>
 <p className={styles.p + ' mt-20'}>В этом разделе вы можете
 изменить свои персональные данные</p>
@@ -54,10 +105,10 @@ console.log(getCookie('token'))
 <Input
       type={'text'}
       placeholder={'Имя'}
-    //   onChange={e => setValue(e.target.value)}
+      onChange={onChange}
     //   icon={'CurrencyIcon'}
-    //   value={form.password}
-      name={'password'}
+      value={form.name}
+      name={'name'}
       error={false}
     //   ref={inputRef}
     //   onIconClick={onIconClick}
@@ -70,10 +121,10 @@ console.log(getCookie('token'))
     <Input
       type={'text'}
       placeholder={'Логин'}
-    //   onChange={e => setValue(e.target.value)}
+      onChange={onChange}
     //   icon={'CurrencyIcon'}
-    //   value={form.password}
-      name={'password'}
+      value={form.email}
+      name={'email'}
       error={false}
     //   ref={inputRef}
     //   onIconClick={onIconClick}
@@ -86,9 +137,9 @@ console.log(getCookie('token'))
     <Input
       type={'text'}
       placeholder={'Пароль'}
-    //   onChange={e => setValue(e.target.value)}
+      onChange={onChange}
     //   icon={'CurrencyIcon'}
-    //   value={form.password}
+      value={form.password}
       name={'password'}
       error={false}
     //   ref={inputRef}

@@ -24,7 +24,7 @@ export function register(form) {
             console.log(res.user)
           dispatch({
             type: GET_REGISTER_SUCCESS,
-            // form: res.user
+            form: res.user,
           });
         } else {
           dispatch({

@@ -1,17 +1,17 @@
 import { getCookie } from "../../utils/cookie"
 import { URL, checkResponse } from "../../utils/data";
 
-export const UPDATE_TOKEN_REQUEST = "UPDATE_TOKEN_REQUEST";
-export const UPDATE_TOKEN_SUCCESS = "UPDATE_TOKEN_SUCCESS";
-export const UPDATE_TOKEN_FAILED = "UPDATE_TOKEN_FAILED";
+export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED = "LOGOUT_FAILED";
 
 
-export function updateTokenRequest() {
+export function logoutRequest() {
   return function (dispatch) {
     dispatch({
-      type: UPDATE_TOKEN_REQUEST,
+      type: LOGOUT_REQUEST,
     });
-    fetch(`${URL}auth/token`, {
+    fetch(`${URL}auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,21 +24,21 @@ export function updateTokenRequest() {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
-            console.log(res.user)
+            
           dispatch({
-            type: UPDATE_TOKEN_SUCCESS,
+            type: LOGOUT_SUCCESS,
             // form: res.user
           });
         } else {
           dispatch({
-            type: UPDATE_TOKEN_FAILED,
+            type: LOGOUT_FAILED,
           });
         }
       })
       .catch((err) => {
         console.log(err);
         dispatch({
-          type: UPDATE_TOKEN_FAILED,
+          type: LOGOUT_FAILED,
         });
       });
   };

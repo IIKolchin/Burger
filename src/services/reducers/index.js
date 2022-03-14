@@ -4,7 +4,9 @@ import { orderReducer } from "./order";
 import { constructorReducer } from "./constructor";
 import { modalIngredientReducer } from "./modalIngredient";
 import { registerReducer } from "./register";
-import { authorizationReducer } from "./authorization"
+import { authorizationReducer } from "./authorization";
+import { updateTokenReducer } from "./updateToken";
+import { logoutReducer} from "./logout"
 
 export const rootReducer = combineReducers({
   items: ingredientsReducer,
@@ -12,5 +14,7 @@ export const rootReducer = combineReducers({
   element: constructorReducer,
   modal: modalIngredientReducer,
   register: registerReducer,
-  authorization: authorizationReducer
+  authorization: authorizationReducer,
+  updateToken: updateTokenReducer,
+  logout: logoutReducer,
 });

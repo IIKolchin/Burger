@@ -14,11 +14,7 @@ function App() {
     <>
     <Router>
       <AppHeader />
-        <Switch>
-          <Route path="/" exact={true}>
-            <HomePage />
-          </Route>
-        </Switch>
+
         <Switch>
           <Route path="/login" exact={true}>
             <LoginPage />
@@ -42,6 +38,11 @@ function App() {
         <Switch>
           <Route path="/profile" exact={true}>
             <Profile />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/" exact={true}>
+            <HomePage />
           </Route>
         </Switch>
       </Router>
