@@ -30,7 +30,7 @@ export const registerReducer = (state = registerInitialState, action) => {
       return {
         ...state,
         registerFailed: false,
-        form: action.payload,
+        form: action.user,
         registerRequest: false,
       };
     }

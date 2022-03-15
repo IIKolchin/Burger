@@ -1,5 +1,6 @@
 import React, { useMemo, useCallback } from "react";
 import update from "immutability-helper";
+import { URL, checkResponse } from "../../utils/data";
 import { v4 as uuidv4 } from "uuid";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
@@ -40,7 +41,7 @@ function BurgerConstructor() {
   const isAuth = useSelector((store) => store.authorization.isAuth)
   const history = useHistory();
 // const newOrder = {...order}
-
+const accessToken = useSelector((store) => store.authorization.accessToken);
 
 
   const [{ ingredientHover }, dropTarget] = useDrop({
@@ -93,12 +94,26 @@ function BurgerConstructor() {
   );
 
   function handleShow() {
-if(isAuth){
-    dispatch(getOrder(id));
-    dispatch({ type: SHOW_ORDER });
-  } else {
-    history.replace({ pathname: '/login' });
-  }
+  fetch(`${URL}auth/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: accessToken,
+      },
+    })
+    .then(checkResponse)
+    .then((res) => {
+        
+      if (res && res.success) {
+        dispatch(getOrder(id));
+        dispatch({ type: SHOW_ORDER });
+      } 
+    })
+    .catch((err) => {
+      console.log(err);
+      history.replace({ pathname: '/login' });
+
+    })
   }
 
   function handleHide() {

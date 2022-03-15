@@ -2,11 +2,11 @@ import {
     UPDATE_TOKEN_REQUEST,
     UPDATE_TOKEN_SUCCESS,
     UPDATE_TOKEN_FAILED,
-    
+    SET_NEW_TOKEN
   } from "../actions/updateToken";
   
   const updateTokenInitialState = {
-
+    accessToken: '',
     updateTokenRequest: false,
     updateTokenFailed: false,
   };
@@ -24,7 +24,7 @@ import {
         return {
           ...state,
           updateTokenFailed: false,
-  
+          accessToken: action.accessToken,
           updateTokenRequest: false,
         };
       }
@@ -36,6 +36,8 @@ import {
           updateTokenRequest: false,
         };
       }
+
+
 
       default: {
         return state;

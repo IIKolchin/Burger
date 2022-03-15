@@ -47,3 +47,11 @@
   display: flex;
   margin-top: 32px;
 }
+
+.button {
+  cursor: pointer;
+  background: inherit;
+  border: none;
+  vertical-align: top;
+  padding: 0 0 30px;
+}
