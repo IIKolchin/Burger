@@ -7,7 +7,7 @@ export const UPDATE_TOKEN_FAILED = "UPDATE_TOKEN_FAILED";
 export const SET_NEW_TOKEN = "SET_NEW_TOKEN";
 
 export function updateTokenRequest() {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: UPDATE_TOKEN_REQUEST,
     });
@@ -29,13 +29,13 @@ export function updateTokenRequest() {
             type: UPDATE_TOKEN_SUCCESS,
             accessToken: res.accessToken,
           });
-          fetch(`${URL}auth/user`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: res.accessToken,
-            },
-          })
+          // fetch(`${URL}auth/user`, {
+          //   method: "GET",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     authorization: res.accessToken,
+          //   },
+          // })
         } else {
           dispatch({
             type: UPDATE_TOKEN_FAILED,

@@ -33,7 +33,8 @@ console.log(form)
 
 
 
-    const resetPassword = () => {
+    const resetPassword = (e) => {
+      e.preventDefault();
     return fetch(`${URL}password-reset`, {
         method: "POST",
         body: JSON.stringify({
@@ -55,20 +56,20 @@ console.log(form)
     }
   
     return (
-      <div className={styles.container}>
+      <form onSubmit={resetPassword} className={styles.container}>
         <h2 className={styles.heading}>Восстановление пароля</h2>
         <div className="mb-6">
         <EmailInput onChange={onChange} value={form.email} name={"email"} />
        
         
         </div>
-        <Button onClick={resetPassword} type="primary" size="medium">
+        <Button type="primary" size="medium">
         Восстановить
         </Button>
   
         <p className={styles.p + " mt-20 mb-4"}>Вспомнили пароль? <Link to='/login' className={styles.a}>Войти</Link></p>
         
-      </div>
+      </form>
     );
   }
   

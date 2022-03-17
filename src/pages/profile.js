@@ -4,7 +4,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,11 +12,16 @@ import { URL, checkResponse } from "../utils/data";
 import { deleteCookie } from "../utils/cookie";
 import { logoutRequest } from "../services/actions/logout";
 import { useHistory } from "react-router-dom";
-import { SET_REGISTER } from "../services/actions/register";
+import {
+  SET_REGISTER,
+  GET_REGISTER_SUCCESS,
+} from "../services/actions/register";
 import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization";
-import { updateTokenRequest, UPDATE_TOKEN_SUCCESS } from "../services/actions/updateToken";
-
-
+import {
+  updateTokenRequest,
+  UPDATE_TOKEN_SUCCESS,
+} from "../services/actions/updateToken";
+import { SET_AUTHORIZATION } from "../services/actions/authorization";
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -27,6 +32,38 @@ export function Profile() {
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const history = useHistory();
 
+
+  let user
+
+  const getUserInfo = () => {
+    fetch(`${URL}auth/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: accessToken,
+      },
+    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res && res.success) {
+
+         
+
+          user = res.user 
+
+          form.name = res.user.name;
+          form.email = res.user.email;
+        }
+      });
+  };
+
+console.log(user)
+
+
+  useEffect(() => {
+    getUserInfo();
+  }, [getUserInfo]);
+
   const onChange = (e) => {
     dispatch({
       type: SET_REGISTER,
@@ -34,7 +71,26 @@ export function Profile() {
     });
   };
 
- 
+
+  const cancel = () => {
+    fetch(`${URL}auth/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: accessToken,
+      },
+    })
+      .then(checkResponse)
+      .then((res) => {
+        if (res && res.success) {
+          form.name = res.user.name;
+          form.email = res.user.email;
+        }
+      });
+    }
+
+
+
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -42,27 +98,21 @@ export function Profile() {
     deleteCookie("token");
   };
 
-  const cancel = () => {
-    dispatch({ 
-      type: SET_REGISTER,
-      payload: {...form, name: '', email: '', password: ''}
-  });
-  };
 
 
   const logout = useCallback(() => {
-    signOut()
-    .then(() => {
-      history.replace({ pathname: '/login' });
+    signOut().then(() => {
+      history.replace({ pathname: "/login" });
     });
   }, []);
-
 
   console.log(form);
   console.log(accessToken);
   console.log(newAccessToken);
 
-  const updateUser = () =>
+  const formSubmit = (e) => {
+    e.preventDefault();
+
     fetch(`${URL}auth/user`, {
       method: "PATCH",
       headers: {
@@ -70,32 +120,40 @@ export function Profile() {
         Authorization: accessToken,
       },
       body: JSON.stringify(form),
-    })
-      .then((res) => res.json())
+    });
+  };
 
-      .catch((err) => {
-        console.log(err);
-        
-      })
-      .then(() => {
-        fetch(`${URL}auth/user`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: newAccessToken,
-          },
-          body: JSON.stringify(form),
-        })
-      }) 
-      .catch((err) => {
-        console.log(err);
-        
-      })
+  // const updateUser = () =>
+
+  //   fetch(`${URL}auth/user`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: accessToken,
+  //     },
+  //     body: JSON.stringify(form),
+  //   })
+  //     .then((res) => res.json())
+
+  //     .catch((err) => {
+  //       console.log(err);
+  //       fetch(`${URL}auth/user`, {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: newAccessToken,
+  //         },
+  //         body: JSON.stringify(form),
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     })
 
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <button /* onClick={getUser} */ className={styles.a + " mb-8"}>
+        <button onClick={getUserInfo} className={styles.a + " mb-8"}>
           Профиль
         </button>
         <button className={styles.a + " mb-8"}>История заказов</button>
@@ -107,7 +165,7 @@ export function Profile() {
         В этом разделе вы можете изменить свои персональные данные
       </p>
 
-      <div className={styles.input}>
+      <form onSubmit={formSubmit} className={styles.input}>
         <div className="mb-6">
           <Input
             type={"text"}
@@ -115,53 +173,47 @@ export function Profile() {
             onChange={onChange}
             value={form.name}
             name={"name"}
-            error={false}
-            errorText={"Ошибка"}
             size={"default"}
           />
         </div>
 
         <div className="mb-6">
           <Input
-            type={"text"}
+            type={"email"}
             placeholder={"Логин"}
             onChange={onChange}
             value={form.email}
             name={"email"}
-            error={false}
-            errorText={"Ошибка"}
             size={"default"}
           />
         </div>
 
         <div>
           <Input
-            type={"text"}
+            type={"password"}
             placeholder={"Пароль"}
             onChange={onChange}
-            //   icon={'CurrencyIcon'}
             value={form.password}
             name={"password"}
             error={false}
-            //   ref={inputRef}
-            //   onIconClick={onIconClick}
             errorText={"Ошибка"}
             size={"default"}
           />
         </div>
-        <div className={styles.buttons + " mt-6 mr-2"}>
-          <div>
-            <Button onClick={updateUser} type="primary" size="medium">
+        {/* <div className={styles.buttons + " mt-6 mr-2"}> */}
+          <div className={styles.buttons + " mt-6 mr-2"}>
+            <Button type="primary" size="medium">
               Сохранить
             </Button>
           </div>
+          </form>
           <div>
             <Button onClick={cancel} type="primary" size="medium">
               Отмена
             </Button>
           </div>
-        </div>
-      </div>
+        {/* </div> */}
+      
     </div>
   );
 }

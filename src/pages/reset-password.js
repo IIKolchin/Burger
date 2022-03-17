@@ -30,7 +30,8 @@ console.log(form)
     });
   }
 
-  const onClick = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
 dispatch(getNewPassword(form))
   };
 
@@ -46,7 +47,7 @@ dispatch(getNewPassword(form))
 
 
   return (
-    <div className={styles.container}>
+    <form onSubmit={onSubmit} className={styles.container}>
       <h2 className={styles.heading}>Восстановление пароля</h2>
       <Input
         type={"text"}
@@ -70,7 +71,7 @@ dispatch(getNewPassword(form))
           size={"default"}
         />
       </div>
-      <Button onClick={onClick} type="primary" size="medium">
+      <Button type="primary" size="medium">
         Сохранить
       </Button>
 
@@ -80,6 +81,6 @@ dispatch(getNewPassword(form))
           Войти
         </Link>
       </p>
-    </div>
+    </form>
   );
 }

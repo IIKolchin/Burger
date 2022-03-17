@@ -10,13 +10,13 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { URL, checkResponse } from "../../utils/data";
-import {
-  updateTokenRequest,
-  UPDATE_TOKEN_SUCCESS,
-} from "../../services/actions/updateToken";
-import { Redirect } from 'react-router-dom';
+import { updateTokenRequest } from "../../services/actions/updateToken";
+import { Redirect } from "react-router-dom";
+import { getUserRequest } from "../../services/actions/getUser";
 
 function AppHeader() {
+
+
   const dispatch = useDispatch();
   const history = useHistory();
   const accessToken = useSelector((store) => store.authorization.accessToken);
@@ -24,64 +24,42 @@ function AppHeader() {
   const newAccessToken = useSelector((store) => store.updateToken.accessToken);
   console.log(isAuth);
 
-  const getUser = async () => {
-    await fetch(`${URL}auth/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: accessToken,
-      },
-    })
-      .then(checkResponse)
-      .then((res) => {
-        
-        if (res && res.success) {
-          
-          history.replace({ pathname: "/profile" });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(updateTokenRequest());
+  // const getUser = async () => {
+  //   await dispatch(getUserRequest(accessToken))
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       if (res && res.success) {
+  //         history.replace({ pathname: "/profile" });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       dispatch(updateTokenRequest()).then(() => {
+  //         dispatch(getUserRequest(newAccessToken))
+  //           .then((res) => res.json())
+  //           .then((res) => res.json())
+  //           .then((res) => {
+  //             console.log(res);
+  //             if (res && res.success) {
+  //               history.replace({ pathname: "/profile" });
+  //             }
+  //           })
+  //           .catch((err) => {
+  //             console.log(err);
+  //             history.replace({ pathname: "/login" });
+  //           });
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
-      })
-      .then(() => {
-
- if (newAccessToken) {  
-    history.replace({ pathname: "/profile" });
-  }
-
-
-
-
-
-  
-      // fetch(`${URL}auth/user`, {
-      //     method: "GET",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       authorization: newAccessToken,
-      //     },
-      //   })
-      //   .then(res => res.json())
-      //   .then((res) => {
-      //     console.log(res)
-      //     if (res && res.success) {  
-      //       history.replace({ pathname: "/profile" });
-      //     }
-      //   })
-      })   
-      .catch((err) => {
-        console.log(err);
-      })
-  };
-
-  // if (res && res.success) {  
+  // if (res && res.success) {
   //   history.replace({ pathname: "/profile" });
   // }
 
-
-console.log(newAccessToken)
+  console.log(newAccessToken);
 
   // const onClick = () => {
   //   dispatch(updateTokenRequest());
@@ -116,19 +94,18 @@ console.log(newAccessToken)
           </li>
 
           <li className={styles.profile}>
-
             <ProfileIcon type="secondary" />
+                       <Link to={{ pathname:'/profile'}} className={styles.link}>
             {/* <Link to={{ pathname: isAuth ? '/profile' : '/' }} className={styles.link}> */}
-            <button onClick={getUser} className={styles.button}>
+            <button className={styles.button}>
               <p className=" text text_type_main-default text_color_inactive ml-2">
                 Личный кабинет
               </p>
             </button>
-            {/* </Link> */}
+            </Link>
           </li>
         </ul>
       </nav>
-
 
       {/* <button onClick={onClick}></button> */}
     </header>

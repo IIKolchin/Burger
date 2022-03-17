@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
+import { ProtectedRoute } from "../protected-route/protected-route"
 import {
   HomePage,
   LoginPage,
@@ -36,9 +37,9 @@ function App() {
           </Route>
         </Switch>
         <Switch>
-          <Route path="/profile" exact={true}>
+        <ProtectedRoute path="/profile" exact={true}>
             <Profile />
-          </Route>
+            </ProtectedRoute>
         </Switch>
         <Switch>
           <Route path="/" exact={true}>

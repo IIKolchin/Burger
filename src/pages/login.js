@@ -31,7 +31,7 @@ console.log(accessToken)
       });
     }
 
-    const onClick = (e) => {
+    const onSubmit= (e) => {
       e.preventDefault();
       dispatch(loginRequest(form));
       
@@ -50,7 +50,7 @@ console.log(accessToken)
     }
 
   return (
-    <div className={styles.container}>
+    <form onSubmit={onSubmit} className={styles.container}>
       <h2 className={styles.heading}>Вход</h2>
       <EmailInput onChange={onChange} value={form.email} name={"email"} />
      <div className="mt-6 mb-6">
@@ -60,12 +60,12 @@ console.log(accessToken)
         name={"password"}
       />
       </div>
-      <Button onClick={onClick} type="primary" size="medium">
+      <Button type="primary" size="medium">
         Войти
       </Button>
 
       <p className={styles.p + " mt-20 mb-4"}>Вы — новый пользователь? <Link to='/register' className={styles.a}>Зарегистрироваться</Link></p>
       <p className={styles.p}>Забыли пароль? <Link to='/forgot-password' className={styles.a}>Восстановить пароль</Link></p>
-    </div>
+    </form>
   );
 }
