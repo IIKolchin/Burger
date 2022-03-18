@@ -4,7 +4,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo, useRef } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +22,9 @@ import {
   UPDATE_TOKEN_SUCCESS,
 } from "../services/actions/updateToken";
 import { SET_AUTHORIZATION } from "../services/actions/authorization";
+import { getUserRequest } from "../services/actions/getUser";
+import { GET_USER_SUCCESS } from "../services/actions/getUser";
+
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -29,40 +32,34 @@ export function Profile() {
   const accessToken = useSelector((store) => store.authorization.accessToken);
   const newAccessToken = useSelector((store) => store.updateToken.accessToken);
   const form = useSelector((store) => store.register.form);
+  const isChange = useSelector((store) => store.register.isChange);
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const history = useHistory();
+  const userForm = useSelector((store) => store.user.form);
+  const user = useSelector((store) => store.user.isUser);
 
+  const [, forceUpdate] = useState(0);
 
-  let user
+  const inputRefName = React.useRef(null)
+  const inputRefEmail = React.useRef(null)
+  const inputRefPassword = React.useRef(null)
 
-  const getUserInfo = () => {
-    fetch(`${URL}auth/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: accessToken,
-      },
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res && res.success) {
-
-         
-
-          user = res.user 
-
-          form.name = res.user.name;
-          form.email = res.user.email;
-        }
-      });
-  };
-
-console.log(user)
+  // const getUserInfo = () => {
+  //   dispatch(getUserRequest(accessToken))
+  //     .then((res) => {
+  //       if (res && res.success) {
+  //         form.name = res.user.name;
+  //         form.email = res.user.email;
+  //       }
+  //     });
+  // };
 
 
   useEffect(() => {
-    getUserInfo();
-  }, [getUserInfo]);
+   form.name = userForm.name;
+  form.email = userForm.email;
+ 
+  }, []);
 
   const onChange = (e) => {
     dispatch({
@@ -72,24 +69,36 @@ console.log(user)
   };
 
 
+  const onIconClickName = () => {
+    setTimeout(() => inputRefName.current.focus(), 0)
+    
+  }
+  const onIconClickEmail = () => {
+    setTimeout(() => inputRefEmail.current.focus(), 0)
+    
+  }
+  const onIconClickPassword = () => {
+    setTimeout(() => inputRefPassword.current.focus(), 0)
+    
+  }
+
+
+function viewButton() {
+return  userForm.name !== form.name || userForm.email !== form.email ? true : false
+}
+
+
+console.log(viewButton())
+
+
   const cancel = () => {
-    fetch(`${URL}auth/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: accessToken,
-      },
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res && res.success) {
-          form.name = res.user.name;
-          form.email = res.user.email;
-        }
-      });
+    form.name = userForm.name;
+    form.email = userForm.email
+    forceUpdate(n => !n)
     }
 
-
+console.log(userForm.name)
+console.log(form.name)
 
 
   const signOut = async () => {
@@ -106,9 +115,9 @@ console.log(user)
     });
   }, []);
 
-  console.log(form);
-  console.log(accessToken);
-  console.log(newAccessToken);
+  // console.log(form);
+  // console.log(accessToken);
+  // console.log(newAccessToken);
 
   const formSubmit = (e) => {
     e.preventDefault();
@@ -120,7 +129,13 @@ console.log(user)
         Authorization: accessToken,
       },
       body: JSON.stringify(form),
-    });
+    })
+    .then(() => {
+      dispatch(getUserRequest(accessToken))
+      forceUpdate(n => !n)
+    })
+   
+    
   };
 
   // const updateUser = () =>
@@ -150,10 +165,13 @@ console.log(user)
   //       console.log(err);
   //     })
 
+
+  console.log(isChange)
+
   return (
     <div className={styles.container}>
       <nav className={styles.nav}>
-        <button onClick={getUserInfo} className={styles.a + " mb-8"}>
+        <button /* onClick={getUserInfo} */ className={styles.a + " mb-8"}>
           Профиль
         </button>
         <button className={styles.a + " mb-8"}>История заказов</button>
@@ -174,6 +192,10 @@ console.log(user)
             value={form.name}
             name={"name"}
             size={"default"}
+            icon={"EditIcon"}
+            onIconClick={onIconClickName}
+            ref={inputRefName}
+
           />
         </div>
 
@@ -185,6 +207,10 @@ console.log(user)
             value={form.email}
             name={"email"}
             size={"default"}
+            icon={"EditIcon"}
+            onIconClick={onIconClickEmail}
+            ref={inputRefEmail}
+ 
           />
         </div>
 
@@ -195,23 +221,24 @@ console.log(user)
             onChange={onChange}
             value={form.password}
             name={"password"}
-            error={false}
-            errorText={"Ошибка"}
             size={"default"}
+            icon={"EditIcon"}
+            onIconClick={onIconClickPassword}
+            ref={inputRefPassword}
           />
         </div>
         {/* <div className={styles.buttons + " mt-6 mr-2"}> */}
-          <div className={styles.buttons + " mt-6 mr-2"}>
+       { viewButton() && <div className=" mt-6 mr-2">
             <Button type="primary" size="medium">
               Сохранить
             </Button>
-          </div>
+          </div>}
           </form>
-          <div>
+      {  viewButton() &&  <div className={styles.button} >
             <Button onClick={cancel} type="primary" size="medium">
               Отмена
             </Button>
-          </div>
+          </div>}
         {/* </div> */}
       
     </div>

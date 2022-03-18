@@ -19,8 +19,10 @@ export function getUserRequest(accessToken) {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
+            console.log(res.user)
           dispatch({
             type: GET_USER_SUCCESS,
+            form: res.user
           });
         } else {
           dispatch({

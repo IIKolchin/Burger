@@ -34,14 +34,16 @@
 }
 
 .input {
-  position: fixed;
-  top: 358px;
+  position: absolute;
+  top: 320px;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 
-.buttons {
-  display: flex;
-  justify-content: space-between;
+.button {
+  position: absolute;
+  top: 425px;
+  left: 51.5%;
+
 }

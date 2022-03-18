@@ -30,6 +30,7 @@ export const userReducer = (state = userInitialState, action) => {
         userFailed: false,
         userRequest: false,
         isUser: true,
+        form: action.form
       };
     }
     case GET_USER_FAILED: {

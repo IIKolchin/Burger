@@ -8,7 +8,6 @@ import {
   ConstructorElement,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { updateTokenRequest } from "../../services/actions/updateToken";
 import Modal from "../modal/modal";
 import { useDrop } from "react-dnd";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,9 +24,11 @@ import {
   UPDATE_POSITION_ITEM,
   RESET_CONSTRUCTOR,
 } from "../../services/actions/constructor";
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 function BurgerConstructor() {
+  
   const data = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
@@ -38,11 +39,11 @@ function BurgerConstructor() {
   const items = [bun, bun, ...constructor];
   const id = items.map((item) => item._id);
   const dispatch = useDispatch();
-  const isAuth = useSelector((store) => store.authorization.isAuth);
+  const isAuth = useSelector((store) => store.authorization.isAuth)
   const history = useHistory();
 
-  const accessToken = useSelector((store) => store.authorization.accessToken);
-  const newAccessToken = useSelector((store) => store.updateToken.accessToken);
+const accessToken = useSelector((store) => store.authorization.accessToken);
+const user = useSelector((store) => store.user.isUser);
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
@@ -93,45 +94,30 @@ function BurgerConstructor() {
     [constructor, dispatch]
   );
 
+
+console.log(user)
+
+
   function handleShow() {
-    fetch(`${URL}auth/user`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: accessToken,
-      },
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch(getOrder(id));
-          dispatch({ type: SHOW_ORDER });
+ 
+
+        dispatch(getOrder(id));
+        dispatch({ type: SHOW_ORDER });
+     
+        if (!user) {
+          return (
+            <Redirect
+              to={{
+                pathname: '/login'
+              }}
+            />
+          );
         }
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(updateTokenRequest())
-        .then(() => {
-          fetch(`${URL}auth/user`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              authorization: newAccessToken,
-            },
-          })
-          .then(checkResponse)
-            .then((res) => {
-              if (res && res.success) {
-                dispatch(getOrder(id));
-                dispatch({ type: SHOW_ORDER });
-              }
-            }) .catch((err) => {
-              console.log(err);
-              history.replace({ pathname: "/login" });
-            });
-        })
-      })
-      
+    // .catch((err) => {
+    //   console.log(err);
+    //   history.replace({ pathname: '/login' });
+
+    // })
   }
 
   function handleHide() {
@@ -140,10 +126,12 @@ function BurgerConstructor() {
   }
 
   const totalPrice = useMemo(() => {
+
+   
     let total = 0;
-
+ 
     items.map((item) => (total += item.price || 0));
-
+    // constructor.map((item) => (main += item.price));
     return total ? total : 0;
   }, [items]);
 
@@ -196,7 +184,7 @@ function BurgerConstructor() {
         </Button>
       </div>
 
-      {showOrder && order && bun.type && (
+      {showOrder && order && bun.type && user && (
         <Modal handleHide={handleHide}>
           <OrderDetails order={order} />
         </Modal>

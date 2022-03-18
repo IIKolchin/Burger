@@ -12,9 +12,10 @@ const registerInitialState = {
     name: "",
     password: "",
   },
-
+  isChange: false,
   registerRequest: false,
   registerFailed: false,
+
 };
 
 export const registerReducer = (state = registerInitialState, action) => {
@@ -30,7 +31,7 @@ export const registerReducer = (state = registerInitialState, action) => {
       return {
         ...state,
         registerFailed: false,
-        form: action.user,
+        form: action.form,
         registerRequest: false,
       };
     }
@@ -45,6 +46,7 @@ export const registerReducer = (state = registerInitialState, action) => {
         return {
             ...state,
             form: action.payload,
+            isChange: true
         }
     }
     default: {
