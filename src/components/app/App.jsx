@@ -7,7 +7,8 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   ResetPasswordPage,
-  Profile
+  Profile,
+  NotFound404
 } from "../../pages";
 
 function App() {
@@ -20,31 +21,31 @@ function App() {
           <Route path="/login" exact={true}>
             <LoginPage />
           </Route>
-        </Switch>
-        <Switch>
+      
           <Route path="/register" exact={true}>
             <RegisterPage />
           </Route>
-        </Switch>
-        <Switch>
+     
           <Route path="/forgot-password" exact={true}>
             <ForgotPasswordPage />
           </Route>
-        </Switch>
-        <Switch>
+     
           <Route path="/reset-password" exact={true}>
             <ResetPasswordPage />
           </Route>
-        </Switch>
-        <Switch>
+  
         <ProtectedRoute path="/profile" exact={true}>
             <Profile />
             </ProtectedRoute>
-        </Switch>
-        <Switch>
+ 
           <Route path="/" exact={true}>
             <HomePage />
           </Route>
+
+
+         <Route >
+          <NotFound404 />
+        </Route>
         </Switch>
       </Router>
     </>

@@ -98,26 +98,14 @@ const user = useSelector((store) => store.user.isUser);
 console.log(user)
 
 
-  function handleShow() {
- 
-
-        dispatch(getOrder(id));
-        dispatch({ type: SHOW_ORDER });
-     
-        if (!user) {
-          return (
-            <Redirect
-              to={{
-                pathname: '/login'
-              }}
-            />
-          );
+  function handleShow() {   
+        if (user) {
+          dispatch(getOrder(id));
+          dispatch({ type: SHOW_ORDER }); 
+        } else {
+          history.replace({ pathname: "/login" });
         }
-    // .catch((err) => {
-    //   console.log(err);
-    //   history.replace({ pathname: '/login' });
 
-    // })
   }
 
   function handleHide() {
@@ -131,7 +119,7 @@ console.log(user)
     let total = 0;
  
     items.map((item) => (total += item.price || 0));
-    // constructor.map((item) => (main += item.price));
+
     return total ? total : 0;
   }, [items]);
 
