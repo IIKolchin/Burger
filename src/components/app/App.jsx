@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
-import { ProtectedRoute } from "../protected-route/protected-route"
+import { ProtectedRoute } from "../protected-route/protected-route";
+import { NotUserRoute } from "../not-user-route/not-user-route"
 import {
   HomePage,
   LoginPage,
@@ -18,21 +19,21 @@ function App() {
       <AppHeader />
 
         <Switch>
-          <Route path="/login" exact={true}>
+          <NotUserRoute path="/login" exact={true}>
             <LoginPage />
-          </Route>
+          </NotUserRoute>
       
-          <Route path="/register" exact={true}>
+          <NotUserRoute path="/register" exact={true}>
             <RegisterPage />
-          </Route>
+          </NotUserRoute>
      
-          <Route path="/forgot-password" exact={true}>
+          <NotUserRoute path="/forgot-password" exact={true}>
             <ForgotPasswordPage />
-          </Route>
+          </NotUserRoute>
      
-          <Route path="/reset-password" exact={true}>
+          <NotUserRoute path="/reset-password" exact={true}>
             <ResetPasswordPage />
-          </Route>
+          </NotUserRoute>
   
         <ProtectedRoute path="/profile" exact={true}>
             <Profile />

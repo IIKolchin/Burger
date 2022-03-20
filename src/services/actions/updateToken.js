@@ -1,5 +1,6 @@
 import { getCookie } from "../../utils/cookie"
 import { URL, checkResponse } from "../../utils/data";
+import { getUserRequest } from "./getUser"
 
 export const UPDATE_TOKEN_REQUEST = "UPDATE_TOKEN_REQUEST";
 export const UPDATE_TOKEN_SUCCESS = "UPDATE_TOKEN_SUCCESS";
@@ -7,7 +8,7 @@ export const UPDATE_TOKEN_FAILED = "UPDATE_TOKEN_FAILED";
 export const SET_NEW_TOKEN = "SET_NEW_TOKEN";
 
 export function updateTokenRequest() {
-  return async function (dispatch) {
+  return  function (dispatch) {
     dispatch({
       type: UPDATE_TOKEN_REQUEST,
     });
@@ -25,17 +26,12 @@ export function updateTokenRequest() {
       .then((res) => {
         if (res && res.success) {
           console.log(res.accessToken)
-          dispatch({
-            type: UPDATE_TOKEN_SUCCESS,
-            accessToken: res.accessToken,
-          });
-          // fetch(`${URL}auth/user`, {
-          //   method: "GET",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //     authorization: res.accessToken,
-          //   },
-          // })
+          // dispatch({
+          //   type: UPDATE_TOKEN_SUCCESS,
+          //   accessToken: res.accessToken,
+          // });
+          dispatch(getUserRequest(res.accessToken))
+
         } else {
           dispatch({
             type: UPDATE_TOKEN_FAILED,

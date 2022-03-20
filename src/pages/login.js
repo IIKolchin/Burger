@@ -7,20 +7,22 @@ import {
 import React, { useCallback, useState } from "react";
 import styles from "./login.module.css";
 import { Link } from 'react-router-dom';
-import { SET_AUTHORIZATION } from "../services/actions/authorization";
+import { SET_AUTHORIZATION, GET_AUTHORIZATION_FAILED } from "../services/actions/authorization";
 import { loginRequest } from "../services/actions/authorization"
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from 'react-router-dom';
+import { getUserRequest } from "../services/actions/getUser";
+
 
 export function LoginPage() {
 
   const form = useSelector((store) => store.authorization.form)
   const isAuth = useSelector((store) => store.authorization.isAuth)
-   
+  const user = useSelector((store) => store.user.isUser);
 
   const accessToken = useSelector((store) => store.authorization.accessToken)
-console.log(accessToken)
-  console.log(form)
+// console.log(accessToken)
+  console.log(isAuth)
   
       const dispatch = useDispatch();
     
@@ -34,9 +36,11 @@ console.log(accessToken)
     const onSubmit= (e) => {
       e.preventDefault();
       dispatch(loginRequest(form));
-      
+ 
     
     }
+
+  
 
 
     if (isAuth) {
@@ -48,6 +52,17 @@ console.log(accessToken)
         />
       );
     }
+
+    // if (user) {
+    //   return (
+ 
+    //     <Redirect
+    //       to={{
+    //         pathname: '/'
+    //       }}
+    //     />
+    //   );
+    // }
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>

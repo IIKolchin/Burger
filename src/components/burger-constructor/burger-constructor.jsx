@@ -26,6 +26,7 @@ import {
 } from "../../services/actions/constructor";
 import { useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import { getUserRequest } from "../../services/actions/getUser";
 
 function BurgerConstructor() {
   
@@ -98,7 +99,8 @@ const user = useSelector((store) => store.user.isUser);
 console.log(user)
 
 
-  function handleShow() {   
+  function handleShow() { 
+   
         if (user) {
           dispatch(getOrder(id));
           dispatch({ type: SHOW_ORDER }); 

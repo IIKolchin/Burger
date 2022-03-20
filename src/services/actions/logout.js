@@ -21,20 +21,6 @@ export function logoutRequest() {
         
       }),
     })
-      .then(checkResponse)
-      .then((res) => {
-        if (res && res.success) {
-            
-          dispatch({
-            type: LOGOUT_SUCCESS,
-            // form: res.user
-          });
-        } else {
-          dispatch({
-            type: LOGOUT_FAILED,
-          });
-        }
-      })
       .catch((err) => {
         console.log(err);
         dispatch({

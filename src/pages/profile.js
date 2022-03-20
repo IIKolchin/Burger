@@ -17,13 +17,10 @@ import {
   GET_REGISTER_SUCCESS,
 } from "../services/actions/register";
 import { GET_AUTHORIZATION_FAILED } from "../services/actions/authorization";
-import {
-  updateTokenRequest,
-  UPDATE_TOKEN_SUCCESS,
-} from "../services/actions/updateToken";
+import { UPDATE_TOKEN_FAILED } from "../services/actions/updateToken";
 import { SET_AUTHORIZATION } from "../services/actions/authorization";
 import { getUserRequest } from "../services/actions/getUser";
-import { GET_USER_SUCCESS } from "../services/actions/getUser";
+import { GET_USER_FAILED } from "../services/actions/getUser";
 
 
 export function Profile() {
@@ -32,7 +29,7 @@ export function Profile() {
   const accessToken = useSelector((store) => store.authorization.accessToken);
   const newAccessToken = useSelector((store) => store.updateToken.accessToken);
   const form = useSelector((store) => store.register.form);
-  const isChange = useSelector((store) => store.register.isChange);
+
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const history = useHistory();
   const userForm = useSelector((store) => store.user.form);
@@ -89,7 +86,7 @@ return  userForm.name !== form.name || userForm.email !== form.email ? true : fa
 
 
 console.log(viewButton())
-
+console.log(user)
 
   const cancel = () => {
     form.name = userForm.name;
@@ -97,13 +94,15 @@ console.log(viewButton())
     forceUpdate(n => !n)
     }
 
-console.log(userForm.name)
-console.log(form.name)
+// console.log(userForm.name)
+// console.log(form.name)
 
 
   const signOut = async () => {
     dispatch(logoutRequest());
     dispatch({ type: GET_AUTHORIZATION_FAILED });
+    dispatch({ type: GET_USER_FAILED });
+    // dispatch({ type: UPDATE_TOKEN_FAILED });
     deleteCookie("token");
   };
 
@@ -166,7 +165,7 @@ console.log(form.name)
   //     })
 
 
-  console.log(isChange)
+ 
 
   return (
     <div className={styles.container}>

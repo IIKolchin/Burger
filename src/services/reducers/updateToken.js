@@ -31,7 +31,7 @@ import {
       case UPDATE_TOKEN_FAILED: {
         return {
           ...state,
-    
+          accessToken: '',
           updateTokenFailed: true,
           updateTokenRequest: false,
         };

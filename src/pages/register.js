@@ -22,6 +22,15 @@ export function RegisterPage() {
 
   const dispatch = useDispatch();
 
+
+  useEffect(() => {
+    form.name = '';
+   form.email = '';
+   form.password = '';
+  
+   }, []);
+
+
   const onChange = (e) => {
     dispatch({
       type: SET_REGISTER,
@@ -44,8 +53,6 @@ export function RegisterPage() {
           onChange={onChange}
           value={form.name}
           name={"name"}
-          error={false}
-          errorText={"Ошибка"}
           size={"default"}
         />
       </div>

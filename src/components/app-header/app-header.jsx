@@ -6,7 +6,7 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useRouteMatch } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { URL, checkResponse } from "../../utils/data";
@@ -15,70 +15,40 @@ import { Redirect } from "react-router-dom";
 import { getUserRequest } from "../../services/actions/getUser";
 
 function AppHeader() {
-
-
   const dispatch = useDispatch();
   const history = useHistory();
   const accessToken = useSelector((store) => store.authorization.accessToken);
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const newAccessToken = useSelector((store) => store.updateToken.accessToken);
   console.log(isAuth);
+  const { url } = useRouteMatch();
 
-  // const getUser = async () => {
-  //   await dispatch(getUserRequest(accessToken))
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       if (res && res.success) {
-  //         history.replace({ pathname: "/profile" });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       dispatch(updateTokenRequest()).then(() => {
-  //         dispatch(getUserRequest(newAccessToken))
-  //           .then((res) => res.json())
-  //           .then((res) => res.json())
-  //           .then((res) => {
-  //             console.log(res);
-  //             if (res && res.success) {
-  //               history.replace({ pathname: "/profile" });
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //             history.replace({ pathname: "/login" });
-  //           });
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
-  // if (res && res.success) {
-  //   history.replace({ pathname: "/profile" });
-  // }
+ 
 
-  console.log(newAccessToken);
+const burgerIcon = window.location.pathname === '/' ? "primary" : "secondary"
+const profileIcon = window.location.pathname === '/profile' ? "primary" : "secondary"
 
-  // const onClick = () => {
-  //   dispatch(updateTokenRequest());
-  // }
+console.log(window.location.pathname)
 
-  // console.log(accessToken);
-  // console.log(newAccessToken);
+console.log(profileIcon)
 
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <ul className={styles.menu}>
           <li className={styles.constructor}>
-            <Link to="/" className={styles.link}>
-              <BurgerIcon type="primary" />
-              <p className="text text_type_main-default ml-2 mr-10 mr-2">
-                Конструктор
-              </p>
-            </Link>
+            <BurgerIcon type={window.location.pathname === '/' ? "primary" : "secondary"} />
+            <NavLink
+              to="/"
+              className={
+                styles.link + " text text_type_main-default ml-2 mr-10 mr-2"
+              }
+              activeClassName={styles.activeLink}
+              exact
+            >
+              Конструктор
+            </NavLink>
 
             <a href="#" className={styles.link}>
               <div className={styles.burger}>
@@ -94,20 +64,19 @@ function AppHeader() {
           </li>
 
           <li className={styles.profile}>
-            <ProfileIcon type="secondary" />
-                       <Link to={{ pathname:'/profile'}} className={styles.link}>
-            {/* <Link to={{ pathname: isAuth ? '/profile' : '/' }} className={styles.link}> */}
-            <button className={styles.button}>
-              <p className=" text text_type_main-default text_color_inactive ml-2">
-                Личный кабинет
-              </p>
-            </button>
-            </Link>
+            <ProfileIcon type={profileIcon} />
+            <NavLink
+              to={{ pathname: "/profile" }}
+              className={styles.link + " text text_type_main-default ml-2"}
+              activeClassName={styles.activeLink}
+              exact
+            >
+              {/* <Link to={{ pathname: isAuth ? '/profile' : '/' }} className={styles.link}> */}
+              Личный кабинет
+            </NavLink>
           </li>
         </ul>
       </nav>
-
-      {/* <button onClick={onClick}></button> */}
     </header>
   );
 }

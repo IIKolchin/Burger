@@ -38,7 +38,7 @@ import {
       case GET_AUTHORIZATION_FAILED: {
         return {
           ...state,
-          
+          accessToken: '',
           authorizationFailed: true,
           authorizationRequest: false,
           isAuth: false,

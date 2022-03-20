@@ -12,7 +12,7 @@ const registerInitialState = {
     name: "",
     password: "",
   },
-  isChange: false,
+  
   registerRequest: false,
   registerFailed: false,
 
@@ -46,7 +46,7 @@ export const registerReducer = (state = registerInitialState, action) => {
         return {
             ...state,
             form: action.payload,
-            isChange: true
+  
         }
     }
     default: {
