@@ -18,6 +18,7 @@ export function LoginPage() {
 
   const form = useSelector((store) => store.authorization.form)
   const isAuth = useSelector((store) => store.authorization.isAuth)
+  const login = sessionStorage.getItem('login')
   const user = useSelector((store) => store.user.isUser);
 
   const accessToken = useSelector((store) => store.authorization.accessToken)
@@ -43,7 +44,7 @@ export function LoginPage() {
   
 
 
-    if (isAuth) {
+    if (isAuth || login) {
       return (
         <Redirect
           to={{

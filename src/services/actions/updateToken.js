@@ -1,6 +1,7 @@
 import { getCookie } from "../../utils/cookie"
 import { URL, checkResponse } from "../../utils/data";
-import { getUserRequest } from "./getUser"
+import { getUserRequest } from "./getUser";
+import { setCookie } from "../../utils/cookie"
 
 export const UPDATE_TOKEN_REQUEST = "UPDATE_TOKEN_REQUEST";
 export const UPDATE_TOKEN_SUCCESS = "UPDATE_TOKEN_SUCCESS";
@@ -18,7 +19,7 @@ export function updateTokenRequest() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: getCookie('token'),
+        token: localStorage.getItem('token'),
         
       }),
     })
@@ -26,11 +27,12 @@ export function updateTokenRequest() {
       .then((res) => {
         if (res && res.success) {
           console.log(res.accessToken)
-          // dispatch({
-          //   type: UPDATE_TOKEN_SUCCESS,
-          //   accessToken: res.accessToken,
-          // });
-          dispatch(getUserRequest(res.accessToken))
+          dispatch({
+            type: UPDATE_TOKEN_SUCCESS,
+          });
+          setCookie('token', res.accessToken);
+          localStorage.setItem('token', res.refreshToken);
+          dispatch(getUserRequest())
 
         } else {
           dispatch({

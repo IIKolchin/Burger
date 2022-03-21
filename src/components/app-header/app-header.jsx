@@ -24,14 +24,9 @@ function AppHeader() {
   const { url } = useRouteMatch();
 
 
- 
+console.log()
 
-const burgerIcon = window.location.pathname === '/' ? "primary" : "secondary"
-const profileIcon = window.location.pathname === '/profile' ? "primary" : "secondary"
 
-console.log(window.location.pathname)
-
-console.log(profileIcon)
 
   return (
     <header className={styles.header}>
@@ -64,7 +59,8 @@ console.log(profileIcon)
           </li>
 
           <li className={styles.profile}>
-            <ProfileIcon type={profileIcon} />
+            <ProfileIcon type={window.location.pathname === '/profile' ? "primary" : "secondary"
+} />
             <NavLink
               to={{ pathname: "/profile" }}
               className={styles.link + " text text_type_main-default ml-2"}

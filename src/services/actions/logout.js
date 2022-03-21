@@ -1,5 +1,9 @@
 import { getCookie } from "../../utils/cookie"
 import { URL, checkResponse } from "../../utils/data";
+import { deleteCookie } from "../../utils/cookie";
+import { GET_AUTHORIZATION_FAILED } from "../actions/authorization";
+import { GET_USER_FAILED } from "../actions/getUser"
+
 
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
@@ -17,9 +21,23 @@ export function logoutRequest() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        token: getCookie('token'),
+        token: localStorage.getItem('token'),
         
       }),
+    })
+    .then(res => res.json())
+    .then((res) => {
+     
+      if (res && res.success) {
+          // console.log(res.user)
+
+          localStorage.removeItem('token');
+          sessionStorage.removeItem('login');
+          deleteCookie("token");
+          dispatch({ type: LOGOUT_SUCCESS });
+          dispatch({ type: GET_AUTHORIZATION_FAILED });
+          dispatch({ type: GET_USER_FAILED });
+      } 
     })
       .catch((err) => {
         console.log(err);

@@ -29,7 +29,7 @@ import {
         return {
           ...state,
           authorizationFailed: false,
-          accessToken: action.accessToken,
+          // accessToken: action.accessToken,
           authorizationRequest: false,
           isAuth: true,
 
@@ -38,7 +38,7 @@ import {
       case GET_AUTHORIZATION_FAILED: {
         return {
           ...state,
-          accessToken: '',
+        
           authorizationFailed: true,
           authorizationRequest: false,
           isAuth: false,

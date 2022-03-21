@@ -21,6 +21,8 @@ import { UPDATE_TOKEN_FAILED } from "../services/actions/updateToken";
 import { SET_AUTHORIZATION } from "../services/actions/authorization";
 import { getUserRequest } from "../services/actions/getUser";
 import { GET_USER_FAILED } from "../services/actions/getUser";
+import { LOGOUT_SUCCESS } from "../services/actions/logout";
+import { patchUserRequest } from "../services/actions/patchUser"
 
 
 export function Profile() {
@@ -34,7 +36,7 @@ export function Profile() {
   const history = useHistory();
   const userForm = useSelector((store) => store.user.form);
   const user = useSelector((store) => store.user.isUser);
-
+  const login = sessionStorage.getItem('login')
   const [, forceUpdate] = useState(0);
 
   const inputRefName = React.useRef(null)
@@ -100,19 +102,27 @@ console.log(user)
 
   const signOut = async () => {
     dispatch(logoutRequest());
-    dispatch({ type: GET_AUTHORIZATION_FAILED });
-    dispatch({ type: GET_USER_FAILED });
-    // dispatch({ type: UPDATE_TOKEN_FAILED });
-    deleteCookie("token");
+
+    
   };
 
 
 
   const logout = useCallback(() => {
-    signOut().then(() => {
-      history.replace({ pathname: "/login" });
-    });
+    signOut()
+
   }, []);
+
+
+  if (!login) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/login'
+        }}
+      />
+    );
+  }
 
   // console.log(form);
   // console.log(accessToken);
@@ -121,18 +131,20 @@ console.log(user)
   const formSubmit = (e) => {
     e.preventDefault();
 
-    fetch(`${URL}auth/user`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: accessToken,
-      },
-      body: JSON.stringify(form),
-    })
-    .then(() => {
-      dispatch(getUserRequest(accessToken))
-      forceUpdate(n => !n)
-    })
+    dispatch(patchUserRequest(form))
+
+    // fetch(`${URL}auth/user`, {
+    //   method: "PATCH",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: accessToken,
+    //   },
+    //   body: JSON.stringify(form),
+    // })
+    // .then(() => {
+    //   dispatch(getUserRequest(accessToken))
+    //   forceUpdate(n => !n)
+    // })
    
     
   };

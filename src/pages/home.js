@@ -33,14 +33,8 @@ console.log(isAuth)
 // console.log(getCookie('token'))
 
   const getUser = () => {
-   
-      if (!user) {
-        
-        dispatch(getUserRequest(accessToken))
-      } else  if(!user && userFailed) {
-        dispatch({type: GET_AUTHORIZATION_FAILED})
-        
-      }
+    dispatch(getUserRequest(accessToken))
+
 
   };
 
@@ -50,7 +44,7 @@ console.log(isAuth)
  
 
   useEffect(() => {
-    // dispatch(getUserRequest(accessToken))
+ 
     dispatch(getIngredients());
     getUser();
   }, [dispatch]);

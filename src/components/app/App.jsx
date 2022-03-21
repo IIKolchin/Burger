@@ -19,21 +19,21 @@ function App() {
       <AppHeader />
 
         <Switch>
-          <NotUserRoute path="/login" exact={true}>
+          <Route path="/login" exact={true}>
             <LoginPage />
-          </NotUserRoute>
+          </Route>
       
-          <NotUserRoute path="/register" exact={true}>
+          <Route path="/register" exact={true}>
             <RegisterPage />
-          </NotUserRoute>
+          </Route>
      
-          <NotUserRoute path="/forgot-password" exact={true}>
+          <Route path="/forgot-password" exact={true}>
             <ForgotPasswordPage />
-          </NotUserRoute>
+          </Route>
      
-          <NotUserRoute path="/reset-password" exact={true}>
+          <Route path="/reset-password" exact={true}>
             <ResetPasswordPage />
-          </NotUserRoute>
+          </Route>
   
         <ProtectedRoute path="/profile" exact={true}>
             <Profile />

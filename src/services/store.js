@@ -9,14 +9,14 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(applyMiddleware(thunk));
-const persistedState = loadState();
-export const store = createStore(rootReducer, persistedState, enhancer);
+// const persistedState = loadState();
+export const store = createStore(rootReducer, enhancer);
 
 
 
-store.subscribe(() => {
-  saveState(store.getState())
-})
+// store.subscribe(() => {
+//   saveState(store.getState())
+// })
 
 
 
