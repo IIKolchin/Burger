@@ -16,7 +16,7 @@ import {
   export function ForgotPasswordPage() {
    
 
-
+    const login = sessionStorage.getItem('login')
     const form = useSelector((store) => store.register.form)
 
 console.log(form)
@@ -31,7 +31,15 @@ console.log(form)
   }
     const history = useHistory();
 
-
+    if (login) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/'
+          }}
+        />
+      );
+    }
 
     const resetPassword = (e) => {
       e.preventDefault();

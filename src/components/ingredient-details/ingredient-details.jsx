@@ -6,7 +6,8 @@ function IngredientDetails({ data }) {
   
   return (
     <>
-      <div className={styles.container}>
+    
+      <div className={styles.container + " pb-15"}>
         <img src={data.image_large} alt={data.name} />
         <p className={styles.name + " mt-4 mb-8"}>{data.name}</p>
 

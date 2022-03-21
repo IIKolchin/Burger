@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const modalRoot = document.getElementById("modals");
 
 function Modal(props) {
-  
+
   React.useEffect(() => {
     function handleKeyDown(e) {
       if (e.keyCode === 27) {
@@ -23,14 +23,9 @@ function Modal(props) {
     };
   }, [props.handleHide]);
 
-  const style = {
-    width: 720,
-    height: props.shortModal ? 539 : 718,
-  };
-
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modal} style={style}>
+      <div className={styles.modal} >
         <h3 className={styles.heading + " ml-10"}>{props.header}</h3>
         <button onClick={props.handleHide} className={styles.close}>
           <CloseIcon />
@@ -46,7 +41,7 @@ function Modal(props) {
 Modal.propTypes = {
   shortModal: PropTypes.bool,
   handleHide: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.object.isRequired,
   header: PropTypes.string,
 };
 

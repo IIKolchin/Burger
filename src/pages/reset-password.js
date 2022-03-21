@@ -18,6 +18,8 @@ export function ResetPasswordPage() {
 
 const isNewPasswordSuccess = useSelector((store) => store.newPassword.isNewPasswordSuccess)
 const form = useSelector((store) => store.newPassword.form)
+const login = sessionStorage.getItem('login')
+
 
 console.log(form)
 
@@ -45,6 +47,25 @@ dispatch(getNewPassword(form))
     );
   }
 
+if (!login) {
+  return (
+    <Redirect
+      to={{
+        pathname: '/forgot-password'
+      }}
+    />
+  );
+}
+
+if (login) {
+  return (
+    <Redirect
+      to={{
+        pathname: '/'
+      }}
+    />
+  );
+}
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>

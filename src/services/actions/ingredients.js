@@ -21,10 +21,12 @@ export function getIngredients() {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
+          console.log(res.data)
           dispatch({
             type: GET_INGREDIENTS_SUCCESS,
             data: res.data,
           });
+          localStorage.setItem('data', JSON.stringify(res.data))
         } else {
           dispatch({
             type: GET_INGREDIENTS_FAILED,

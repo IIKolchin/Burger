@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./ingredient.module.css";
 import {
   CurrencyIcon,
@@ -20,6 +20,9 @@ function Ingredient({ children, data }) {
 
   const dispatch = useDispatch();
   const id = data._id;
+
+ 
+  
 
   const handleShow = () => {
     dispatch({

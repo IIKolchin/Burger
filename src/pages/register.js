@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../services/actions/register";
 import { SET_REGISTER } from "../services/actions/register";
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -19,7 +20,7 @@ export function RegisterPage() {
 
 
   const form = useSelector((store) => store.register.form);
-
+  const login = sessionStorage.getItem('login')
   const dispatch = useDispatch();
 
 
@@ -42,6 +43,18 @@ export function RegisterPage() {
     e.preventDefault();
     dispatch(register(form));
   };
+
+
+  if (login) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
+
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>
