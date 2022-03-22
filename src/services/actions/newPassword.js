@@ -25,7 +25,6 @@ export function getNewPassword(form) {
             type: GET_NEW_PASSWORD_SUCCESS,
             form: res.user,
           });
-          localStorage.removeItem("forgot-password");
         }
       })
       .catch((err) => {

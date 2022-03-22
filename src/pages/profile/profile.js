@@ -13,7 +13,7 @@ import {
 } from "../../services/actions/patchUser";
 
 export function Profile() {
-  
+
   const dispatch = useDispatch();
   const form = useSelector((store) => store.patchUser.form);
   const userForm = useSelector((store) => store.user.form);
@@ -62,7 +62,7 @@ export function Profile() {
   };
 
   const logout = useCallback(() => {
-    signOut();
+    signOut()
   }, []);
 
   if (!login) {

@@ -2,6 +2,7 @@ import { URL } from "../../utils/data";
 import { deleteCookie } from "../../utils/cookie";
 import { GET_AUTHORIZATION_FAILED } from "../actions/authorization";
 import { GET_USER_FAILED } from "../actions/getUser";
+import { FORGOT_PASSWORD_FAILED } from "../actions/forgotPassword"
 
 export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
@@ -30,6 +31,8 @@ export function logoutRequest() {
           dispatch({ type: LOGOUT_SUCCESS });
           dispatch({ type: GET_AUTHORIZATION_FAILED });
           dispatch({ type: GET_USER_FAILED });
+          dispatch({ type: FORGOT_PASSWORD_FAILED });
+          window.location.reload();
         }
       })
       .catch((err) => {

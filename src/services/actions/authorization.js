@@ -21,7 +21,6 @@ export function loginRequest(form) {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
-          console.log(res.user)
           dispatch({
             type: GET_AUTHORIZATION_SUCCESS,
           });

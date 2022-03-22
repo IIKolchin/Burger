@@ -7,14 +7,15 @@ import { getIngredients } from "../../services/actions/ingredients";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserRequest } from "../../services/actions/getUser";
 import React, { useEffect } from "react";
+import { getCookie } from "../../utils/cookie";
 
 export function HomePage() {
   
   const dispatch = useDispatch();
-  const accessToken = useSelector((store) => store.authorization.accessToken);
+
 
   const getUser = () => {
-    dispatch(getUserRequest(accessToken));
+    dispatch(getUserRequest(getCookie("token")))
   };
 
   useEffect(() => {

@@ -17,7 +17,6 @@
   line-height: 30px;
   padding: 0;
   border: none;
-  background-color: transparent;
   text-decoration: none;
 }
 
@@ -33,10 +32,6 @@
   padding: 0;
   border: none;
   background-color: transparent;
-}
-
-.a:first-of-type {
-  color: #f2f2f3;
 }
 
 .p {

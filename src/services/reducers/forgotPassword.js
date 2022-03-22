@@ -28,6 +28,7 @@ import {
       case  FORGOT_PASSWORD_FAILED: {
         return {
           ...state,
+          forgotPasswordSuccess: false,
         };
       }
       case SET_FORGOT_PASSWORD: {

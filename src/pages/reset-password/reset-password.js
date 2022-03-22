@@ -82,7 +82,7 @@ export function ResetPasswordPage() {
           placeholder={"Введите код из письма"}
           onChange={onChange}
           value={form.token}
-          name={"token"}
+            name={"token"}
           error={false}
           errorText={"Ошибка"}
           size={"default"}
