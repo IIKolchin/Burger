@@ -19,13 +19,11 @@
   border: none;
   background-color: transparent;
   text-decoration: none;
-
 }
 
 .activeLink {
-  color: #F2F2F3;
+  color: #f2f2f3;
 }
-
 
 .exit {
   color: #8585ad;
@@ -35,10 +33,7 @@
   padding: 0;
   border: none;
   background-color: transparent;
-  
-
 }
-
 
 .a:first-of-type {
   color: #f2f2f3;
@@ -59,10 +54,8 @@
   transform: translate(-50%, -50%);
 }
 
-
 .button {
   position: absolute;
   top: 425px;
   left: 51.5%;
-
 }

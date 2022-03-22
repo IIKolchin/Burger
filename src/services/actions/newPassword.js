@@ -1,9 +1,9 @@
 import { URL, checkResponse } from "../../utils/data";
 
-export const GET_NEW_PASSWORD_REQUEST = "GET_REGISTER_REQUEST";
-export const GET_NEW_PASSWORD_SUCCESS = "GET_REGISTER_SUCCESS";
-export const GET_NEW_PASSWORD_FAILED = "GET_REGISTER_FAILED";
-export const SET_NEW_PASSWORD = "SET_REGISTER";
+export const GET_NEW_PASSWORD_REQUEST = "GET_NEW_PASSWORD_REQUEST";
+export const GET_NEW_PASSWORD_SUCCESS = "GET_NEW_PASSWORD_SUCCESS";
+export const GET_NEW_PASSWORD_FAILED = "GET_NEW_PASSWORD_FAILED";
+export const SET_NEW_PASSWORD = "SET_NEW_PASSWORD";
 
 export function getNewPassword(form) {
   return function (dispatch) {

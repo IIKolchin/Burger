@@ -1,5 +1,4 @@
 import {
-
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -7,30 +6,24 @@ import React, {
   useCallback,
   useEffect,
   useState,
-
 } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
-import { logoutRequest } from "../services/actions/logout";
-
+import { logoutRequest } from "../../services/actions/logout";
 import {
   patchUserRequest,
   SET_PATCH_USER,
-} from "../services/actions/patchUser";
+} from "../../services/actions/patchUser";
 
 export function Profile() {
 
   const dispatch = useDispatch();
-
   const form = useSelector((store) => store.patchUser.form);
-
   const userForm = useSelector((store) => store.user.form);
   const user = useSelector((store) => store.user.isUser);
   const login = sessionStorage.getItem("login");
   const [, forceUpdate] = useState(0);
-
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
@@ -63,15 +56,11 @@ export function Profile() {
       : false;
   }, [form]);
 
-  console.log(userForm);
-  console.log(user);
-
   const cancel = () => {
     form.name = userForm.name;
     form.email = userForm.email;
     forceUpdate((n) => !n);
   };
-
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -90,7 +79,6 @@ export function Profile() {
       />
     );
   }
-
 
   const formSubmit = (e) => {
     e.preventDefault();
@@ -172,7 +160,6 @@ export function Profile() {
             errorText={"Ошибка"}
           />
         </div>
-        {/* <div className={styles.buttons + " mt-6 mr-2"}> */}
         {viewButton() && (
           <div className=" mt-6 mr-2">
             <Button type="primary" size="medium">
@@ -188,7 +175,6 @@ export function Profile() {
           </Button>
         </div>
       )}
-      {/* </div> */}
     </div>
   );
 }

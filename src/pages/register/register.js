@@ -1,36 +1,28 @@
 import {
-  BurgerIcon,
   EmailInput,
   PasswordInput,
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useState } from "react";
-import styles from "./login.module.css";
+import React, { useEffect } from "react";
+import styles from "../login/login.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { register } from "../services/actions/register";
-import { SET_REGISTER } from "../services/actions/register";
-import { Redirect } from 'react-router-dom';
-
-
-
+import { register } from "../../services/actions/register";
+import { SET_REGISTER } from "../../services/actions/register";
+import { Redirect } from "react-router-dom";
 
 export function RegisterPage() {
-
-
+  
   const form = useSelector((store) => store.register.form);
-  const login = sessionStorage.getItem('login')
+  const login = sessionStorage.getItem("login");
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-    form.name = '';
-   form.email = '';
-   form.password = '';
-  
-   }, []);
-
+    form.name = "";
+    form.email = "";
+    form.password = "";
+  }, []);
 
   const onChange = (e) => {
     dispatch({
@@ -44,17 +36,15 @@ export function RegisterPage() {
     dispatch(register(form));
   };
 
-
   if (login) {
     return (
       <Redirect
         to={{
-          pathname: '/'
+          pathname: "/",
         }}
       />
     );
   }
-
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>

@@ -1,5 +1,5 @@
 import styles from "./ingredient.module.css";
-import IngredientDetails from "../components/ingredient-details/ingredient-details";
+import IngredientDetails from "../../components/ingredient-details/ingredient-details";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 export function IngredientPage() {

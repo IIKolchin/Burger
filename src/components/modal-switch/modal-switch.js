@@ -9,10 +9,8 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { useSelector, useDispatch } from "react-redux";
 import { HIDE_MODAL } from "../../services/actions/modalIngredient";
-
 import AppHeader from "../app-header/app-header";
 import { ProtectedRoute } from "../protected-route/protected-route";
-
 import {
   HomePage,
   LoginPage,
@@ -78,10 +76,7 @@ export function ModalSwitch() {
 
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
-        </Route>
-
-        
-        
+        </Route>  
       </Switch>
       {background && (
         <Route

@@ -6,11 +6,9 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink} from "react-router-dom";
-
+import { NavLink } from "react-router-dom";
 
 function AppHeader() {
-
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>

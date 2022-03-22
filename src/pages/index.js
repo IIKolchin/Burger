@@ -1,12 +1,12 @@
-import { HomePage } from "./home";
-import { LoginPage } from "./login";
-import { RegisterPage } from "./register";
-import { ForgotPasswordPage } from "./forgot-password";
-import { ResetPasswordPage } from "./reset-password";
-import { Profile } from "./profile";
-import { NotFound404 } from "./not-found";
-import { IngredientPage } from "./ingredient";
-import { ProfileOrders } from "./profileOrders"
+import { HomePage } from "./home/home";
+import { LoginPage } from "./login/login";
+import { RegisterPage } from "./register/register";
+import { ForgotPasswordPage } from "./forgot-password/forgot-password";
+import { ResetPasswordPage } from "./reset-password/reset-password";
+import { Profile } from "./profile/profile";
+import { NotFound404 } from "./not-found/not-found";
+import { IngredientPage } from "./ingredient/ingredient";
+import { ProfileOrders } from "./profile/profileOrders"
 
 export {
   HomePage,

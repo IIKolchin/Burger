@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback } from "react";
 import update from "immutability-helper";
-import { URL, checkResponse } from "../../utils/data";
 import { v4 as uuidv4 } from "uuid";
 import OrderDetails from "../order-details/order-details";
 import styles from "./burger-constructor.module.css";
@@ -24,12 +23,12 @@ import {
   UPDATE_POSITION_ITEM,
   RESET_CONSTRUCTOR,
 } from "../../services/actions/constructor";
-import { useHistory } from 'react-router-dom';
-import { Redirect } from 'react-router-dom';
-import { getUserRequest } from "../../services/actions/getUser";
+import { useHistory } from "react-router-dom";
+
 
 function BurgerConstructor() {
-  
+
+
   const data = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
@@ -40,11 +39,8 @@ function BurgerConstructor() {
   const items = [bun, bun, ...constructor];
   const id = items.map((item) => item._id);
   const dispatch = useDispatch();
-  const isAuth = useSelector((store) => store.authorization.isAuth)
   const history = useHistory();
-
-const accessToken = useSelector((store) => store.authorization.accessToken);
-const user = useSelector((store) => store.user.isUser);
+  const user = useSelector((store) => store.user.isUser);
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
@@ -95,19 +91,13 @@ const user = useSelector((store) => store.user.isUser);
     [constructor, dispatch]
   );
 
-
-console.log(user)
-
-
-  function handleShow() { 
-   
-        if (user) {
-          dispatch(getOrder(id));
-          dispatch({ type: SHOW_ORDER }); 
-        } else {
-          history.replace({ pathname: "/login" });
-        }
-
+  function handleShow() {
+    if (user) {
+      dispatch(getOrder(id));
+      dispatch({ type: SHOW_ORDER });
+    } else {
+      history.replace({ pathname: "/login" });
+    }
   }
 
   function handleHide() {
@@ -116,10 +106,8 @@ console.log(user)
   }
 
   const totalPrice = useMemo(() => {
-
-   
     let total = 0;
- 
+
     items.map((item) => (total += item.price || 0));
 
     return total ? total : 0;

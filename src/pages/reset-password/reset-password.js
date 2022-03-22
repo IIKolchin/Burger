@@ -1,72 +1,67 @@
 import {
-  EmailInput,
-  PasswordInput,
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useState } from "react";
-import styles from "./login.module.css";
+import styles from "../login/login.module.css";
 import { Link } from "react-router-dom";
-import { URL } from '../utils/data';
 import { useSelector, useDispatch } from "react-redux";
-import { SET_NEW_PASSWORD, getNewPassword } from "../services/actions/newPassword";
-import { Redirect } from 'react-router-dom';
-
+import {
+  SET_NEW_PASSWORD,
+  getNewPassword,
+} from "../../services/actions/newPassword";
+import { Redirect } from "react-router-dom";
 
 export function ResetPasswordPage() {
-  
 
-const isNewPasswordSuccess = useSelector((store) => store.newPassword.isNewPasswordSuccess)
-const form = useSelector((store) => store.newPassword.form)
-const login = sessionStorage.getItem('login')
-const forgotPassword = localStorage.getItem('forgot-password')
+  const isNewPasswordSuccess = useSelector(
+    (store) => store.newPassword.isNewPasswordSuccess
+  );
+  const form = useSelector((store) => store.newPassword.form);
+  const login = sessionStorage.getItem("login");
+  const forgotPassword = localStorage.getItem("forgot-password");
+  const dispatch = useDispatch();
 
-
-console.log(form)
-
-    const dispatch = useDispatch();
-  
-    const onChange = (e) => {
-      dispatch({ 
-        type: SET_NEW_PASSWORD,
-        payload: {...form, [e.target.name]: e.target.value }
+  const onChange = (e) => {
+    dispatch({
+      type: SET_NEW_PASSWORD,
+      payload: { ...form, [e.target.name]: e.target.value },
     });
-  }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-dispatch(getNewPassword(form))
+    dispatch(getNewPassword(form));
   };
 
   if (isNewPasswordSuccess) {
     return (
       <Redirect
         to={{
-          pathname: '/login'
+          pathname: "/login",
         }}
       />
     );
   }
 
-if (!forgotPassword) {
-  return (
-    <Redirect
-      to={{
-        pathname: '/forgot-password'
-      }}
-    />
-  );
-}
+  if (!forgotPassword) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/forgot-password",
+        }}
+      />
+    );
+  }
 
-if (login) {
-  return (
-    <Redirect
-      to={{
-        pathname: '/'
-      }}
-    />
-  );
-}
+  if (login) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/",
+        }}
+      />
+    );
+  }
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>

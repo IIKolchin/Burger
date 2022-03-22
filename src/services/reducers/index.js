@@ -9,7 +9,8 @@ import { updateTokenReducer } from "./updateToken";
 import { logoutReducer} from "./logout";
 import { newPasswordReducer } from "./newPassword"
 import { userReducer } from "./getUser";
-import { patchUserReducer } from "./patchUser"
+import { patchUserReducer } from "./patchUser";
+import { forgotPasswordReducer } from "./forgotPassword"
 
 export const rootReducer = combineReducers({
   items: ingredientsReducer,
@@ -23,4 +24,5 @@ export const rootReducer = combineReducers({
   newPassword: newPasswordReducer,
   user: userReducer,
   patchUser: patchUserReducer,
+  forgotPassword: forgotPasswordReducer
 });
