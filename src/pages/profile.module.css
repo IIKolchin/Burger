@@ -18,8 +18,27 @@
   padding: 0;
   border: none;
   background-color: transparent;
+  text-decoration: none;
 
 }
+
+.activeLink {
+  color: #F2F2F3;
+}
+
+
+.exit {
+  color: #8585ad;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 30px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  
+
+}
+
 
 .a:first-of-type {
   color: #f2f2f3;

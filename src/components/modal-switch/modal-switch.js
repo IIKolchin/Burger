@@ -2,10 +2,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useHistory,
   useLocation,
-  useParams,
 } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -23,28 +21,23 @@ import {
   ResetPasswordPage,
   Profile,
   NotFound404,
-  IngredientPage
+  IngredientPage,
+  ProfileOrders
 } from "../../pages";
 
 export function ModalSwitch() {
 
-
-  const ingredientModal = useSelector((state) => state.modal.ingredient);
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const shortModal = useSelector((state) => state.modal.shortModal);
-
-  const location = useLocation();
+  const ingredientModal = useSelector((state) => state.modal.ingredient);
   const background = location.state && location.state.background;
   const history = useHistory();
-
-  console.log(ingredientModal);
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
-
 
   return (
     <>
@@ -71,17 +64,24 @@ export function ModalSwitch() {
           <Profile />
         </ProtectedRoute>
 
+        <ProtectedRoute path="/profile/orders" exact>
+          <ProfileOrders />
+        </ProtectedRoute>
+
         <Route path="/" exact>
           <HomePage />
         </Route>
 
-        {/* <Route>
+        <Route>
           <NotFound404 />
-        </Route> */}
+        </Route>
 
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
         </Route>
+
+        
+        
       </Switch>
       {background && (
         <Route

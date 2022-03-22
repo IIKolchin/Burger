@@ -3,14 +3,12 @@ import styles from "./ingredient-details.module.css";
 import { dataPropTypes } from "../../utils/data";
 
 function IngredientDetails({ data }) {
-  
+
   return (
     <>
-    
       <div className={styles.container + " pb-15"}>
         <img src={data.image_large} alt={data.name} />
         <p className={styles.name + " mt-4 mb-8"}>{data.name}</p>
-
         <ul className={styles.energy}>
           <li className={styles.li + " mr-5"}>
             <p className={styles.p}>Калории,ккал</p>

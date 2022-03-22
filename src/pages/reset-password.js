@@ -19,6 +19,7 @@ export function ResetPasswordPage() {
 const isNewPasswordSuccess = useSelector((store) => store.newPassword.isNewPasswordSuccess)
 const form = useSelector((store) => store.newPassword.form)
 const login = sessionStorage.getItem('login')
+const forgotPassword = localStorage.getItem('forgot-password')
 
 
 console.log(form)
@@ -47,7 +48,7 @@ dispatch(getNewPassword(form))
     );
   }
 
-if (!login) {
+if (!forgotPassword) {
   return (
     <Redirect
       to={{

@@ -56,6 +56,7 @@ console.log(form)
       .then((res) => {
         if (res && res.success) {
             console.log(res)
+            localStorage.setItem('forgot-password', res.success)
             history.replace({ pathname: '/reset-password' });
         
       

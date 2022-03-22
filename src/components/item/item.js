@@ -7,7 +7,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./item.module.css";
 import { useDrag, useDrop } from "react-dnd";
-import { DELETE_ITEM } from "../../services/actions/ingredients";
+import { DELETE_ITEM } from "../../services/actions/constructor";
 import { useDispatch } from "react-redux";
 
 function Item({ data, index, updateItem }) {

@@ -20,17 +20,14 @@ export function loginRequest(form) {
     })
       .then(checkResponse)
       .then((res) => {
-        console.log(res.accessToken)
-        console.log(res.refreshToken)
         if (res && res.success) {
           console.log(res.user)
           dispatch({
             type: GET_AUTHORIZATION_SUCCESS,
-            // accessToken: res.accessToken
           });
           setCookie('token', res.accessToken);
           localStorage.setItem('token', res.refreshToken);
-          sessionStorage.setItem('login', res.user.name);
+          sessionStorage.setItem('login', (res.user));
         } else {
           dispatch({
             type: GET_AUTHORIZATION_FAILED,

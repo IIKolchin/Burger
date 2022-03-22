@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 const modalRoot = document.getElementById("modals");
 
 function Modal(props) {
-
+  
   React.useEffect(() => {
     function handleKeyDown(e) {
       if (e.keyCode === 27) {
@@ -25,7 +25,7 @@ function Modal(props) {
 
   return ReactDOM.createPortal(
     <>
-      <div className={styles.modal} >
+      <div className={styles.modal}>
         <h3 className={styles.heading + " ml-10"}>{props.header}</h3>
         <button onClick={props.handleHide} className={styles.close}>
           <CloseIcon />

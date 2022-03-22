@@ -1,35 +1,18 @@
 import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
-import { useSelector, useDispatch } from "react-redux";
-import { HIDE_MODAL } from "../../services/actions/modalIngredient";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useHistory,
-  useLocation,
-  useParams,
-} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 
 function BurgerIngredients() {
 
-
-  
   const data = useSelector((store) => store.items.data);
-
-
   const buns = data.filter((item) => item.type === "bun");
   const sauces = data.filter((item) => item.type === "sauce");
   const mains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
-
   const location = useLocation();
-
 
   const set1 = () => {
     setCurrent("one");

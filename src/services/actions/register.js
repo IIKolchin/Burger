@@ -1,4 +1,3 @@
-
 import { URL, checkResponse } from "../../utils/data";
 
 export const GET_REGISTER_REQUEST = "GET_REGISTER_REQUEST";
@@ -21,7 +20,6 @@ export function register(form) {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
-            console.log(res.user)
           dispatch({
             type: GET_REGISTER_SUCCESS,
             form: res.user,
