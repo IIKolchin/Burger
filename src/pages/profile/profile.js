@@ -2,11 +2,7 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,11 +13,10 @@ import {
 } from "../../services/actions/patchUser";
 
 export function Profile() {
-
+  
   const dispatch = useDispatch();
   const form = useSelector((store) => store.patchUser.form);
   const userForm = useSelector((store) => store.user.form);
-  const user = useSelector((store) => store.user.isUser);
   const login = sessionStorage.getItem("login");
   const [, forceUpdate] = useState(0);
   const inputRefName = React.useRef(null);
@@ -50,11 +45,11 @@ export function Profile() {
     setTimeout(() => inputRefPassword.current.focus(), 0);
   };
 
-  const viewButton = useCallback(() => {
-    return form.name !== userForm.name || form.email !== userForm.email
+  const viewButton = () => {
+    return userForm.name !== form.name || userForm.email !== form.email
       ? true
       : false;
-  }, [form]);
+  };
 
   const cancel = () => {
     form.name = userForm.name;
@@ -82,7 +77,6 @@ export function Profile() {
 
   const formSubmit = (e) => {
     e.preventDefault();
-
     dispatch(patchUserRequest(form));
   };
 

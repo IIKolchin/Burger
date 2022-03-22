@@ -70,13 +70,14 @@ export function ModalSwitch() {
           <HomePage />
         </Route>
 
-        <Route>
-          <NotFound404 />
-        </Route>
-
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
         </Route>  
+
+        <Route>
+          <NotFound404 />
+        </Route>
+        
       </Switch>
       {background && (
         <Route

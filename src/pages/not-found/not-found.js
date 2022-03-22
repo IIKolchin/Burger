@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
-import { useHistory, Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./not-found.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export function NotFound404() {
-
-
+  
   return (
     <div className={styles.content}>
       <div className={styles.container}>

@@ -12,7 +12,7 @@ import {
 import { Redirect } from "react-router-dom";
 
 export function ResetPasswordPage() {
-
+  
   const isNewPasswordSuccess = useSelector(
     (store) => store.newPassword.isNewPasswordSuccess
   );

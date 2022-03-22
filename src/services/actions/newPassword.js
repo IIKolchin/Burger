@@ -6,6 +6,7 @@ export const GET_NEW_PASSWORD_FAILED = "GET_NEW_PASSWORD_FAILED";
 export const SET_NEW_PASSWORD = "SET_NEW_PASSWORD";
 
 export function getNewPassword(form) {
+
   return function (dispatch) {
     dispatch({
       type: GET_NEW_PASSWORD_REQUEST,
@@ -25,10 +26,6 @@ export function getNewPassword(form) {
             form: res.user,
           });
           localStorage.removeItem("forgot-password");
-        } else {
-          dispatch({
-            type: GET_NEW_PASSWORD_FAILED,
-          });
         }
       })
       .catch((err) => {

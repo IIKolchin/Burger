@@ -11,7 +11,8 @@ import { DELETE_ITEM } from "../../services/actions/constructor";
 import { useDispatch } from "react-redux";
 
 function Item({ data, index, updateItem }) {
-  
+
+  const dispatch = useDispatch();
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
     item: { index },
@@ -19,8 +20,6 @@ function Item({ data, index, updateItem }) {
       isDragging: monitor.isDragging(),
     }),
   });
-
-  const dispatch = useDispatch();
 
   const [, dropRef] = useDrop({
     accept: "item",

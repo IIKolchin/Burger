@@ -8,7 +8,6 @@
   gap: 16px;
   margin-left: 16px;
   border: 1px solid black;
-  
 }
 
 .group {
@@ -16,7 +15,6 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 16px;
-  
 }
 
 .group:last-of-type {
@@ -26,7 +24,6 @@
 .constructor {
   height: 464px;
   overflow-y: scroll;
-  
 }
 
 .order {
@@ -42,4 +39,3 @@
   background-position: center;
   margin-right: 40px;
 }
-

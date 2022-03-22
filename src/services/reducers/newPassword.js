@@ -28,7 +28,6 @@ export const newPasswordReducer = (state = newPasswordInitialState, action) => {
       return {
         ...state,
         newPasswordFailed: false,
-        form: action.payload,
         newPasswordRequest: false,
         isNewPasswordSuccess: true,
       };

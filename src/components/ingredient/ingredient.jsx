@@ -16,7 +16,6 @@ function Ingredient({ children, data }) {
   const bun = useSelector((store) => store.element.bun);
   const burgerItems = [bun, bun, ...constructor];
   const count = burgerItems.filter((item) => item._id === data._id).length;
-
   const dispatch = useDispatch();
   const id = data._id;
 

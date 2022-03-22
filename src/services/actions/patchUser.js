@@ -1,5 +1,6 @@
 import { URL } from "../../utils/data";
 import { getCookie } from "../../utils/cookie";
+import { getUserRequest } from "./getUser"
 
 export const PATCH_USER_REQUEST = "PATCH_USER_REQUEST";
 export const PATCH_USER_SUCCESS = "PATCH_USER_SUCCESS";
@@ -26,6 +27,7 @@ export function patchUserRequest(form) {
             type: PATCH_USER_SUCCESS,
             form: res.user,
           });
+          dispatch(getUserRequest(getCookie("token")))
         }
       })
       .catch((err) => {

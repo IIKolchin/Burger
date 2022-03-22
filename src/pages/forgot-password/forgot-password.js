@@ -3,7 +3,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../login/login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -11,13 +11,12 @@ import {
   SET_FORGOT_PASSWORD,
 } from "../../services/actions/forgotPassword";
 
+
 export function ForgotPasswordPage() {
   
   const login = sessionStorage.getItem("login");
+  const history = useHistory();
   const form = useSelector((store) => store.forgotPassword.form);
-  const forgotPasswordSuccess = useSelector(
-    (store) => store.forgotPassword.forgotPasswordSuccess
-  );
   const dispatch = useDispatch();
 
   const onChange = (e) => {
@@ -27,26 +26,18 @@ export function ForgotPasswordPage() {
     });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(forgotPassword(form.email)).then(() => {
+        history.replace({ pathname: "/reset-password" });
+      });
+  };
+
   if (login) {
     return (
       <Redirect
         to={{
           pathname: "/",
-        }}
-      />
-    );
-  }
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    dispatch(forgotPassword(form.email));
-  };
-
-  if (forgotPasswordSuccess) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/reset-password",
         }}
       />
     );
