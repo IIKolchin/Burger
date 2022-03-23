@@ -11,17 +11,17 @@ import { getCookie } from "../../utils/cookie";
 
 export function HomePage() {
   
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
 
-  const getUser = () => {
-    dispatch(getUserRequest(getCookie("token")))
-  };
+  // const getUser = () => {
+  //   dispatch(getUserRequest(getCookie("token")))
+  // };
 
-  useEffect(() => {
-    dispatch(getIngredients());
-    getUser();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getIngredients());
+  //   getUser();
+  // }, [dispatch]);
 
   return (
     <main className={styles.main}>
