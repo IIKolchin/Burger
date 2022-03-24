@@ -11,6 +11,14 @@ function App() {
   const dispatch = useDispatch();
 
 
+  const items = useSelector((store) => store.items.data)
+  const isItems = useSelector((store) => store.items.dataRequest)
+  const isError = useSelector((store) => store.items.dataFailed)
+
+
+  // console.log(!isItems)
+  // console.log(isError)
+
   const getUser = () => {
     dispatch(getUserRequest(getCookie("token")))
   };
@@ -22,10 +30,15 @@ function App() {
 
 
   return (
-    <Router>
+
+ 
+   <Router>
+   {/* { items.length !== 0 && !isItems && !isError && */}
       <ModalSwitch />
-    </Router>
-  );
+    {/* } */}
+    </Router>)
+  
+
 }
 
 export default App;

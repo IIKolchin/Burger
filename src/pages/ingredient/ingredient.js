@@ -1,17 +1,24 @@
 import styles from "./ingredient.module.css";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
-import { BrowserRouter as Router, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function IngredientPage() {
-    
-  const data = JSON.parse(localStorage.getItem("data"));
-  const { id } = useParams();
-  const ingredient = data.find((el) => el._id === id);
+
+
+  const data = useSelector((store) => store.items.data);
+  const isItems = useSelector((store) => store.items.dataRequest);
+  const isError = useSelector((store) => store.items.dataFailed);
+
+  
 
   return (
     <>
-      <h3 className={styles.heading}>Детали ингредиента</h3>
-      <IngredientDetails data={ingredient} />
+      {data.length !== 0 && !isItems && !isError ? (
+        <>
+          <h3 className={styles.heading}>Детали ингредиента</h3>
+          <IngredientDetails />
+        </>
+      ) : null}
     </>
   );
 }

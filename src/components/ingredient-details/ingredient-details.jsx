@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import { dataPropTypes } from "../../utils/data";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 
-function IngredientDetails({ data }) {
+function IngredientDetails() {
+
+  const { id } = useParams();
+  const items = useSelector((store) => store.items.data);
+  const data = items.find((el) => el._id === id);
 
   return (
     <>
@@ -33,9 +38,5 @@ function IngredientDetails({ data }) {
     </>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: dataPropTypes.isRequired,
-};
 
 export default IngredientDetails;

@@ -4,6 +4,7 @@ import {
   Route,
   useHistory,
   useLocation,
+  useParams,
 } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -20,16 +21,19 @@ import {
   Profile,
   NotFound404,
   IngredientPage,
-  ProfileOrders
+  ProfileOrders,
 } from "../../pages";
 
 export function ModalSwitch() {
 
+  
   const location = useLocation();
   const dispatch = useDispatch();
   const shortModal = useSelector((state) => state.modal.shortModal);
-  const ingredientModal = useSelector((state) => state.modal.ingredient);
   const background = location.state && location.state.background;
+  const data = useSelector((store) => store.items.data);
+  const isItems = useSelector((store) => store.items.dataRequest);
+  const isError = useSelector((store) => store.items.dataFailed);
   const history = useHistory();
 
   const handleHide = () => {
@@ -72,14 +76,13 @@ export function ModalSwitch() {
 
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
-        </Route>  
+        </Route>
 
         <Route>
           <NotFound404 />
         </Route>
-        
       </Switch>
-      {background && (
+      {background && data.length !== 0 && !isItems && !isError && (
         <Route
           path="/ingredients/:id"
           children={
@@ -88,7 +91,7 @@ export function ModalSwitch() {
               shortModal={shortModal}
               handleHide={handleHide}
             >
-              <IngredientDetails data={ingredientModal} />
+              <IngredientDetails />
             </Modal>
           }
         />
