@@ -4,7 +4,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { SET_AUTHORIZATION } from "../../services/actions/authorization";
 import { loginRequest } from "../../services/actions/authorization";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ export function LoginPage() {
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const login = sessionStorage.getItem("login");
   const dispatch = useDispatch();
+  let location = useLocation();
 
   const onChange = (e) => {
     dispatch({
@@ -32,12 +33,11 @@ export function LoginPage() {
   if (isAuth || login) {
     return (
       <Redirect
-        to={{
-          pathname: "/",
-        }}
+      to={ location.state?.from || '/' }
       />
     );
   }
+
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>
