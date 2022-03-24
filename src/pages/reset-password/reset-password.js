@@ -18,8 +18,10 @@ export function ResetPasswordPage() {
   );
   const form = useSelector((store) => store.newPassword.form);
   const login = sessionStorage.getItem("login");
-  const forgotPassword = localStorage.getItem("forgot-password");
   const dispatch = useDispatch();
+  const forgotPasswordSuccess = useSelector(
+    (store) => store.forgotPassword.forgotPasswordSuccess
+  );
 
   const onChange = (e) => {
     dispatch({
@@ -43,7 +45,7 @@ export function ResetPasswordPage() {
     );
   }
 
-  if (!forgotPassword) {
+  if (!forgotPasswordSuccess) {
     return (
       <Redirect
         to={{
@@ -82,7 +84,7 @@ export function ResetPasswordPage() {
           placeholder={"Введите код из письма"}
           onChange={onChange}
           value={form.token}
-            name={"token"}
+          name={"token"}
           error={false}
           errorText={"Ошибка"}
           size={"default"}

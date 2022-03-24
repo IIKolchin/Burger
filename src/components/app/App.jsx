@@ -7,38 +7,19 @@ import { getUserRequest } from "../../services/actions/getUser";
 import { getCookie } from "../../utils/cookie";
 
 function App() {
-
+  
   const dispatch = useDispatch();
-
-
-  const items = useSelector((store) => store.items.data)
-  const isItems = useSelector((store) => store.items.dataRequest)
-  const isError = useSelector((store) => store.items.dataFailed)
-
-
-  // console.log(!isItems)
-  // console.log(isError)
-
-  const getUser = () => {
-    dispatch(getUserRequest(getCookie("token")))
-  };
 
   useEffect(() => {
     dispatch(getIngredients());
-    getUser();
+    dispatch(getUserRequest(getCookie("token")));
   }, [dispatch]);
 
-
   return (
-
- 
-   <Router>
-   {/* { items.length !== 0 && !isItems && !isError && */}
+    <Router>
       <ModalSwitch />
-    {/* } */}
-    </Router>)
-  
-
+    </Router>
+  );
 }
 
 export default App;

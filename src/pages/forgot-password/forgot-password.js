@@ -12,10 +12,13 @@ import {
 } from "../../services/actions/forgotPassword";
 
 export function ForgotPasswordPage() {
-
+  
   const login = sessionStorage.getItem("login");
   const form = useSelector((store) => store.forgotPassword.form);
   const dispatch = useDispatch();
+  const forgotPasswordSuccess = useSelector(
+    (store) => store.forgotPassword.forgotPasswordSuccess
+  );
 
   const change = (e) => {
     dispatch({
@@ -34,6 +37,16 @@ export function ForgotPasswordPage() {
       <Redirect
         to={{
           pathname: "/",
+        }}
+      />
+    );
+  }
+
+  if (forgotPasswordSuccess) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/reset-password",
         }}
       />
     );

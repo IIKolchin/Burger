@@ -3,7 +3,6 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 import styles from "./home.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { getIngredients } from "../../services/actions/ingredients";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserRequest } from "../../services/actions/getUser";
 import React, { useEffect } from "react";
@@ -11,17 +10,16 @@ import { getCookie } from "../../utils/cookie";
 
 export function HomePage() {
   
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
-  // const getUser = () => {
-  //   dispatch(getUserRequest(getCookie("token")))
-  // };
+  const getUser = () => {
+    dispatch(getUserRequest(getCookie("token")))
+  };
 
-  // useEffect(() => {
-  //   dispatch(getIngredients());
-  //   getUser();
-  // }, [dispatch]);
+  useEffect(() => {
+    getUser();
+  }, [dispatch]);
 
   return (
     <main className={styles.main}>

@@ -1,5 +1,4 @@
 import { URL, checkResponse } from "../../utils/data";
-import { push } from "connected-react-router";
 
 export const FORGOT_PASSWORD_REQUEST = "FORGOT_PASSWORD_REQUEST";
 export const FORGOT_PASSWORD_SUCCESS = "FORGOT_PASSWORD_SUCCESS";
@@ -7,6 +6,7 @@ export const FORGOT_PASSWORD_FAILED = "FORGOT_PASSWORD_FAILED";
 export const SET_FORGOT_PASSWORD = "SET_FORGOT_PASSWORD";
 
 export function forgotPassword(form) {
+  
   return async function (dispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
@@ -27,8 +27,6 @@ export function forgotPassword(form) {
             type: FORGOT_PASSWORD_SUCCESS,
             form: res.user,
           });
-          dispatch(push('/reset-password'));
-          window.location.reload();
         }
       })
       .catch((err) => {
