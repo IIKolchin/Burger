@@ -28,7 +28,7 @@ export function updateTokenRequest() {
           });
           setCookie("token", res.accessToken);
           localStorage.setItem("token", res.refreshToken);
-          dispatch(getUserRequest());
+          // dispatch(getUserRequest());
         } else {
           dispatch({
             type: UPDATE_TOKEN_FAILED,

@@ -9,14 +9,18 @@ import { SET_AUTHORIZATION } from "../../services/actions/authorization";
 import { loginRequest } from "../../services/actions/authorization";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { useCallback } from "react";
 
 export function LoginPage() {
   
   const form = useSelector((store) => store.authorization.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
-  const login = sessionStorage.getItem("login");
+  const login = sessionStorage.getItem("login")
   const dispatch = useDispatch();
-  let location = useLocation();
+  const location = useLocation();
+
+
+  console.log(login)
 
   const onChange = (e) => {
     dispatch({
@@ -25,15 +29,29 @@ export function LoginPage() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = useCallback((e) => {
     e.preventDefault();
     dispatch(loginRequest(form));
-  };
+  },[form, dispatch])
 
-  if (isAuth || login) {
+
+  console.log(location.state)
+  console.log(login)
+  console.log(isAuth)
+
+  if (isAuth) {
     return (
       <Redirect
-      to={ location.state?.from || '/' }
+      // to={ location.state?.from || '/' }
+      to={{ pathname: '/' }}
+      />
+    );
+  }
+
+  if (login) {
+    return (
+      <Redirect
+      to={{ pathname: '/' }}
       />
     );
   }

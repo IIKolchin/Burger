@@ -26,7 +26,7 @@ export function loginRequest(form) {
           });
           setCookie('token', res.accessToken);
           localStorage.setItem('token', res.refreshToken);
-          sessionStorage.setItem('login', (res.user));
+          sessionStorage.setItem('login', JSON.stringify(res.user));
         } else {
           dispatch({
             type: GET_AUTHORIZATION_FAILED,

@@ -7,6 +7,7 @@ import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/logout";
+import { getUserRequest } from "../../services/actions/getUser";
 import {
   patchUserRequest,
   SET_PATCH_USER,
@@ -15,7 +16,9 @@ import {
 export function Profile() {
 
   const dispatch = useDispatch();
+  const [showButton, setShowButton] = useState(false)
   const form = useSelector((store) => store.patchUser.form);
+  const regForm = useSelector((store) => store.register.form);
   const userForm = useSelector((store) => store.user.form);
   const login = sessionStorage.getItem("login");
   const [, forceUpdate] = useState(0);
@@ -23,17 +26,28 @@ export function Profile() {
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
 
-  useEffect(() => {
+
+  console.log(regForm)
+  console.log(form)
+  console.log(login)
+  console.log(showButton)
+
+
+  useEffect(() => { 
+
     form.name = userForm.name;
     form.email = userForm.email;
-  }, []);
+    
+   
+  }, [form]);
 
   const onChange = (e) => {
     dispatch({
       type: SET_PATCH_USER,
       payload: { ...form, [e.target.name]: e.target.value },
     });
-  };
+    setShowButton(true)
+  }
 
   const onIconClickName = () => {
     setTimeout(() => inputRefName.current.focus(), 0);
@@ -45,17 +59,15 @@ export function Profile() {
     setTimeout(() => inputRefPassword.current.focus(), 0);
   };
 
-  const viewButton = () => {
-    return userForm.name !== form.name || userForm.email !== form.email
-      ? true
-      : false;
-  };
-
-  const cancel = () => {
+  const cancel = useCallback(() => {
     form.name = userForm.name;
     form.email = userForm.email;
+    setShowButton(false)
     forceUpdate((n) => !n);
-  };
+
+  },[form]);
+
+
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -78,7 +90,8 @@ export function Profile() {
   const formSubmit = (e) => {
     e.preventDefault();
     dispatch(patchUserRequest(form));
-  };
+    setShowButton(false)
+  }
 
   return (
     <div className={styles.container}>
@@ -154,7 +167,7 @@ export function Profile() {
             errorText={"Ошибка"}
           />
         </div>
-        {viewButton() && (
+        {showButton && (
           <div className=" mt-6 mr-2">
             <Button type="primary" size="medium">
               Сохранить
@@ -162,7 +175,7 @@ export function Profile() {
           </div>
         )}
       </form>
-      {viewButton() && (
+      { showButton && (
         <div className={styles.button}>
           <Button onClick={cancel} type="primary" size="medium">
             Отмена

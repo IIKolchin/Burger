@@ -1,7 +1,7 @@
-import { URL } from "../../utils/data";
+import { URL, checkResponse } from "../../utils/data";
 import { getCookie } from "../../utils/cookie";
 import { getUserRequest } from "./getUser"
-
+import { updateTokenRequest } from "../../services/actions/updateToken";
 export const PATCH_USER_REQUEST = "PATCH_USER_REQUEST";
 export const PATCH_USER_SUCCESS = "PATCH_USER_SUCCESS";
 export const PATCH_USER_FAILED = "PATCH_USER_FAILED";
@@ -20,21 +20,23 @@ export function patchUserRequest(form) {
       },
       body: JSON.stringify(form),
     })
-      .then((res) => res.json())
+      .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
           dispatch({
             type: PATCH_USER_SUCCESS,
             form: res.user,
           });
-          dispatch(getUserRequest(getCookie("token")))
         }
       })
       .catch((err) => {
         console.log(err);
-        dispatch({
-          type: PATCH_USER_FAILED,
-        });
+        if (err === "Ошибка: 403") {
+          dispatch({ type: PATCH_USER_FAILED });
+          dispatch(updateTokenRequest());
+          dispatch(patchUserRequest(form))
+        }
+
       });
   };
 }
