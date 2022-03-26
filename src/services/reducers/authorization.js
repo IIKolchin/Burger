@@ -26,6 +26,7 @@ export const authorizationReducer = (
         ...state,
         authorizationRequest: true,
         authorizationFailed: false,
+        isAuth: true,
       };
     }
     case GET_AUTHORIZATION_SUCCESS: {
@@ -39,7 +40,6 @@ export const authorizationReducer = (
     case GET_AUTHORIZATION_FAILED: {
       return {
         ...state,
-
         authorizationFailed: true,
         authorizationRequest: false,
         isAuth: false,

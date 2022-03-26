@@ -6,7 +6,6 @@ import {
   } from "../actions/logout";
   
   const logoutInitialState = {
-
     logoutRequest: false,
     logoutFailed: false,
   };
@@ -24,7 +23,6 @@ import {
         return {
           ...state,
           logoutFailed: false,
-  
           logoutRequest: false,
         };
       }

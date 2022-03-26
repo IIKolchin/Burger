@@ -7,39 +7,25 @@ import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/logout";
-import { getUserRequest } from "../../services/actions/getUser";
 import {
   patchUserRequest,
   SET_PATCH_USER,
 } from "../../services/actions/patchUser";
+
 
 export function Profile() {
 
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false)
   const form = useSelector((store) => store.patchUser.form);
-  const regForm = useSelector((store) => store.register.form);
   const userForm = useSelector((store) => store.user.form);
+  const isAuth = useSelector((store) => store.authorization.isAuth);
   const login = sessionStorage.getItem("login");
   const [, forceUpdate] = useState(0);
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
 
-
-  console.log(regForm)
-  console.log(form)
-  console.log(login)
-  console.log(showButton)
-
-
-  useEffect(() => { 
-
-    form.name = userForm.name;
-    form.email = userForm.email;
-    
-   
-  }, [form]);
 
   const onChange = (e) => {
     dispatch({
@@ -64,18 +50,26 @@ export function Profile() {
     form.email = userForm.email;
     setShowButton(false)
     forceUpdate((n) => !n);
-
   },[form]);
 
-
-
   const signOut = async () => {
-    dispatch(logoutRequest());
+   dispatch(logoutRequest());
   };
 
   const logout = useCallback(() => {
-    signOut()
-  }, []);
+   signOut()
+   
+  }, [signOut]);
+
+  if (!isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+        }}
+      />
+    );
+  }
 
   if (!login) {
     return (

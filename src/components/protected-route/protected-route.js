@@ -1,21 +1,22 @@
 import { Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { getUserRequest } from "../../services/actions/getUser";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 
 export function ProtectedRoute({ children, ...rest }) {
 
-  const user = useSelector((store) => store.user.isUser);
-  const dispatch = useDispatch();
+  const user = localStorage.getItem("user");
 
+  const [isUserLoaded, setUserLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(getUserRequest())
+    setUserLoaded(true);
   }, []);
 
+  if (!isUserLoaded) {
+    return null;
+  }
 
   return (
     <Route
@@ -24,7 +25,12 @@ export function ProtectedRoute({ children, ...rest }) {
         user ? (
           children
         ) : (
-          <Redirect to={{ pathname: "/login", state: { from: location } }} />
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
         )
       }
     />

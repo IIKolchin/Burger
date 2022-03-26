@@ -22,21 +22,22 @@ export function getUserRequest() {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
-          console.log(res)
+          console.log(res);
           dispatch({
             type: GET_USER_SUCCESS,
             form: res.user,
           });
           dispatch({ type: GET_AUTHORIZATION_SUCCESS });
-        } 
+          localStorage.setItem("user", JSON.stringify(res.user));
+        }
       })
       .catch((err) => {
-        console.log(err === "Ошибка: 403");
-    
-        if(err === "Ошибка: 403") {
+        console.log(err);
+        if (err === "Ошибка: 403") {
           dispatch({ type: GET_USER_FAILED });
+          localStorage.removeItem("user");
           dispatch(updateTokenRequest());
-          dispatch(getUserRequest())
+          dispatch(getUserRequest());
         }
       });
   };

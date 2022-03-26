@@ -5,8 +5,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
 import { Link, useLocation } from "react-router-dom";
-import { SET_AUTHORIZATION } from "../../services/actions/authorization";
-import { loginRequest } from "../../services/actions/authorization";
+import {
+  loginRequest,
+  SET_AUTHORIZATION,
+} from "../../services/actions/authorization";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useCallback } from "react";
@@ -15,12 +17,9 @@ export function LoginPage() {
   
   const form = useSelector((store) => store.authorization.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
-  const login = sessionStorage.getItem("login")
+  const login = sessionStorage.getItem("login");
   const dispatch = useDispatch();
   const location = useLocation();
-
-
-  console.log(login)
 
   const onChange = (e) => {
     dispatch({
@@ -29,33 +28,21 @@ export function LoginPage() {
     });
   };
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    dispatch(loginRequest(form));
-  },[form, dispatch])
-
-
-  console.log(location.state)
-  console.log(login)
-  console.log(isAuth)
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      dispatch(loginRequest(form));
+    },
+    [form, dispatch]
+  );
 
   if (isAuth) {
-    return (
-      <Redirect
-      // to={ location.state?.from || '/' }
-      to={{ pathname: '/' }}
-      />
-    );
+    return <Redirect to={{ pathname: location.state?.from.pathname || "/" }} />;
   }
 
   if (login) {
-    return (
-      <Redirect
-      to={{ pathname: '/' }}
-      />
-    );
+    return <Redirect to={{ pathname: "/" }} />;
   }
-
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>

@@ -1,5 +1,6 @@
 import { setCookie } from "../../utils/cookie"
 import { URL, checkResponse } from "../../utils/data";
+import { getUserRequest } from "../actions/getUser"
 
 export const GET_AUTHORIZATION_REQUEST = "GET_AUTHORIZATION_REQUEST";
 export const GET_AUTHORIZATION_SUCCESS = "GET_AUTHORIZATION_SUCCESS";
@@ -7,7 +8,7 @@ export const GET_AUTHORIZATION_FAILED = "GET_AUTHORIZATION_FAILED";
 export const SET_AUTHORIZATION = "SET_AUTHORIZATION";
 
 export function loginRequest(form) {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch({
       type: GET_AUTHORIZATION_REQUEST,
     });
@@ -27,7 +28,9 @@ export function loginRequest(form) {
           setCookie('token', res.accessToken);
           localStorage.setItem('token', res.refreshToken);
           sessionStorage.setItem('login', JSON.stringify(res.user));
-        } else {
+          dispatch(getUserRequest());
+        } 
+        else {
           dispatch({
             type: GET_AUTHORIZATION_FAILED,
           });
