@@ -1,27 +1,18 @@
 import React from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import Modal from "../modal/modal";
 import Ingredient from "../ingredient/ingredient";
-import { useSelector, useDispatch } from "react-redux";
-import { HIDE_MODAL } from "../../services/actions/modalIngredient";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 
 function BurgerIngredients() {
-  
+
   const data = useSelector((store) => store.items.data);
-  const dispatch = useDispatch();
-  const showModal = useSelector((state) => state.modal.showModal);
-  const shortModal = useSelector((state) => state.modal.shortModal);
-  const ingedientModal = useSelector((state) => state.modal.ingredient);
   const buns = data.filter((item) => item.type === "bun");
   const sauces = data.filter((item) => item.type === "sauce");
   const mains = data.filter((item) => item.type === "main");
   const [current, setCurrent] = React.useState("one");
-
-  const handleHide = () => {
-    dispatch({ type: HIDE_MODAL });
-  };
+  const location = useLocation();
 
   const set1 = () => {
     setCurrent("one");
@@ -73,7 +64,18 @@ function BurgerIngredients() {
         </h2>
         <ul className={styles.ul + " ml-4"}>
           {buns.map((data) => {
-            return <Ingredient key={data._id} data={data} />;
+            return (
+              <Link
+                key={data._id}
+                className={styles.link}
+                to={{
+                  pathname: `/ingredients/${data._id}`,
+                  state: { background: location },
+                }}
+              >
+                <Ingredient data={data} />
+              </Link>
+            );
           })}
         </ul>
 
@@ -82,7 +84,18 @@ function BurgerIngredients() {
         </h2>
         <ul className={styles.ul + " ml-4"}>
           {sauces.map((data) => {
-            return <Ingredient key={data._id} data={data} />;
+            return (
+              <Link
+                key={data._id}
+                className={styles.link}
+                to={{
+                  pathname: `/ingredients/${data._id}`,
+                  state: { background: location },
+                }}
+              >
+                <Ingredient data={data} />
+              </Link>
+            );
           })}
         </ul>
 
@@ -91,20 +104,21 @@ function BurgerIngredients() {
         </h2>
         <ul className={styles.ul + " ml-4"}>
           {mains.map((data) => {
-            return <Ingredient key={data._id} data={data} />;
+            return (
+              <Link
+                key={data._id}
+                className={styles.link}
+                to={{
+                  pathname: `/ingredients/${data._id}`,
+                  state: { background: location },
+                }}
+              >
+                <Ingredient data={data} />
+              </Link>
+            );
           })}
         </ul>
       </div>
-
-      {showModal && (
-        <Modal
-          header="Детали ингредиента"
-          shortModal={shortModal}
-          handleHide={handleHide}
-        >
-          <IngredientDetails data={ingedientModal} />
-        </Modal>
-      )}
     </section>
   );
 }

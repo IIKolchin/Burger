@@ -1,15 +1,19 @@
 import React from "react";
 import styles from "./ingredient-details.module.css";
-import { dataPropTypes } from "../../utils/data";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, useParams } from "react-router-dom";
 
-function IngredientDetails({ data }) {
-  
+function IngredientDetails() {
+
+  const { id } = useParams();
+  const items = useSelector((store) => store.items.data);
+  const data = items.find((el) => el._id === id);
+
   return (
     <>
-      <div className={styles.container}>
+      <div className={styles.container + " pb-15"}>
         <img src={data.image_large} alt={data.name} />
         <p className={styles.name + " mt-4 mb-8"}>{data.name}</p>
-
         <ul className={styles.energy}>
           <li className={styles.li + " mr-5"}>
             <p className={styles.p}>Калории,ккал</p>
@@ -34,9 +38,5 @@ function IngredientDetails({ data }) {
     </>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: dataPropTypes.isRequired,
-};
 
 export default IngredientDetails;

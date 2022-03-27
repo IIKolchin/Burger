@@ -23,9 +23,12 @@ import {
   UPDATE_POSITION_ITEM,
   RESET_CONSTRUCTOR,
 } from "../../services/actions/constructor";
+import { useHistory } from "react-router-dom";
+
 
 function BurgerConstructor() {
-  
+
+
   const data = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
@@ -36,6 +39,8 @@ function BurgerConstructor() {
   const items = [bun, bun, ...constructor];
   const id = items.map((item) => item._id);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const user = useSelector((store) => store.user.isUser);
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
@@ -87,8 +92,12 @@ function BurgerConstructor() {
   );
 
   function handleShow() {
-    dispatch(getOrder(id));
-    dispatch({ type: SHOW_ORDER });
+    if (user) {
+      dispatch(getOrder(id));
+      dispatch({ type: SHOW_ORDER });
+    } else {
+      history.replace({ pathname: "/login" });
+    }
   }
 
   function handleHide() {
@@ -98,10 +107,10 @@ function BurgerConstructor() {
 
   const totalPrice = useMemo(() => {
     let total = 0;
-    let main = 0;
-    items.map((item) => (total += item.price));
-    constructor.map((item) => (main += item.price));
-    return total ? total : main ? main : 0;
+
+    items.map((item) => (total += item.price || 0));
+
+    return total ? total : 0;
   }, [items]);
 
   return (
@@ -153,7 +162,7 @@ function BurgerConstructor() {
         </Button>
       </div>
 
-      {showOrder && order && bun.type && (
+      {showOrder && order && bun.type && user && (
         <Modal handleHide={handleHide}>
           <OrderDetails order={order} />
         </Modal>

@@ -1,0 +1,56 @@
+.container {
+  width: 1240px;
+  margin: 0 auto;
+}
+
+.nav {
+  margin-top: 135px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.a {
+  color: #8585ad;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 30px;
+  padding: 0;
+  border: none;
+  text-decoration: none;
+}
+
+.activeLink {
+  color: #f2f2f3;
+}
+
+.exit {
+  color: #8585ad;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 30px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.p {
+  width: 320px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8585ad;
+  opacity: 0.4;
+}
+
+.input {
+  position: absolute;
+  top: 320px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.button {
+  position: absolute;
+  top: 425px;
+  left: 51.5%;
+}

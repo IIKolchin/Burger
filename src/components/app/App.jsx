@@ -1,31 +1,23 @@
 import React, { useEffect } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from "./app.module.css";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useDispatch } from "react-redux";
+import { BrowserRouter as Router } from "react-router-dom";
+import { ModalSwitch } from "../modal-switch/modal-switch";
 import { getIngredients } from "../../services/actions/ingredients";
+import { useDispatch } from "react-redux";
+
 
 function App() {
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
+
   }, [dispatch]);
 
   return (
-    <>
-      <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
-    </>
+    <Router>
+      <ModalSwitch />
+    </Router>
   );
 }
 

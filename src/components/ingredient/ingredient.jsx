@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./ingredient.module.css";
 import {
   CurrencyIcon,
@@ -11,13 +10,12 @@ import { SHOW_MODAL } from "../../services/actions/modalIngredient";
 import { useSelector, useDispatch } from "react-redux";
 
 function Ingredient({ children, data }) {
-  
+
   const dataItems = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
   const burgerItems = [bun, bun, ...constructor];
   const count = burgerItems.filter((item) => item._id === data._id).length;
-
   const dispatch = useDispatch();
   const id = data._id;
 

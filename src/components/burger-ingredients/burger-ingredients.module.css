@@ -44,3 +44,8 @@
   text-decoration: none;
   margin: 0;
 }
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
