@@ -1,0 +1,19 @@
+.container {
+  width: 584px;
+  height: 214px;
+  background-color: #1c1c21;
+  border-radius: 40px;
+}
+
+.group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #f2f2f3;
+  margin-bottom: 0;
+}

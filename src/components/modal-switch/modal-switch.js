@@ -22,11 +22,10 @@ import {
   NotFound404,
   IngredientPage,
   ProfileOrders,
+  FeedPage
 } from "../../pages";
 
 export function ModalSwitch() {
-
-  
   const location = useLocation();
   const dispatch = useDispatch();
   const shortModal = useSelector((state) => state.modal.shortModal);
@@ -60,6 +59,10 @@ export function ModalSwitch() {
 
         <Route path="/reset-password" exact>
           <ResetPasswordPage />
+        </Route>
+
+        <Route path="/feed" exact>
+          <FeedPage />
         </Route>
 
         <ProtectedRoute path="/profile" exact>

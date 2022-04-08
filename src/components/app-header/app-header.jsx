@@ -31,11 +31,12 @@ function AppHeader() {
 
             <a href="#" className={styles.link}>
               <div className={styles.burger}>
-                <ListIcon type="secondary" />
+                <ListIcon type={window.location.pathname === "/feed" ? "primary" : "secondary"} />
               </div>
-              <p className="text text_type_main-default text_color_inactive ml-2">
+              <NavLink to="/feed" className={styles.link + " text text_type_main-default text_color_inactive ml-2"} activeClassName={styles.activeLink}
+              exact>
                 Лента заказов
-              </p>
+              </NavLink>
             </a>
           </li>
           <li className={styles.logo}>
