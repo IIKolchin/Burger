@@ -2,6 +2,11 @@
   font-weight: 700;
   font-size: 36px;
   line-height: 40px;
-  color: #f2f2f3;
   margin: 40px 0 20px;
+}
+
+.items {
+  width: 600px;
+  height: 904px;
+  overflow-y: scroll;
 }

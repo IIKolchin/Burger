@@ -22,8 +22,10 @@ import {
   NotFound404,
   IngredientPage,
   ProfileOrders,
-  FeedPage
+  FeedPage,
+  OrderInfo
 } from "../../pages";
+
 
 export function ModalSwitch() {
   const location = useLocation();
@@ -79,6 +81,11 @@ export function ModalSwitch() {
 
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
+        </Route>
+
+
+        <Route path="/feed/id" exact>
+          <OrderInfo/>
         </Route>
 
         <Route>
