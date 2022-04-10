@@ -1,14 +1,12 @@
 .container {
-  width: 584px;
-  min-height: 214px;
   background-color: #1c1c21;
   border-radius: 40px;
   margin-bottom: 16px;
 }
 
 .container:last-of-type {
-    margin-bottom: 0;
-  }
+  margin-bottom: 0;
+}
 
 .group {
   display: flex;
@@ -79,9 +77,16 @@
 }
 
 .price {
-    display: flex;
+  display: flex;
 }
 
 .number {
-    margin-right: 9px;
+  margin-right: 9px;
+}
+
+.status {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 8px 0 24px 24px;
 }

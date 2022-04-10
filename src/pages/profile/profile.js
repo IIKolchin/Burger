@@ -13,6 +13,7 @@ import {
 } from "../../services/actions/patchUser";
 
 
+
 export function Profile() {
 
   const dispatch = useDispatch();
@@ -89,6 +90,7 @@ export function Profile() {
 
   return (
     <div className={styles.container}>
+      <div >
       <nav className={styles.nav}>
         <NavLink
           to={{ pathname: `/profile` }}
@@ -112,6 +114,7 @@ export function Profile() {
       <p className={styles.p + " mt-20"}>
         В этом разделе вы можете изменить свои персональные данные
       </p>
+      </div>
 
       <form onSubmit={formSubmit} className={styles.input}>
         <div className="mb-6">
@@ -162,6 +165,19 @@ export function Profile() {
           />
         </div>
         {showButton && (
+          <div className={styles.buttons + " mt-6 mr-2"}>
+            <Button type="primary" size="medium">
+              Сохранить
+            </Button>
+            <Button onClick={cancel} type="primary" size="medium">
+            Отмена
+          </Button>
+          </div>
+
+        )}
+</form>
+
+        {/* {showButton && (
           <div className=" mt-6 mr-2">
             <Button type="primary" size="medium">
               Сохранить
@@ -175,7 +191,8 @@ export function Profile() {
             Отмена
           </Button>
         </div>
-      )}
+      )} */}
+     
     </div>
   );
 }

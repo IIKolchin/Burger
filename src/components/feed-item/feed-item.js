@@ -6,9 +6,12 @@ import i3 from "../../images/3.png";
 import i4 from "../../images/4.png";
 import i5 from "../../images/5.png";
 
-export function FeedItem() {
+export function FeedItem({status}) {
+
+  const style = { width: status ? 844 : 584 }
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={style}>
       <div className={styles.group + " pt-6"}>
         <span className={styles.number + " text text_type_digits-default pl-6"}>
           #034535
@@ -25,7 +28,8 @@ export function FeedItem() {
       <h3 className={styles.name + " ml-6 mt-6"}>
         Death Star Starship Main бургер
       </h3>
-      <div className={styles.ingredients + " mt-6 ml-6 mr-6"}>
+      <p className={styles.status}>{status}</p>
+      <div className={styles.ingredients + " mt-6 ml-6 mr-6 pb-6"}>
         <div className={styles.items}>
           <div className={styles.item}>
             <img src={i1} alt=""></img>
