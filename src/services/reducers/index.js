@@ -13,6 +13,7 @@ import { patchUserReducer } from "./patchUser";
 import { forgotPasswordReducer } from "./forgotPassword";
 import { connectRouter } from "connected-react-router";
 
+
 export const rootReducer = (history) =>
   combineReducers({
     items: ingredientsReducer,
