@@ -31,11 +31,13 @@ import {
           wsConnected: false
         };
   
-      case WS_GET_MESSAGE:
-        return {
-          ...state,
-          messages: []
-        };
+        case WS_GET_MESSAGE:
+      return {
+        ...state,
+        messages: state.messages.length
+          ? [...state.messages, { ...action.payload, timestamp: new Date().getTime() / 1000 }]
+          : [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
+      };
       case WS_USER_NAME_UPDATE:
         return {
           ...state,

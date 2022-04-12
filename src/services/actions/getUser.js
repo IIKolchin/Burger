@@ -22,7 +22,6 @@ export function getUserRequest() {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
-          console.log(res);
           dispatch({
             type: GET_USER_SUCCESS,
             form: res.user,

@@ -1,20 +1,21 @@
 import styles from "./feed-item.module.css";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import i1 from "../../images/1.png";
-import i2 from "../../images/2.png";
-import i3 from "../../images/3.png";
-import i4 from "../../images/4.png";
-import i5 from "../../images/5.png";
+import { useSelector, useDispatch } from "react-redux";
+import { ImageFeed } from "../image-feed/image-feed";
 
-export function FeedItem({status}) {
+export function FeedItem({status, data}) {
 
   const style = { width: status ? 844 : 584 }
+
+  
+
+  console.log()
 
   return (
     <div className={styles.container} style={style}>
       <div className={styles.group + " pt-6"}>
         <span className={styles.number + " text text_type_digits-default pl-6"}>
-          #034535
+          #{data.number}
         </span>
         <span
           className={
@@ -22,27 +23,22 @@ export function FeedItem({status}) {
             " text text_type_main-default text_color_inactive pr-6"
           }
         >
-          Сегодня, 16:20 i-GMT+3
+          {data.createdAt}
         </span>
       </div>
       <h3 className={styles.name + " ml-6 mt-6"}>
-        Death Star Starship Main бургер
+        {data.name}
       </h3>
       <p className={styles.status}>{status}</p>
       <div className={styles.ingredients + " mt-6 ml-6 mr-6 pb-6"}>
         <div className={styles.items}>
-          <div className={styles.item}>
-            <img src={i1} alt=""></img>
-          </div>
-          <div className={styles.item}>
-            <img src={i2} alt=""></img>
-          </div>
-          <div className={styles.item}>
-            <img src={i3} alt=""></img>
-          </div>
-          <div className={styles.item}>
-            <img src={i4} alt=""></img>
-          </div>
+          {data && data.ingredients.map((id, index) => {
+            return (
+            <ImageFeed key={index} id={id} />
+            )
+          })
+        }
+
         </div>
         <div className={styles.price}>
           <span className={styles.number + " text text_type_digits-default"}>

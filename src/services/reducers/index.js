@@ -12,6 +12,7 @@ import { userReducer } from "./getUser";
 import { patchUserReducer } from "./patchUser";
 import { forgotPasswordReducer } from "./forgotPassword";
 import { connectRouter } from "connected-react-router";
+import { wsReducer } from "./wsReducer";
 
 
 export const rootReducer = (history) =>
@@ -29,4 +30,5 @@ export const rootReducer = (history) =>
     patchUser: patchUserReducer,
     forgotPassword: forgotPasswordReducer,
     router: connectRouter(history),
+    ws: wsReducer,
   });

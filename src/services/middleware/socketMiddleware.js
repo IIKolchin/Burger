@@ -9,11 +9,12 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       return next => action => {
         const { dispatch, getState } = store;
         const { type, payload } = action;
-        const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
-        // const { user } = getState().user;
-        if (type === wsInit && token) {
+        const { wsInit, wsAll, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+     if ( type === wsAll) {
+        socket = new WebSocket(`${wsUrl}/all`);
+     } else if (type === wsInit && token) {
           socket = new WebSocket(`${wsUrl}?token=${token}`);
-        }
+        } 
         if (socket) {
           socket.onopen = event => {
             dispatch({ type: onOpen, payload: event });
