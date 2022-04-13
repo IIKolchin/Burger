@@ -5,6 +5,7 @@ import {
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
   } from '../actions/wsActions';
+
   
   const initialState = {
     wsConnected: false,
@@ -35,7 +36,7 @@ import {
       return {
         ...state,
         messages: state.messages.length
-          ? [...state.messages, { ...action.payload, timestamp: new Date().getTime() / 1000 }]
+          ? [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
           : [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
       };
       case WS_USER_NAME_UPDATE:
