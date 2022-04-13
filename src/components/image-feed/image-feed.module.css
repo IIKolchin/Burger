@@ -28,6 +28,7 @@
   z-index: 2;
 }
 
+
 .item::before {
   content: "";
   position: absolute;
@@ -46,6 +47,6 @@
 
 .image {
   width: 110px;
-  margin-left: -20px;
+  margin-left: -22px;
   margin-top: 5px;
 }

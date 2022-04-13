@@ -26,7 +26,6 @@
   display: flex;
 }
 
-
 .price {
   display: flex;
 }
@@ -40,4 +39,19 @@
   font-size: 16px;
   line-height: 24px;
   margin: 8px 0 24px 24px;
+}
+
+.other {
+  position: relative;
+  font-weight: 400;
+  font-size: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 56px;
+  z-index: 2;
+  margin-top: 4px;
+  margin-left: -60px;
+  background-color: rgba(28, 28, 33, 0.6);
 }

@@ -1,15 +1,31 @@
 import styles from "./feed-item.module.css";
+import React, { useMemo, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import { ImageFeed } from "../image-feed/image-feed";
 
-export function FeedItem({status, data}) {
+export function FeedItem({ status, data }) {
+  const style = { width: status ? 844 : 584 };
 
-  const style = { width: status ? 844 : 584 }
+  const items = useSelector((store) => store.items.data);
 
-  
 
-  console.log()
+  const ingredients = data.ingredients.slice(0, 6);
+  const otherIngredients =
+    data.ingredients.slice(6).length !== 0
+      ? `+${data.ingredients.slice(6).length}`
+      : null;
+
+  const totalPrice = useMemo(() => {
+    let total = 0;
+    data.ingredients.map((id) => {
+      const it = items.find((data) => data._id === id);
+      if (it) {
+        total += it.price || 0;
+      }
+    });
+    return total ? total : 0;
+  }, []);
 
   return (
     <div className={styles.container} style={style}>
@@ -26,23 +42,19 @@ export function FeedItem({status, data}) {
           {data.createdAt}
         </span>
       </div>
-      <h3 className={styles.name + " ml-6 mt-6"}>
-        {data.name}
-      </h3>
+      <h3 className={styles.name + " ml-6 mt-6"}>{data.name}</h3>
       <p className={styles.status}>{status}</p>
       <div className={styles.ingredients + " mt-6 ml-6 mr-6 pb-6"}>
         <div className={styles.items}>
-          {data && data.ingredients.map((id, index) => {
-            return (
-            <ImageFeed key={index} id={id} />
-            )
-          })
-        }
-
+          {data &&
+            ingredients.map((id, index) => {
+              return <ImageFeed key={index} id={id} />;
+            })}
+          <div className={styles.other}>{otherIngredients}</div>
         </div>
         <div className={styles.price}>
           <span className={styles.number + " text text_type_digits-default"}>
-            480
+            {totalPrice}
           </span>
 
           <div className={styles.icon}>

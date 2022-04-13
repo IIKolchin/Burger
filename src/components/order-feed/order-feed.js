@@ -10,7 +10,7 @@ export function OrderFeed() {
     const data = useSelector(store => store.ws.messages);
   const feed1 = (data.map(data => data.orders));
   const feed = feed1[0];
-//   console.log(data)
+
 
 
   return (
@@ -20,7 +20,7 @@ export function OrderFeed() {
 
 
       { feed && feed.map((data) => {
-          console.log(data)
+        //   console.log(data)
             return (
               <Link
                 key={data._id}
