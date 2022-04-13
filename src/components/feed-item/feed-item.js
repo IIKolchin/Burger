@@ -23,6 +23,9 @@ export function FeedItem({ status, data }) {
       if (it) {
         total += it.price || 0;
       }
+      if (it && it.type === "bun") {
+        total += it.price
+      }
     });
     return total ? total : 0;
   }, []);

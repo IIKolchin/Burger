@@ -20,7 +20,7 @@ export function OrderFeed() {
 
 
       { feed && feed.map((data) => {
-        //   console.log(data)
+
             return (
               <Link
                 key={data._id}

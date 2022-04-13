@@ -36,6 +36,8 @@ export function ModalSwitch() {
   const isItems = useSelector((store) => store.items.dataRequest);
   const isError = useSelector((store) => store.items.dataFailed);
   const history = useHistory();
+  const wsConnected = useSelector(store => store.ws.wsConnected)
+  const orders = useSelector(store => store.ws.messages)
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
@@ -84,7 +86,7 @@ export function ModalSwitch() {
         </Route>
 
 
-        <Route path="/feed/id" exact>
+        <Route path="/feed/:id" exact>
           <OrderInfo/>
         </Route>
 
@@ -102,6 +104,19 @@ export function ModalSwitch() {
               handleHide={handleHide}
             >
               <IngredientDetails />
+            </Modal>
+          }
+        />
+      )}
+
+{background && orders.length !== 0 && wsConnected && (
+        <Route
+          path="/feed/:id"
+          children={
+            <Modal
+              handleHide={handleHide}
+            >
+             <OrderInfo/>
             </Modal>
           }
         />
