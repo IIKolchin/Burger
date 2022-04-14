@@ -3,10 +3,12 @@ import React, { useMemo, useCallback } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import { ImageFeed } from "../image-feed/image-feed";
+import {getDateOrder} from "../../utils/data"
 
 export function FeedItem({ status, data }) {
-  const style = { width: status ? 844 : 584 };
 
+  
+  const style = { width: status ? 844 : 584 };
   const items = useSelector((store) => store.items.data);
 
 
@@ -42,7 +44,7 @@ export function FeedItem({ status, data }) {
             " text text_type_main-default text_color_inactive pr-6"
           }
         >
-          {data.createdAt}
+          {getDateOrder(data.createdAt)}
         </span>
       </div>
       <h3 className={styles.name + " ml-6 mt-6"}>{data.name}</h3>

@@ -22,4 +22,20 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-export { URL, dataPropTypes, checkResponse };
+const getDateOrder = (date) => {
+  const dateNow = new Date().toLocaleString();
+  const createdAt = new Date(date);
+  const dateOrder = createdAt.toLocaleString();
+  const timeZone = (createdAt.getTimezoneOffset() / 60) * -1;
+  const dayNumber = dateNow.slice(0, 2) - dateOrder.slice(0, 2);
+  const hours = dateOrder.slice(12, 17);
+  const day =
+    dayNumber === 0
+      ? "Cегодня"
+      : dayNumber === 1
+      ? "Вчера"
+      : `${dayNumber}  дня(-ей) назад`;
+  return `${day}, ${hours} i-GMT+${timeZone}`;
+};
+
+export { URL, dataPropTypes, checkResponse, getDateOrder };
