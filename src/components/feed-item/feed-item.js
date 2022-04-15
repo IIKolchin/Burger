@@ -9,6 +9,9 @@ export function FeedItem({ status, data }) {
 
   
   const style = { width: status ? 844 : 584 };
+  const color = {
+    color: status === "Выполнен" ? "#00CCCC" : "#F2F2F3"
+  }
   const items = useSelector((store) => store.items.data);
 
 
@@ -32,6 +35,8 @@ export function FeedItem({ status, data }) {
     return total ? total : 0;
   }, []);
 
+ 
+
   return (
     <div className={styles.container} style={style}>
       <div className={styles.group + " pt-6"}>
@@ -48,7 +53,7 @@ export function FeedItem({ status, data }) {
         </span>
       </div>
       <h3 className={styles.name + " ml-6 mt-6"}>{data.name}</h3>
-      <p className={styles.status}>{status}</p>
+      <p className={styles.status} style={color}>{status}</p>
       <div className={styles.ingredients + " mt-6 ml-6 mr-6 pb-6"}>
         <div className={styles.items}>
           {data &&

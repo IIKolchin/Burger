@@ -4,8 +4,9 @@ export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS';
 export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED';
 export const WS_GET_MESSAGE = 'WS_GET_MESSAGE';
+export const WS_GET_ALL_MESSAGE = 'WS_GET_ALL_MESSAGE';
 export const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE';
-export const WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE';
+
   
   export const wsConnectionSuccess = () => {
     return {
@@ -25,6 +26,13 @@ export const WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE';
     };
   };
   
+  export const wsGetAllMessage = message => {
+    return {
+      type: WS_GET_ALL_MESSAGE,
+      payload: message
+    };
+  };
+
   export const wsGetMessage = message => {
     return {
       type: WS_GET_MESSAGE,
@@ -39,9 +47,3 @@ export const WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE';
     };
   };
   
-  export const wsUserNameUpdate = userName => {
-    return {
-      type: WS_USER_NAME_UPDATE,
-      payload: userName
-    };
-  };

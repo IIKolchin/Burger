@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,9 +26,12 @@ import {
   FeedPage,
   OrderInfo
 } from "../../pages";
+import { getIngredients } from "../../services/actions/ingredients";
+import { getUserRequest } from "../../services/actions/getUser";
 
 
 export function ModalSwitch() {
+
   const location = useLocation();
   const dispatch = useDispatch();
   const shortModal = useSelector((state) => state.modal.shortModal);
@@ -37,12 +41,23 @@ export function ModalSwitch() {
   const isError = useSelector((store) => store.items.dataFailed);
   const history = useHistory();
   const wsConnected = useSelector(store => store.ws.wsConnected)
-  const orders = useSelector(store => store.ws.messages)
+  const orders = useSelector(store => store.ws.orders)
+  const messages = useSelector(store => store.ws.messages)
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
+
+
+  useEffect(() => {
+    dispatch(getIngredients());
+
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUserRequest());
+  }, [dispatch]);
 
   return (
     <>
@@ -109,9 +124,22 @@ export function ModalSwitch() {
         />
       )}
 
-{background && orders.length !== 0 && wsConnected && (
+{background && messages.length !== 0 && wsConnected && (
         <Route
           path="/feed/:id"
+          children={
+            <Modal
+              handleHide={handleHide}
+            >
+             <OrderInfo/>
+            </Modal>
+          }
+        />
+      )}
+
+{background && orders.length !== 0 && wsConnected && (
+        <Route
+          path="/profile/orders/:id"
           children={
             <Modal
               handleHide={handleHide}

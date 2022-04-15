@@ -60,3 +60,7 @@
   height: 909px;
   overflow-y: scroll;
 }
+.link {
+  text-decoration: none;
+  color: inherit;
+}

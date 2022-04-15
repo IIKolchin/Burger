@@ -23,11 +23,13 @@ export function updateTokenRequest() {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
+          console.log(res.accessToken)
           dispatch({
             type: UPDATE_TOKEN_SUCCESS,
           });
           setCookie("token", res.accessToken);
           localStorage.setItem("token", res.refreshToken);
+          dispatch(getUserRequest())
         } else {
           dispatch({
             type: UPDATE_TOKEN_FAILED,

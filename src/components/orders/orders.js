@@ -2,13 +2,14 @@ import styles from "./orders.module.css";
 import { useSelector, useDispatch } from "react-redux";
 
 export function Orders() {
-  const data = useSelector((store) => store.ws.messages)[0];
-//   console.log(data);
+  
+  const data = useSelector((store) => store.ws.messages);
 
-  const done = data ? data.orders.filter((item) => item.status === "done") : null;
-  const pending = data ? data.orders.filter((item) => item.status === "pending") : null;
+
+  const done = data ? data.orders?.filter((item) => item.status === "done") : null;
+  const pending = data ? data.orders?.filter((item) => item.status === "pending") : null;
  
-//   console.log(done);
+
 
   return (
     <section className={styles.container}>

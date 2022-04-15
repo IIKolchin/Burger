@@ -3,16 +3,22 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
-import {getDateOrder} from "../../utils/data"
+import { getDateOrder } from "../../utils/data";
 
 export function OrderInfo() {
-
   const { id } = useParams();
-  const items = useSelector((store) => store.ws.messages)[0];
+  const items = useSelector((store) => store.ws.messages);
   const allIngredients = useSelector((store) => store.items.data);
-  const data = items.orders.find((el) => el._id === id);
+  const data = items.orders?.find((el) => el._id === id);
 
-  const status = data.status === "done" ? "Выполнен" : "Готовиться";
+  const status =
+    data?.status === "done"
+      ? "Выполнен"
+      : data?.status === "pending"
+      ? "Готовится"
+      : data?.status === "created"
+      ? "Создан"
+      : "";
 
   const color = {
     color: data.status === "done" ? "#00cccc" : "#F2F2F3",
@@ -52,8 +58,6 @@ export function OrderInfo() {
 
     return total ? total : 0;
   }, []);
-
-  // console.log(ingredientSort);
 
   return (
     <section className={styles.container}>

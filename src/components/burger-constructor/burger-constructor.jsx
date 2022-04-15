@@ -95,6 +95,7 @@ function BurgerConstructor() {
     if (user) {
       dispatch(getOrder(id));
       dispatch({ type: SHOW_ORDER });
+      
     } else {
       history.replace({ pathname: "/login" });
     }

@@ -11,6 +11,7 @@ import {
   patchUserRequest,
   SET_PATCH_USER,
 } from "../../services/actions/patchUser";
+import { WS_CONNECTION_START } from "../../services/actions/wsActions"
 
 
 
@@ -26,6 +27,14 @@ export function Profile() {
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
+
+
+
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START });
+  }, [dispatch]);
+
+
 
 
   const onChange = (e) => {

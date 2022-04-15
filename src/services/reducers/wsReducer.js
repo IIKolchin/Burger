@@ -1,15 +1,16 @@
 import {
-    WS_USER_NAME_UPDATE,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
+    WS_GET_ALL_MESSAGE,
     WS_GET_MESSAGE
   } from '../actions/wsActions';
 
   
   const initialState = {
     wsConnected: false,
-    messages: []
+    messages: [],
+    orders: []
   };
   
   export const wsReducer = (state = initialState, action) => {
@@ -32,17 +33,19 @@ import {
           wsConnected: false
         };
   
-        case WS_GET_MESSAGE:
+        case WS_GET_ALL_MESSAGE:
       return {
         ...state,
-        messages: state.messages.length
-          ? [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
-          : [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
+        // messages: state.messages.length
+        //   ? [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
+        //   : [{ ...action.payload, timestamp: new Date().getTime() / 1000 }],
+          messages: action.payload
       };
-      case WS_USER_NAME_UPDATE:
+      case WS_GET_MESSAGE:
         return {
           ...state,
-          user: action.payload
+
+            orders: action.payload
         };
   
       default:

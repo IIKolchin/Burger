@@ -1,12 +1,23 @@
 import styles from "./profile.module.css";
-import { Link, Redirect, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Link, Redirect, NavLink, useLocation } from "react-router-dom";
 import { logoutRequest } from "../../services/actions/logout";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useCallback, useEffect, useState } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
+import { WS_CONNECTION_START } from "../../services/actions/wsActions"
+
 
 export function ProfileOrders() {
+  
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const data = useSelector((store) => store.ws.orders)
+
+
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START });
+  }, [dispatch]);
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -48,7 +59,23 @@ export function ProfileOrders() {
       </div>
 
       <div className={styles.order}>
-        <FeedItem status={status} />
+        {data && data.orders?.map((data) => {
+          console.log(data)
+          return (
+            <Link
+            key={data._id}
+            className={styles.link}
+            to={{
+              pathname: `/profile/orders/${data._id}`,
+              state: { background: location },
+            }}
+          >
+            <FeedItem data={data} status={status}/>
+          </Link>
+
+          )
+        })}
+       
       </div>
     </div>
   );

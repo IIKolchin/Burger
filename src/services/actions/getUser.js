@@ -36,7 +36,7 @@ export function getUserRequest() {
           dispatch({ type: GET_USER_FAILED });
           localStorage.removeItem("user");
           dispatch(updateTokenRequest());
-          dispatch(getUserRequest());
+          // dispatch(getUserRequest());
         }
       });
   };

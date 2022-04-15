@@ -8,8 +8,7 @@ export function OrderFeed() {
 
     const location = useLocation();
     const data = useSelector(store => store.ws.messages);
-  const feed1 = (data.map(data => data.orders));
-  const feed = feed1[0];
+
 
 
 
@@ -19,7 +18,8 @@ export function OrderFeed() {
       <div className={styles.items}>
 
 
-      { feed && feed.map((data) => {
+      { data ? data.orders?.map((data) => {
+
 
             return (
               <Link
@@ -33,7 +33,7 @@ export function OrderFeed() {
                 <FeedItem data={data} />
               </Link>
             );
-          })}
+          }) : null}
 
       </div>
     </section>

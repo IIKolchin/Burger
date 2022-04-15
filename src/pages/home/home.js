@@ -12,13 +12,13 @@ export function HomePage() {
 
   const dispatch = useDispatch();
 
-  const getUser = () => {
-    dispatch(getUserRequest());
-  };
+  // const getUser = () => {
+  //   dispatch(getUserRequest());
+  // };
 
-  useEffect(() => {
-    getUser();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   getUser();
+  // }, [dispatch]);
 
   return (
     <main className={styles.main}>

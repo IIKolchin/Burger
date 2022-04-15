@@ -3,16 +3,21 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ModalSwitch } from "../modal-switch/modal-switch";
 import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
+import { getUserRequest } from "../../services/actions/getUser";
 
 
 function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getIngredients());
+  // useEffect(() => {
+  //   dispatch(getIngredients());
 
-  }, [dispatch]);
+  // }, [dispatch]);
+
+  // useEffect(() => {
+  //   dispatch(getUserRequest());
+  // }, [dispatch]);
 
   return (
     <Router>
