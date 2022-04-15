@@ -3,9 +3,7 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
-
 export function ProtectedRoute({ children, ...rest }) {
-
   const user = localStorage.getItem("user");
 
   const [isUserLoaded, setUserLoaded] = useState(false);

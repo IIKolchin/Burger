@@ -4,20 +4,22 @@ import { logoutRequest } from "../../services/actions/logout";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useCallback, useEffect, useState } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
-import { WS_CONNECTION_START } from "../../services/actions/wsActions"
+import { WS_CONNECTION_START, WS_CONNECTION_ALL_START} from "../../services/actions/wsActions"
 
 
 export function ProfileOrders() {
   
   const dispatch = useDispatch();
   const location = useLocation();
-
+  const isAuth = useSelector((store) => store.authorization.isAuth);
+  const login = sessionStorage.getItem("login");
   const data = useSelector((store) => store.ws.orders)
 
 
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });
-  }, [dispatch]);
+    dispatch({ type: WS_CONNECTION_ALL_START });
+  }, []);
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -27,7 +29,25 @@ export function ProfileOrders() {
     signOut();
   }, []);
 
-  const status = "Выполнен";
+  if (!isAuth) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+        }}
+      />
+    );
+  }
+
+  if (!login) {
+    return (
+      <Redirect
+        to={{
+          pathname: "/login",
+        }}
+      />
+    );
+  }  
 
   return (
     <div className={styles.container}>
@@ -60,7 +80,6 @@ export function ProfileOrders() {
 
       <div className={styles.order}>
         {data && data.orders?.map((data) => {
-          console.log(data)
           return (
             <Link
             key={data._id}
@@ -70,7 +89,7 @@ export function ProfileOrders() {
               state: { background: location },
             }}
           >
-            <FeedItem data={data} status={status}/>
+            <FeedItem data={data} status={data.status}/>
           </Link>
 
           )

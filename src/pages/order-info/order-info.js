@@ -21,24 +21,30 @@ export function OrderInfo() {
       : "";
 
   const color = {
-    color: data.status === "done" ? "#00cccc" : "#F2F2F3",
+    color: data?.status === "done" ? "#00cccc" : "#F2F2F3",
   };
 
-  const ingredient = data.ingredients.map((i) => {
+  const ingredient = items.length !==0 && data?.ingredients.map((i) => {
     const ing = allIngredients.find((item) => {
       return item._id === i;
     });
     return ing;
   });
 
-  const ingredientSort = ingredient.sort((a, b) => {
+  const ingredientSort = items.length !==0 && ingredient?.sort((a, b) => {
     if (a.type === "bun") return -1;
     if (b.type === "bun") return 1;
     return a.type.localeCompare(b.type);
   });
 
+  console.log(items)
+  console.log(data)
+  console.log(ingredient)
+
+console.log(ingredientSort)
+
   const ingredients =
-    ingredientSort.length !== 1 && ingredientSort[1].type === "bun"
+    items.length !== 1 && ingredientSort[1].type === "bun"
       ? ingredientSort.slice(1)
       : ingredientSort
       ? ingredientSort

@@ -11,14 +11,11 @@ import {
   patchUserRequest,
   SET_PATCH_USER,
 } from "../../services/actions/patchUser";
-import { WS_CONNECTION_START } from "../../services/actions/wsActions"
-
-
+import { WS_CONNECTION_START } from "../../services/actions/wsActions";
 
 export function Profile() {
-
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(false)
+  const [showButton, setShowButton] = useState(false);
   const form = useSelector((store) => store.patchUser.form);
   const userForm = useSelector((store) => store.user.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
@@ -30,20 +27,13 @@ export function Profile() {
 
 
 
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-  }, [dispatch]);
-
-
-
-
   const onChange = (e) => {
     dispatch({
       type: SET_PATCH_USER,
       payload: { ...form, [e.target.name]: e.target.value },
     });
-    setShowButton(true)
-  }
+    setShowButton(true);
+  };
 
   const onIconClickName = () => {
     setTimeout(() => inputRefName.current.focus(), 0);
@@ -58,17 +48,16 @@ export function Profile() {
   const cancel = useCallback(() => {
     form.name = userForm.name;
     form.email = userForm.email;
-    setShowButton(false)
+    setShowButton(false);
     forceUpdate((n) => !n);
-  },[form]);
+  }, [form]);
 
   const signOut = async () => {
-   dispatch(logoutRequest());
+    dispatch(logoutRequest());
   };
 
   const logout = useCallback(() => {
-   signOut()
-   
+    signOut();
   }, [signOut]);
 
   if (!isAuth) {
@@ -94,35 +83,35 @@ export function Profile() {
   const formSubmit = (e) => {
     e.preventDefault();
     dispatch(patchUserRequest(form));
-    setShowButton(false)
-  }
+    setShowButton(false);
+  };
 
   return (
     <div className={styles.container}>
-      <div >
-      <nav className={styles.nav}>
-        <NavLink
-          to={{ pathname: `/profile` }}
-          exact
-          className={styles.a + " mb-8"}
-          activeClassName={styles.activeLink}
-        >
-          Профиль
-        </NavLink>
-        <NavLink
-          to={{ pathname: `/profile/orders` }}
-          exact
-          className={styles.a + " mb-8"}
-        >
-          История заказов
-        </NavLink>
-        <button onClick={logout} className={styles.exit}>
-          Выход
-        </button>
-      </nav>
-      <p className={styles.p + " mt-20"}>
-        В этом разделе вы можете изменить свои персональные данные
-      </p>
+      <div>
+        <nav className={styles.nav}>
+          <NavLink
+            to={{ pathname: `/profile` }}
+            exact
+            className={styles.a + " mb-8"}
+            activeClassName={styles.activeLink}
+          >
+            Профиль
+          </NavLink>
+          <NavLink
+            to={{ pathname: `/profile/orders` }}
+            exact
+            className={styles.a + " mb-8"}
+          >
+            История заказов
+          </NavLink>
+          <button onClick={logout} className={styles.exit}>
+            Выход
+          </button>
+        </nav>
+        <p className={styles.p + " mt-20"}>
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
       </div>
 
       <form onSubmit={formSubmit} className={styles.input}>
@@ -179,29 +168,11 @@ export function Profile() {
               Сохранить
             </Button>
             <Button onClick={cancel} type="primary" size="medium">
-            Отмена
-          </Button>
-          </div>
-
-        )}
-</form>
-
-        {/* {showButton && (
-          <div className=" mt-6 mr-2">
-            <Button type="primary" size="medium">
-              Сохранить
+              Отмена
             </Button>
           </div>
         )}
       </form>
-      { showButton && (
-        <div className={styles.button}>
-          <Button onClick={cancel} type="primary" size="medium">
-            Отмена
-          </Button>
-        </div>
-      )} */}
-     
     </div>
   );
 }

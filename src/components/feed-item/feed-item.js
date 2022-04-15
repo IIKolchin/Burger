@@ -7,13 +7,19 @@ import {getDateOrder} from "../../utils/data"
 
 export function FeedItem({ status, data }) {
 
-  
   const style = { width: status ? 844 : 584 };
   const color = {
-    color: status === "Выполнен" ? "#00CCCC" : "#F2F2F3"
+    color: data.status === "done" ? "#00CCCC" : "#F2F2F3"
   }
   const items = useSelector((store) => store.items.data);
 
+ const statusOrder = status === "done"
+    ? "Выполнен"
+    : status === "pending"
+    ? "Готовится"
+    : status === "created"
+    ? "Создан"
+    : "";
 
   const ingredients = data.ingredients.slice(0, 6);
   const otherIngredients =
@@ -53,14 +59,14 @@ export function FeedItem({ status, data }) {
         </span>
       </div>
       <h3 className={styles.name + " ml-6 mt-6"}>{data.name}</h3>
-      <p className={styles.status} style={color}>{status}</p>
+      <p className={styles.status} style={color}>{statusOrder}</p>
       <div className={styles.ingredients + " mt-6 ml-6 mr-6 pb-6"}>
         <div className={styles.items}>
           {data &&
             ingredients.map((id, index) => {
               return <ImageFeed key={index} id={id} />;
             })}
-          <div className={styles.other}>{otherIngredients}</div>
+          {otherIngredients && (<div className={styles.other}>{otherIngredients}</div>)}
         </div>
         <div className={styles.price}>
           <span className={styles.number + " text text_type_digits-default"}>

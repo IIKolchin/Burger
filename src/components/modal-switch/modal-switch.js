@@ -24,11 +24,10 @@ import {
   IngredientPage,
   ProfileOrders,
   FeedPage,
-  OrderInfo
+  OrderInfo,
 } from "../../pages";
 import { getIngredients } from "../../services/actions/ingredients";
 import { getUserRequest } from "../../services/actions/getUser";
-
 
 export function ModalSwitch() {
 
@@ -40,24 +39,14 @@ export function ModalSwitch() {
   const isItems = useSelector((store) => store.items.dataRequest);
   const isError = useSelector((store) => store.items.dataFailed);
   const history = useHistory();
-  const wsConnected = useSelector(store => store.ws.wsConnected)
-  const orders = useSelector(store => store.ws.orders)
-  const messages = useSelector(store => store.ws.messages)
+  const wsConnected = useSelector((store) => store.ws.wsConnected);
+  const orders = useSelector((store) => store.ws.orders);
+  const messages = useSelector((store) => store.ws.messages);
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
-
-
-  useEffect(() => {
-    dispatch(getIngredients());
-
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getUserRequest());
-  }, [dispatch]);
 
   return (
     <>
@@ -88,7 +77,7 @@ export function ModalSwitch() {
           <Profile />
         </ProtectedRoute>
 
-        <ProtectedRoute path="/profile/orders" exact>
+        <ProtectedRoute path="/profile/orders" exact> 
           <ProfileOrders />
         </ProtectedRoute>
 
@@ -100,9 +89,8 @@ export function ModalSwitch() {
           <IngredientPage />
         </Route>
 
-
         <Route path="/feed/:id" exact>
-          <OrderInfo/>
+          <OrderInfo />
         </Route>
 
         <Route>
@@ -124,27 +112,23 @@ export function ModalSwitch() {
         />
       )}
 
-{background && messages.length !== 0 && wsConnected && (
+      {background && messages.length !== 0 && wsConnected && (
         <Route
           path="/feed/:id"
           children={
-            <Modal
-              handleHide={handleHide}
-            >
-             <OrderInfo/>
+            <Modal handleHide={handleHide}>
+              <OrderInfo />
             </Modal>
           }
         />
       )}
 
-{background && orders.length !== 0 && wsConnected && (
+      {background && orders.length !== 0 && wsConnected && (
         <Route
           path="/profile/orders/:id"
           children={
-            <Modal
-              handleHide={handleHide}
-            >
-             <OrderInfo/>
+            <Modal handleHide={handleHide}>
+              <OrderInfo />
             </Modal>
           }
         />

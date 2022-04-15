@@ -10,14 +10,10 @@ function App() {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getIngredients());
-
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(getUserRequest());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getIngredients());
+    dispatch(getUserRequest()); 
+  }, [dispatch]);
 
   return (
     <Router>
