@@ -12,7 +12,7 @@ export function OrderFeed() {
     <section>
       <h1 className={styles.heading}>Лента заказов</h1>
       <div className={styles.items}>
-        {data
+        {data.orders !== 0
           ? data.orders?.map((data) => {
               return (
                 <Link
