@@ -4,11 +4,21 @@ import { useSelector, useDispatch } from "react-redux";
 import React, { useCallback, useEffect, useState } from "react";
 import { OrderFeed } from "../../components/order-feed/order-feed";
 import { Orders } from "../../components/orders/orders";
-import { WS_CONNECTION_ALL_START } from "../../services/actions/wsActions";
+import {
+  WS_CONNECTION_ALL_START,
+  WS_CONNECTION_CLOSED,
+} from "../../services/actions/wsActions";
 
 export function FeedPage() {
+
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_ALL_START });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
 
   return (
     <div className={styles.container}>

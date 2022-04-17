@@ -10,7 +10,10 @@ import { logoutRequest } from "../../services/actions/logout";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useCallback, useEffect } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
-
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../../services/actions/wsActions";
 
 export function ProfileOrders() {
 
@@ -20,6 +23,12 @@ export function ProfileOrders() {
   const login = sessionStorage.getItem("login");
   const data = useSelector((store) => store.ws.orders);
 
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_START });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
 
   const signOut = async () => {
     dispatch(logoutRequest());

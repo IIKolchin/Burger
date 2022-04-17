@@ -1,21 +1,34 @@
 import styles from "./order-info.module.css";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getDateOrder } from "../../utils/data";
+import {
+  WS_CONNECTION_ALL_START,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_START,
+} from "../../services/actions/wsActions";
 
 export function OrderInfo() {
-  
   const { id } = useParams();
+  const dispatch = useDispatch();
   const items = useSelector((store) => store.ws.messages);
   const userItems = useSelector((store) => store.ws.orders);
   const allIngredients = useSelector((store) => store.items.data);
-  const user = localStorage.getItem("user");
   const data = items.orders?.find((el) => el._id === id)
     ? items.orders?.find((el) => el._id === id)
     : userItems.orders?.find((el) => el._id === id);
   const wsConnected = useSelector((store) => store.ws.wsConnected);
+
+  useEffect(() => {
+    dispatch({ type: WS_CONNECTION_ALL_START });
+    dispatch({ type: WS_CONNECTION_START });
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
 
   const status =
     data?.status === "done"
@@ -66,7 +79,6 @@ export function OrderInfo() {
   return (
     <>
       {Object.keys(items).length !== 0 &&
-        user &&
         ingredientSort?.length !== 0 &&
         wsConnected && (
           <section className={styles.container}>
