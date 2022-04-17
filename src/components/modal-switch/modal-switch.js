@@ -33,7 +33,6 @@ export function ModalSwitch() {
 
   const location = useLocation();
   const dispatch = useDispatch();
-  const shortModal = useSelector((state) => state.modal.shortModal);
   const background = location.state && location.state.background;
   const data = useSelector((store) => store.items.data);
   const isItems = useSelector((store) => store.items.dataRequest);
@@ -47,6 +46,8 @@ export function ModalSwitch() {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
+
+  
 
   return (
     <>
@@ -81,9 +82,9 @@ export function ModalSwitch() {
           <ProfileOrders />
         </ProtectedRoute>
 
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
+        <ProtectedRoute path="/profile/orders/:id" exact> 
+        <OrderInfo />
+        </ProtectedRoute>
 
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
@@ -91,6 +92,10 @@ export function ModalSwitch() {
 
         <Route path="/feed/:id" exact>
           <OrderInfo />
+        </Route>
+
+        <Route path="/" exact>
+          <HomePage />
         </Route>
 
         <Route>
@@ -103,7 +108,6 @@ export function ModalSwitch() {
           children={
             <Modal
               header="Детали ингредиента"
-              shortModal={shortModal}
               handleHide={handleHide}
             >
               <IngredientDetails />
@@ -112,7 +116,7 @@ export function ModalSwitch() {
         />
       )}
 
-      {background && messages.length !== 0 && wsConnected && (
+      {background && messages.orders?.length !== 0 && wsConnected && (
         <Route
           path="/feed/:id"
           children={
@@ -123,7 +127,7 @@ export function ModalSwitch() {
         />
       )}
 
-      {background && orders.length !== 0 && wsConnected && (
+      {background && orders.orders?.length !== 0 && wsConnected && (
         <Route
           path="/profile/orders/:id"
           children={

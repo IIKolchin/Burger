@@ -2,7 +2,6 @@ import { SHOW_MODAL, HIDE_MODAL } from "../actions/modalIngredient";
 
 const initialModalState = {
   showModal: false,
-  shortModal: false,
   ingredient: {},
 };
 
@@ -12,7 +11,6 @@ export const modalIngredientReducer = (state = initialModalState, action) => {
       return {
         ...state,
         showModal: true,
-        shortModal: true,
         ingredient: action.payload,
       };
     }
@@ -21,7 +19,6 @@ export const modalIngredientReducer = (state = initialModalState, action) => {
       return {
         ...state,
         showModal: false,
-        shortModal: false,
       };
     }
 

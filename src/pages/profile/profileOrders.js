@@ -18,7 +18,6 @@ export function ProfileOrders() {
 
   useEffect(() => {
     dispatch({ type: WS_CONNECTION_START });
-    dispatch({ type: WS_CONNECTION_ALL_START });
   }, []);
 
   const signOut = async () => {

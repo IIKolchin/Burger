@@ -22,6 +22,30 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
+const getUserRequest = async (token) => {
+  const res = await fetch(`${URL}auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: token,
+    },
+  });
+  const data = await checkResponse(res);
+  return data;
+};
+
+const updateTokenRequest = async (token) => {
+  const res = await fetch(`${URL}auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+  const data = await checkResponse(res);
+  return data;
+};
+
 const getDateOrder = (date) => {
   const dateNow = new Date().toLocaleString();
   const createdAt = new Date(date);
@@ -38,4 +62,11 @@ const getDateOrder = (date) => {
   return `${day}, ${hours} i-GMT+${timeZone}`;
 };
 
-export { URL, dataPropTypes, checkResponse, getDateOrder };
+export {
+  URL,
+  dataPropTypes,
+  checkResponse,
+  getDateOrder,
+  getUserRequest,
+  updateTokenRequest,
+};

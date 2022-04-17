@@ -25,7 +25,8 @@ export function Profile() {
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
 
-
+console.log(isAuth)
+console.log(login)
 
   const onChange = (e) => {
     dispatch({

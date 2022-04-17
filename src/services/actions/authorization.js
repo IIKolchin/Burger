@@ -1,6 +1,6 @@
-import { setCookie } from "../../utils/cookie"
+import { setCookie } from "../../utils/cookie";
 import { URL, checkResponse } from "../../utils/data";
-import { getUserRequest } from "../actions/getUser"
+import { getUser } from "../actions/getUser";
 
 export const GET_AUTHORIZATION_REQUEST = "GET_AUTHORIZATION_REQUEST";
 export const GET_AUTHORIZATION_SUCCESS = "GET_AUTHORIZATION_SUCCESS";
@@ -22,15 +22,14 @@ export function loginRequest(form) {
       .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
+          setCookie("token", res.accessToken);
+          localStorage.setItem("token", res.refreshToken);
+          sessionStorage.setItem("login", JSON.stringify(res.user));
+          dispatch(getUser());
           dispatch({
             type: GET_AUTHORIZATION_SUCCESS,
           });
-          setCookie('token', res.accessToken);
-          localStorage.setItem('token', res.refreshToken);
-          sessionStorage.setItem('login', JSON.stringify(res.user));
-          dispatch(getUserRequest());
-        } 
-        else {
+        } else {
           dispatch({
             type: GET_AUTHORIZATION_FAILED,
           });

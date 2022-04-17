@@ -6,10 +6,14 @@ import { useMemo } from "react";
 import { getDateOrder } from "../../utils/data";
 
 export function OrderInfo() {
+  
   const { id } = useParams();
   const items = useSelector((store) => store.ws.messages);
+  const userItems = useSelector((store) => store.ws.orders);
+
   const allIngredients = useSelector((store) => store.items.data);
-  const data = items.orders?.find((el) => el._id === id);
+  const data = items.orders?.find((el) => el._id === id) ? items.orders?.find((el) => el._id === id) : userItems.orders?.find((el) => el._id === id)
+const wsConnected = useSelector((store) => store.ws.wsConnected);
 
   const status =
     data?.status === "done"
@@ -24,49 +28,71 @@ export function OrderInfo() {
     color: data?.status === "done" ? "#00cccc" : "#F2F2F3",
   };
 
-  const ingredient = items.length !==0 && data?.ingredients.map((i) => {
-    const ing = allIngredients.find((item) => {
-      return item._id === i;
-    });
-    return ing;
+
+
+  const ingredient = items && data?.ingredients.map((i) => {
+    return allIngredients.find((item) => item._id === i)
   });
 
-  const ingredientSort = items.length !==0 && ingredient?.sort((a, b) => {
+const ingredientUnique = ingredient?.filter((item, pos, arr) => arr.lastIndexOf(item) === pos)
+
+  console.log(ingredientUnique)
+
+  const ingredientSort = items && ingredientUnique?.sort((a, b) => {
     if (a.type === "bun") return -1;
     if (b.type === "bun") return 1;
     return a.type.localeCompare(b.type);
+
   });
 
-  console.log(items)
-  console.log(data)
-  console.log(ingredient)
 
-console.log(ingredientSort)
+  const ingredients = ingredient?.reduce((prev, curr) => {
+    const id = curr._id
+    prev.item[id] = curr;
+    prev.count[id] = (prev.count[id] || 0) + 1
+    return prev
+  },{ item: {}, count: {} })
 
-  const ingredients =
-    items.length !== 1 && ingredientSort[1].type === "bun"
-      ? ingredientSort.slice(1)
-      : ingredientSort
-      ? ingredientSort
-      : ingredient;
+  // console.log(countIngredient)
+
+
+  // console.log(data)
+  // console.log(Object.keys(items).length !== 0 )
+
+// console.log(data.createdAt)
+
+
+  // const ingredients =
+  //   ingredientSort?.length !== 0 && ingredientSort[1]?.type === "bun"
+  //     ? ingredientSort.slice(1)
+  //     : ingredientSort
+  //     ? ingredientSort
+  //     : ingredient;
+
+
+
+      // console.log(ingredients)
+      // console.log(wsConnected)
 
   const totalPrice = useMemo(() => {
     let total = 0;
 
-    ingredientSort.map((item) => {
+    ingredient?.map((item) => {
       if (data) {
         total += item.price || 0;
       }
-      if (item.type === "bun") {
-        total += item.price;
-      }
+
     });
 
     return total ? total : 0;
   }, []);
 
+  // console.log(ingredientSort.length)
+  console.log(ingredients?.count)
   return (
-    <section className={styles.container}>
+    <>
+   {Object.keys(items).length !== 0 && ingredient?.length !== 0 && wsConnected && (
+   <section className={styles.container}>
       <p className={styles.number + " text text_type_digits-default pl-6"}>
         {data ? `#${data.number}` : null}
       </p>
@@ -76,8 +102,8 @@ console.log(ingredientSort)
       </p>
       <p className={styles.h3}>Состав:</p>
       <ul className={styles.ingredients}>
-        {data &&
-          ingredients.map((data, i) => {
+        { ingredientSort?.map((data, i) => {
+          console.log(data)
             return (
               <li className={styles.item} key={i}>
                 <div className={styles.flex}>
@@ -93,7 +119,8 @@ console.log(ingredientSort)
                       styles.quantity + " text text_type_digits-default"
                     }
                   >
-                    {`${data.type === "bun" ? 2 : 1} x ${data.price}`}
+                    {/* {`${data.type === "bun" ? 2 : 1} x ${data.price}`} */}
+                    {`${ingredients?.count[data._id]} x ${data.price}`}
                   </p>
                   <CurrencyIcon />
                 </div>
@@ -108,7 +135,7 @@ console.log(ingredientSort)
             " text text_type_main-default text_color_inactive pr-6"
           }
         >
-          {getDateOrder(data.createdAt)}
+          {getDateOrder(data?.createdAt)}
         </span>
         <div className={styles.flex}>
           <p className={styles.quantity + " text text_type_digits-default"}>
@@ -117,6 +144,7 @@ console.log(ingredientSort)
           <CurrencyIcon />
         </div>
       </div>
-    </section>
+    </section>) }
+    </>
   );
 }

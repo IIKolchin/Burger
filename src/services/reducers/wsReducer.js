@@ -9,8 +9,8 @@ import {
   
   const initialState = {
     wsConnected: false,
-    messages: [],
-    orders: []
+    messages: {},
+    orders: {}
   };
   
   export const wsReducer = (state = initialState, action) => {
@@ -36,9 +36,6 @@ import {
         case WS_GET_ALL_MESSAGE:
       return {
         ...state,
-        // messages: state.messages.length
-        //   ? [{ ...action.payload, timestamp: new Date().getTime() / 1000 }]
-        //   : [{ ...action.payload, timestamp: new Date().getTime() / 1000 }],
           messages: action.payload
       };
       case WS_GET_MESSAGE:
