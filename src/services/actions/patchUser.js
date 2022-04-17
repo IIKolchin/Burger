@@ -1,41 +1,38 @@
-import { URL, checkResponse } from "../../utils/data";
-import { getCookie } from "../../utils/cookie";
-import { updateTokenRequest } from "../../services/actions/updateToken";
+import { patchUserRequest } from "../../utils/data";
+import { updateToken } from "../actions/getUser";
 export const PATCH_USER_REQUEST = "PATCH_USER_REQUEST";
 export const PATCH_USER_SUCCESS = "PATCH_USER_SUCCESS";
 export const PATCH_USER_FAILED = "PATCH_USER_FAILED";
 export const SET_PATCH_USER = "SET_PATCH_USER";
 
-export function patchUserRequest(form) {
+export function patchUser(form) {
   return async function (dispatch) {
     dispatch({
       type: PATCH_USER_REQUEST,
     });
-    fetch(`${URL}auth/user`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: getCookie("token"),
-      },
-      body: JSON.stringify(form),
-    })
-      .then(checkResponse)
-      .then((res) => {
-        if (res && res.success) {
-          dispatch({
-            type: PATCH_USER_SUCCESS,
-            form: res.user,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    try {
+      const data = await patchUserRequest(form);
+      if (data && data.success) {
+        dispatch({
+          type: PATCH_USER_SUCCESS,
+          form: data.user,
+        });
+      }
+    } catch (err) {
+      try {
         if (err === "Ошибка: 403") {
-          dispatch({ type: PATCH_USER_FAILED });
-          dispatch(updateTokenRequest());
-          dispatch(patchUserRequest(form))
+          await updateToken();
+          const data = await patchUserRequest(form);
+          if (data && data.success) {
+            dispatch({
+              type: PATCH_USER_SUCCESS,
+              form: data.user,
+            });
+          }
         }
-
-      });
+      } catch (err) {
+        dispatch({ type: PATCH_USER_FAILED });
+      }
+    }
   };
 }

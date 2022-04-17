@@ -2,18 +2,15 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/logout";
-import {
-  patchUserRequest,
-  SET_PATCH_USER,
-} from "../../services/actions/patchUser";
-import { WS_CONNECTION_START } from "../../services/actions/wsActions";
+import { patchUser, SET_PATCH_USER } from "../../services/actions/patchUser";
 
 export function Profile() {
+
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const form = useSelector((store) => store.patchUser.form);
@@ -24,9 +21,6 @@ export function Profile() {
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
-
-console.log(isAuth)
-console.log(login)
 
   const onChange = (e) => {
     dispatch({
@@ -83,7 +77,7 @@ console.log(login)
 
   const formSubmit = (e) => {
     e.preventDefault();
-    dispatch(patchUserRequest(form));
+    dispatch(patchUser(form));
     setShowButton(false);
   };
 

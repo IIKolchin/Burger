@@ -4,22 +4,21 @@ import { ModalSwitch } from "../modal-switch/modal-switch";
 import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../services/actions/getUser";
-import { WS_CONNECTION_ALL_START, WS_CONNECTION_START } from "../../services/actions/wsActions";
-
+import {
+  WS_CONNECTION_ALL_START,
+  WS_CONNECTION_START,
+} from "../../services/actions/wsActions";
 
 function App() {
-
+  
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
-    dispatch(getUser()); 
+    dispatch(getUser());
     dispatch({ type: WS_CONNECTION_ALL_START });
     dispatch({ type: WS_CONNECTION_START });
   }, [dispatch]);
-  
-
-  
 
   return (
     <Router>

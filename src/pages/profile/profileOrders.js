@@ -1,24 +1,25 @@
 import styles from "./profile.module.css";
-import { BrowserRouter as Router, Link, Redirect, NavLink, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Link,
+  Redirect,
+  NavLink,
+  useLocation,
+} from "react-router-dom";
 import { logoutRequest } from "../../services/actions/logout";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
-import { WS_CONNECTION_START, WS_CONNECTION_ALL_START} from "../../services/actions/wsActions"
 
 
 export function ProfileOrders() {
-  
+
   const dispatch = useDispatch();
   const location = useLocation();
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const login = sessionStorage.getItem("login");
-  const data = useSelector((store) => store.ws.orders)
+  const data = useSelector((store) => store.ws.orders);
 
-
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-  }, []);
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -46,7 +47,7 @@ export function ProfileOrders() {
         }}
       />
     );
-  }  
+  }
 
   return (
     <div className={styles.container}>
@@ -78,22 +79,21 @@ export function ProfileOrders() {
       </div>
 
       <div className={styles.order}>
-        {data && data.orders?.map((data) => {
-          return (
-            <Link
-            key={data._id}
-            className={styles.link}
-            to={{
-              pathname: `/profile/orders/${data._id}`,
-              state: { background: location },
-            }}
-          >
-            <FeedItem data={data} status={data.status}/>
-          </Link>
-
-          )
-        })}
-       
+        {data &&
+          data.orders?.map((data) => {
+            return (
+              <Link
+                key={data._id}
+                className={styles.link}
+                to={{
+                  pathname: `/profile/orders/${data._id}`,
+                  state: { background: location },
+                }}
+              >
+                <FeedItem data={data} status={data.status} />
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

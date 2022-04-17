@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { getCookie } from "../utils/cookie";
 
 const URL = "https://norma.nomoreparties.space/api/";
 
@@ -15,6 +16,16 @@ const dataPropTypes = PropTypes.shape({
   carbohydrates: PropTypes.number,
 });
 
+const dataOrderPropTypes = PropTypes.shape({
+  createdAt: PropTypes.string,
+  ingredients: PropTypes.array,
+  name: PropTypes.string,
+  number: PropTypes.number,
+  status: PropTypes.string,
+  updatedAt: PropTypes.string,
+  _id: PropTypes.string,
+});
+
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
@@ -29,6 +40,19 @@ const getUserRequest = async (token) => {
       "Content-Type": "application/json",
       authorization: token,
     },
+  });
+  const data = await checkResponse(res);
+  return data;
+};
+
+const patchUserRequest = async (form) => {
+  const res = await fetch(`${URL}auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getCookie("token"),
+    },
+    body: JSON.stringify(form),
   });
   const data = await checkResponse(res);
   return data;
@@ -65,8 +89,10 @@ const getDateOrder = (date) => {
 export {
   URL,
   dataPropTypes,
+  dataOrderPropTypes,
   checkResponse,
   getDateOrder,
   getUserRequest,
   updateTokenRequest,
+  patchUserRequest,
 };

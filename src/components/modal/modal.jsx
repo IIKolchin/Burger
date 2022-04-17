@@ -39,7 +39,6 @@ function Modal(props) {
 }
 
 Modal.propTypes = {
-  shortModal: PropTypes.bool,
   handleHide: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
   header: PropTypes.string,

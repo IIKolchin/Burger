@@ -5,7 +5,6 @@ import { constructorReducer } from "./constructor";
 import { modalIngredientReducer } from "./modalIngredient";
 import { registerReducer } from "./register";
 import { authorizationReducer } from "./authorization";
-import { updateTokenReducer } from "./updateToken";
 import { logoutReducer } from "./logout";
 import { newPasswordReducer } from "./newPassword";
 import { userReducer } from "./getUser";
@@ -23,7 +22,6 @@ export const rootReducer = (history) =>
     modal: modalIngredientReducer,
     register: registerReducer,
     authorization: authorizationReducer,
-    updateToken: updateTokenReducer,
     logout: logoutReducer,
     newPassword: newPasswordReducer,
     user: userReducer,

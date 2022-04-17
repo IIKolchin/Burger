@@ -1,16 +1,19 @@
 import styles from "./image-feed.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
 export function ImageFeed({ id }) {
-    
+
   const items = useSelector((store) => store.items.data);
   const data = items.find((data) => data._id === id);
 
-  // console.log(data.image_mobile)
-
   return (
     <div className={styles.item}>
-      {data && <img className={styles.image} src={`${data.image}`} alt="" />}
+      {data && <img className={styles.image} src={`${data.image}`} alt="Изображение ингредиента" />}
     </div>
   );
 }
+
+ImageFeed.propTypes = {
+  id: PropTypes.string.isRequired,
+};

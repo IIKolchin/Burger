@@ -1,11 +1,9 @@
-import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useHistory,
   useLocation,
-  useParams,
 } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -26,11 +24,10 @@ import {
   FeedPage,
   OrderInfo,
 } from "../../pages";
-import { getIngredients } from "../../services/actions/ingredients";
-import { getUserRequest } from "../../services/actions/getUser";
+
 
 export function ModalSwitch() {
-
+  
   const location = useLocation();
   const dispatch = useDispatch();
   const background = location.state && location.state.background;
@@ -46,8 +43,6 @@ export function ModalSwitch() {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
-
-  
 
   return (
     <>
@@ -78,12 +73,12 @@ export function ModalSwitch() {
           <Profile />
         </ProtectedRoute>
 
-        <ProtectedRoute path="/profile/orders" exact> 
+        <ProtectedRoute path="/profile/orders" exact>
           <ProfileOrders />
         </ProtectedRoute>
 
-        <ProtectedRoute path="/profile/orders/:id" exact> 
-        <OrderInfo />
+        <ProtectedRoute path="/profile/orders/:id" exact>
+          <OrderInfo />
         </ProtectedRoute>
 
         <Route path="/ingredients/:id" exact>
@@ -106,10 +101,7 @@ export function ModalSwitch() {
         <Route
           path="/ingredients/:id"
           children={
-            <Modal
-              header="Детали ингредиента"
-              handleHide={handleHide}
-            >
+            <Modal header="Детали ингредиента" handleHide={handleHide}>
               <IngredientDetails />
             </Modal>
           }
