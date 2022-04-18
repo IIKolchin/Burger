@@ -42,7 +42,6 @@ export function getUser() {
             dispatch({ type: GET_USER_FAILED });
           }
         }
-        dispatch({ type: GET_USER_FAILED });
       } catch (error) {
         dispatch({ type: GET_USER_FAILED });
       }

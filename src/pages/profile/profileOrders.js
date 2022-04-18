@@ -19,7 +19,6 @@ export function ProfileOrders() {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const isAuth = useSelector((store) => store.authorization.isAuth);
   const login = sessionStorage.getItem("login");
   const data = useSelector((store) => store.ws.orders);
 
@@ -38,15 +37,6 @@ export function ProfileOrders() {
     signOut();
   }, []);
 
-  if (!isAuth) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/login",
-        }}
-      />
-    );
-  }
 
   if (!login) {
     return (
@@ -91,7 +81,7 @@ export function ProfileOrders() {
           </div>
 
           <div className={styles.order}>
-            {data.orders !== 0 ?
+            {
               (data.orders?.map((data) => {
                 return (
                   <Link
@@ -105,7 +95,7 @@ export function ProfileOrders() {
                     <FeedItem data={data} status={data.status} />
                   </Link>
                 );
-              })) : null}
+              })) }
           </div>
         </div>
       )}

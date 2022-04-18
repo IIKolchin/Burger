@@ -30,7 +30,6 @@ export const patchUserReducer = (state = initialState, action) => {
         ...state,
         userFailed: false,
         userRequest: false,
-        // form: action.form,
       };
     }
     case PATCH_USER_FAILED: {

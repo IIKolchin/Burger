@@ -25,7 +25,6 @@ import {
   OrderInfo,
 } from "../../pages";
 
-
 export function ModalSwitch() {
   
   const location = useLocation();
@@ -35,9 +34,7 @@ export function ModalSwitch() {
   const isItems = useSelector((store) => store.items.dataRequest);
   const isError = useSelector((store) => store.items.dataFailed);
   const history = useHistory();
-  const wsConnected = useSelector((store) => store.ws.wsConnected);
-  const orders = useSelector((store) => store.ws.orders);
-  const messages = useSelector((store) => store.ws.messages);
+
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
@@ -108,26 +105,25 @@ export function ModalSwitch() {
         />
       )}
 
-      {background && messages.orders?.length !== 0 && wsConnected && (
-        <Route
-          path="/feed/:id"
-          children={
-            <Modal handleHide={handleHide}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
-      )}
-
-      {background && orders.orders?.length !== 0 && wsConnected && (
-        <Route
-          path="/profile/orders/:id"
-          children={
-            <Modal handleHide={handleHide}>
-              <OrderInfo />
-            </Modal>
-          }
-        />
+      {background && (
+        <>
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal handleHide={handleHide}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            children={
+              <Modal handleHide={handleHide}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </>
       )}
     </>
   );

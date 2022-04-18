@@ -1,7 +1,6 @@
 import styles from "./feed.module.css";
-import { Link, Redirect, NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { OrderFeed } from "../../components/order-feed/order-feed";
 import { Orders } from "../../components/orders/orders";
 import {
@@ -10,7 +9,6 @@ import {
 } from "../../services/actions/wsActions";
 
 export function FeedPage() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,7 +16,7 @@ export function FeedPage() {
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={styles.container}>

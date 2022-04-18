@@ -6,14 +6,13 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 function AppHeader() {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
         <ul className={styles.menu}>
-
           <NavLink
             to="/"
             className={styles.link + " text text_type_main-default mr-10 "}
@@ -28,13 +27,13 @@ function AppHeader() {
               />
               <div className="ml-2">Конструктор</div>
             </li>
-
           </NavLink>
 
           <NavLink
             to="/feed"
             className={
-              styles.link + " text text_type_main-default text_color_inactive ml-2"
+              styles.link +
+              " text text_type_main-default text_color_inactive ml-2"
             }
             activeClassName={styles.activeLink}
             exact
@@ -53,10 +52,12 @@ function AppHeader() {
             </li>
           </NavLink>
 
-          <li className={styles.logo}>
-            <Logo />
-          </li>
-
+          <Link to="/">
+            <li className={styles.logo}>
+              <Logo />
+            </li>
+          </Link>
+          
           <NavLink
             to={{ pathname: "/profile" }}
             className={styles.link + " text text_type_main-default"}
