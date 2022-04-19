@@ -26,15 +26,14 @@ import {
 } from "../../pages";
 
 export function ModalSwitch() {
-  
   const location = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
-  const background = location.state && location.state.background;
+  const action = history.action === "PUSH" || history.action === "REPLACE";
+  const background = action && location.state && location.state.background;
   const data = useSelector((store) => store.items.data);
   const isItems = useSelector((store) => store.items.dataRequest);
   const isError = useSelector((store) => store.items.dataFailed);
-  const history = useHistory();
-
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });

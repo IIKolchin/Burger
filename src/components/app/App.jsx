@@ -5,9 +5,7 @@ import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../services/actions/getUser";
 
-
 function App() {
-
   const dispatch = useDispatch();
 
   useEffect(() => {

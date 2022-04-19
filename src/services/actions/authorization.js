@@ -24,7 +24,6 @@ export function loginRequest(form) {
         if (res && res.success) {
           setCookie("token", res.accessToken);
           localStorage.setItem("token", res.refreshToken);
-          sessionStorage.setItem("login", JSON.stringify(res.user));
           dispatch(getUser());
           dispatch({
             type: GET_AUTHORIZATION_SUCCESS,

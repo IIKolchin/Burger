@@ -1,5 +1,7 @@
 import { patchUserRequest } from "../../utils/data";
 import { updateToken } from "../actions/getUser";
+import { GET_USER_SUCCESS } from "../actions/getUser";
+
 export const PATCH_USER_REQUEST = "PATCH_USER_REQUEST";
 export const PATCH_USER_SUCCESS = "PATCH_USER_SUCCESS";
 export const PATCH_USER_FAILED = "PATCH_USER_FAILED";
@@ -27,6 +29,9 @@ export function patchUser(form) {
             dispatch({
               type: PATCH_USER_SUCCESS,
               form: data.user,
+            });
+            dispatch({
+              type: GET_USER_SUCCESS,
             });
           }
         }

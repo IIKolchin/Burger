@@ -12,12 +12,11 @@ import {
 import { Redirect } from "react-router-dom";
 
 export function ResetPasswordPage() {
-  
   const isNewPasswordSuccess = useSelector(
     (store) => store.newPassword.isNewPasswordSuccess
   );
   const form = useSelector((store) => store.newPassword.form);
-  const login = sessionStorage.getItem("login");
+  const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
   const forgotPasswordSuccess = useSelector(
     (store) => store.forgotPassword.forgotPasswordSuccess
@@ -55,7 +54,7 @@ export function ResetPasswordPage() {
     );
   }
 
-  if (login) {
+  if (isUser) {
     return (
       <Redirect
         to={{

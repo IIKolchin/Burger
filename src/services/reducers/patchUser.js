@@ -13,7 +13,6 @@ const initialState = {
   },
   userRequest: false,
   userFailed: false,
-  isUser: false,
 };
 
 export const patchUserReducer = (state = initialState, action) => {
@@ -37,7 +36,6 @@ export const patchUserReducer = (state = initialState, action) => {
         ...state,
         userFailed: true,
         userRequest: false,
-        isUser: false,
       };
     }
     case SET_PATCH_USER: {

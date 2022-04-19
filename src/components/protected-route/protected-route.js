@@ -2,14 +2,21 @@ import { Route } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../services/actions/getUser";
 
 export function ProtectedRoute({ children, ...rest }) {
-  const user = localStorage.getItem("user");
-
+  const dispatch = useDispatch();
+  const isUser = useSelector((store) => store.user.isUser);
   const [isUserLoaded, setUserLoaded] = useState(false);
 
-  useEffect(() => {
+  const init = async () => {
+    await dispatch(getUser());
     setUserLoaded(true);
+  };
+
+  useEffect(() => {
+    init();
   }, []);
 
   if (!isUserLoaded) {
@@ -20,7 +27,7 @@ export function ProtectedRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        user ? (
+        isUser ? (
           children
         ) : (
           <Redirect
@@ -36,6 +43,6 @@ export function ProtectedRoute({ children, ...rest }) {
 }
 
 ProtectedRoute.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.element.isRequired,
   rest: PropTypes.object,
 };

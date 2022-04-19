@@ -2,25 +2,36 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/logout";
 import { patchUser, SET_PATCH_USER } from "../../services/actions/patchUser";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from "../../services/actions/wsActions";
 
 export function Profile() {
-
   const dispatch = useDispatch();
   const [showButton, setShowButton] = useState(false);
   const form = useSelector((store) => store.patchUser.form);
   const userForm = useSelector((store) => store.user.form);
-  const isAuth = useSelector((store) => store.authorization.isAuth);
-  const login = sessionStorage.getItem("login");
+  const isUser = useSelector((store) => store.user.isUser);
   const [, forceUpdate] = useState(0);
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
+
+  useEffect(() => {
+    if (isUser) {
+      dispatch({ type: WS_CONNECTION_START });
+    }
+    return () => {
+      dispatch({ type: WS_CONNECTION_CLOSED });
+    };
+  }, []);
 
   const onChange = (e) => {
     dispatch({
@@ -55,17 +66,7 @@ export function Profile() {
     signOut();
   }, [signOut]);
 
-  if (!isAuth) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/login",
-        }}
-      />
-    );
-  }
-
-  if (!login) {
+  if (!isUser) {
     return (
       <Redirect
         to={{

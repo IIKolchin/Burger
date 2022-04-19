@@ -10,24 +10,12 @@ import { logoutRequest } from "../../services/actions/logout";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useCallback, useEffect } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from "../../services/actions/wsActions";
 
 export function ProfileOrders() {
-
   const dispatch = useDispatch();
   const location = useLocation();
-  const login = sessionStorage.getItem("login");
+  const isUser = useSelector((store) => store.user.isUser);
   const data = useSelector((store) => store.ws.orders);
-
-  useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
-    };
-  }, []);
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -37,8 +25,7 @@ export function ProfileOrders() {
     signOut();
   }, []);
 
-
-  if (!login) {
+  if (!isUser) {
     return (
       <Redirect
         to={{
@@ -47,7 +34,6 @@ export function ProfileOrders() {
       />
     );
   }
-
 
   return (
     <>
@@ -81,21 +67,20 @@ export function ProfileOrders() {
           </div>
 
           <div className={styles.order}>
-            {
-              (data.orders?.map((data) => {
-                return (
-                  <Link
-                    key={data._id}
-                    className={styles.link}
-                    to={{
-                      pathname: `/profile/orders/${data._id}`,
-                      state: { background: location },
-                    }}
-                  >
-                    <FeedItem data={data} status={data.status} />
-                  </Link>
-                );
-              })) }
+            {data.orders?.map((data) => {
+              return (
+                <Link
+                  key={data._id}
+                  className={styles.link}
+                  to={{
+                    pathname: `/profile/orders/${data._id}`,
+                    state: { background: location },
+                  }}
+                >
+                  <FeedItem data={data} status={data.status} />
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
