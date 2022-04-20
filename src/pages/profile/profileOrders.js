@@ -15,7 +15,7 @@ export function ProfileOrders() {
   const dispatch = useDispatch();
   const location = useLocation();
   const isUser = useSelector((store) => store.user.isUser);
-  const data = useSelector((store) => store.ws.orders);
+  const data = useSelector((store) => store?.ws?.orders);
 
   const signOut = async () => {
     dispatch(logoutRequest());
@@ -37,7 +37,7 @@ export function ProfileOrders() {
 
   return (
     <>
-      {data.orders !== 0 && (
+
         <div className={styles.container}>
           <div>
             <nav className={styles.nav}>
@@ -67,7 +67,7 @@ export function ProfileOrders() {
           </div>
 
           <div className={styles.order}>
-            {data.orders?.map((data) => {
+            {data.orders !== 0 && data.orders?.map((data) => {
               return (
                 <Link
                   key={data._id}
@@ -83,7 +83,7 @@ export function ProfileOrders() {
             })}
           </div>
         </div>
-      )}
+   
     </>
   );
 }

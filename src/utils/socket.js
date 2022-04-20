@@ -12,7 +12,6 @@ import {
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders';
 const wsActions = {
-  // wsInit: WS_CONNECTION_START,
   wsAll: WS_CONNECTION_ALL_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,

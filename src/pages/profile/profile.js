@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/logout";
 import { patchUser, SET_PATCH_USER } from "../../services/actions/patchUser";
 import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
+  wsConnectionStart,
+  wsConnectionClosed,
 } from "../../services/actions/wsActions";
+import { getCookie } from "../../utils/cookie";
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -19,17 +20,19 @@ export function Profile() {
   const form = useSelector((store) => store.patchUser.form);
   const userForm = useSelector((store) => store.user.form);
   const isUser = useSelector((store) => store.user.isUser);
+  const user = useSelector((store) => store.user.form);
   const [, forceUpdate] = useState(0);
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
 
   useEffect(() => {
-    if (isUser) {
-      dispatch({ type: WS_CONNECTION_START });
+    if (user.name && user.email) {
+    const token = getCookie("token")
+      dispatch(wsConnectionStart(token));
     }
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(wsConnectionClosed());
     };
   }, []);
 

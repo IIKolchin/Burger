@@ -4,17 +4,17 @@ import React, { useEffect } from "react";
 import { OrderFeed } from "../../components/order-feed/order-feed";
 import { Orders } from "../../components/orders/orders";
 import {
-  WS_CONNECTION_ALL_START,
-  WS_CONNECTION_CLOSED,
+  wsConnectionAllStart,
+  wsConnectionClosed,
 } from "../../services/actions/wsActions";
 
 export function FeedPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_ALL_START });
+    dispatch(wsConnectionAllStart());
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(wsConnectionClosed());
     };
   }, [dispatch]);
 

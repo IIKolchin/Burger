@@ -7,6 +7,19 @@ export const WS_GET_MESSAGE = 'WS_GET_MESSAGE';
 export const WS_GET_ALL_MESSAGE = 'WS_GET_ALL_MESSAGE';
 export const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE';
 
+
+export const wsConnectionStart = (token) => {
+  return {
+    type: WS_CONNECTION_START,
+    payload: { token }
+  };
+};
+
+export const wsConnectionAllStart = () => {
+  return {
+    type: WS_CONNECTION_ALL_START
+  };
+};
   
   export const wsConnectionSuccess = () => {
     return {
