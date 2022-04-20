@@ -37,37 +37,37 @@ export function ProfileOrders() {
 
   return (
     <>
+      <div className={styles.container}>
+        <div>
+          <nav className={styles.nav}>
+            <NavLink
+              to={{ pathname: `/profile` }}
+              exact
+              className={styles.a + " mb-8"}
+              activeClassName={styles.activeLink}
+            >
+              Профиль
+            </NavLink>
+            <NavLink
+              to={{ pathname: `/profile/orders` }}
+              exact
+              className={styles.a + " mb-8"}
+              activeClassName={styles.activeLink}
+            >
+              История заказов
+            </NavLink>
+            <button onClick={logout} className={styles.exit}>
+              Выход
+            </button>
+          </nav>
+          <p className={styles.p + " mt-20"}>
+            В этом разделе вы можете просмотреть свою историю заказов
+          </p>
+        </div>
 
-        <div className={styles.container}>
-          <div>
-            <nav className={styles.nav}>
-              <NavLink
-                to={{ pathname: `/profile` }}
-                exact
-                className={styles.a + " mb-8"}
-                activeClassName={styles.activeLink}
-              >
-                Профиль
-              </NavLink>
-              <NavLink
-                to={{ pathname: `/profile/orders` }}
-                exact
-                className={styles.a + " mb-8"}
-                activeClassName={styles.activeLink}
-              >
-                История заказов
-              </NavLink>
-              <button onClick={logout} className={styles.exit}>
-                Выход
-              </button>
-            </nav>
-            <p className={styles.p + " mt-20"}>
-              В этом разделе вы можете просмотреть свою историю заказов
-            </p>
-          </div>
-
-          <div className={styles.order}>
-            {data.orders !== 0 && data.orders?.map((data) => {
+        <div className={styles.order}>
+          {data.orders !== 0 &&
+            data.orders?.map((data) => {
               return (
                 <Link
                   key={data._id}
@@ -81,9 +81,8 @@ export function ProfileOrders() {
                 </Link>
               );
             })}
-          </div>
         </div>
-   
+      </div>
     </>
   );
 }

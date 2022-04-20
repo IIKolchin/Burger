@@ -35,7 +35,7 @@
 
 .ingredients {
   height: 312px;
-  overflow-y: scroll;
+  overflow-y: auto;
   list-style: none;
   margin: 0;
   padding: 0;

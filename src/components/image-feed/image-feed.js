@@ -1,13 +1,7 @@
 import styles from "./image-feed.module.css";
-import { useSelector } from "react-redux";
-import PropTypes from "prop-types";
+import { dataPropTypes } from "../../utils/data";
 
-export function ImageFeed({ id }) {
-  const items = useSelector((store) => store.items.data);
-  const data = items
-    .filter((data) => data !== undefined)
-    .find((data) => data._id === id);
-
+export function ImageFeed({ data }) {
   return (
     <div className={styles.item}>
       {data && (
@@ -22,5 +16,5 @@ export function ImageFeed({ id }) {
 }
 
 ImageFeed.propTypes = {
-  id: PropTypes.string.isRequired,
+  data: dataPropTypes.isRequired,
 };

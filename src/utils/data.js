@@ -1,5 +1,12 @@
 import PropTypes from "prop-types";
 import { getCookie } from "../utils/cookie";
+import {
+  format,
+  formatDistanceToNowStrict,
+  isToday,
+  isYesterday,
+} from "date-fns";
+import { ru } from "date-fns/locale";
 
 const URL = "https://norma.nomoreparties.space/api/";
 
@@ -71,19 +78,18 @@ const updateTokenRequest = async (token) => {
 };
 
 const getDateOrder = (date) => {
-  const dateNow = new Date().toLocaleString();
-  const createdAt = new Date(date);
-  const dateOrder = createdAt.toLocaleString();
-  const timeZone = (createdAt.getTimezoneOffset() / 60) * -1;
-  const dayNumber = dateNow.slice(0, 2) - dateOrder.slice(0, 2);
-  const hours = dateOrder.slice(12, 17);
-  const day =
-    dayNumber === 0
-      ? "Cегодня"
-      : dayNumber === 1
-      ? "Вчера"
-      : `${dayNumber}  дня(-ей) назад`;
-  return `${day}, ${hours} i-GMT+${timeZone}`;
+  const dateCreatedAt = new Date(date);
+  const day = isToday(dateCreatedAt)
+    ? "Сегодня"
+    : isYesterday(dateCreatedAt)
+    ? "Вчера"
+    : formatDistanceToNowStrict(dateCreatedAt, {
+        unit: "day",
+        addSuffix: true,
+        locale: ru,
+      });
+  const hour = format(dateCreatedAt, "p 'i-'O", {locale: ru});
+  return `${day}, ${hour}`    
 };
 
 export {

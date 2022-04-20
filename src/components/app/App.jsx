@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import { ModalSwitch } from "../modal-switch/modal-switch";
 import { getIngredients } from "../../services/actions/ingredients";
 import { useDispatch } from "react-redux";
@@ -13,11 +12,7 @@ function App() {
     dispatch(getUser());
   }, [dispatch]);
 
-  return (
-    <Router>
-      <ModalSwitch />
-    </Router>
-  );
+  return <ModalSwitch />;
 }
 
 export default App;

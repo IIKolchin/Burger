@@ -23,7 +23,13 @@ export function FeedItem({ status, data }) {
       ? "Создан"
       : "";
 
-  const ingredients = data.ingredients.slice(0, 6);
+  const ingredients = useMemo(() => {
+  return  data.ingredients.length && items.length ? data.ingredients.map((id) => {
+    return items.find((item) => item._id === id)
+    
+  }).filter((data) => data !== undefined).slice(0, 6) : []
+  },[data.ingredients, items])
+
   const otherIngredients =
     data.ingredients.slice(6).length !== 0
       ? `+${data.ingredients.slice(6).length}`
@@ -38,7 +44,7 @@ export function FeedItem({ status, data }) {
       }
     });
     return total ? total : 0;
-  }, []);
+  }, [ingredients]);
 
   return (
     <div className={styles.container} style={style}>
@@ -62,8 +68,8 @@ export function FeedItem({ status, data }) {
       <div className={styles.ingredients + " mt-6 ml-6 mr-6 pb-6"}>
         <div className={styles.items}>
           {data &&
-            ingredients.map((id, index) => {
-              return <ImageFeed key={index} id={id} />;
+            ingredients.map((data, index) => {
+              return <ImageFeed key={index} data={data} />;
             })}
           {otherIngredients && (
             <div className={styles.other}>{otherIngredients}</div>

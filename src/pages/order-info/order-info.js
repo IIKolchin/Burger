@@ -1,4 +1,5 @@
 import styles from "./order-info.module.css";
+import { getCookie } from "../../utils/cookie";
 import { useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,9 +9,9 @@ import {
 } from "react-router-dom";
 import { getDateOrder } from "../../utils/data";
 import {
-  WS_CONNECTION_ALL_START,
-  WS_CONNECTION_CLOSED,
-  WS_CONNECTION_START,
+  wsConnectionAllStart,
+  wsConnectionClosed,
+  wsConnectionStart,
 } from "../../services/actions/wsActions";
 
 export function OrderInfo() {
@@ -25,10 +26,11 @@ export function OrderInfo() {
 
 
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START });
-    dispatch({ type: WS_CONNECTION_ALL_START });
+    const token = getCookie("token").split("Bearer ")[1]
+    dispatch(wsConnectionStart(token));
+    dispatch(wsConnectionAllStart());
     return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED });
+      dispatch(wsConnectionClosed());
     };
   }, []);
 
@@ -80,7 +82,7 @@ export function OrderInfo() {
 
   return (
     <>
-      {ingredientSort?.length !== 0 && (
+      {data && ingredientSort?.length !== 0 && (
         <section className={styles.container}>
           <p className={styles.number + " text text_type_digits-default pl-6"}>
             {data ? `#${data.number}` : null}

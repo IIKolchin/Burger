@@ -1,5 +1,6 @@
 import { updateTokenRequest, getUserRequest } from "../../utils/data";
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
+import { PATCH_USER_SUCCESS } from "./patchUser"
 
 export const GET_USER_REQUEST = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
@@ -14,9 +15,12 @@ export function getUser() {
       const token = getCookie("token");
       const data = await getUserRequest(token);
       if (data?.success) {
-        localStorage.setItem("user", JSON.stringify(data.user));
         dispatch({
           type: GET_USER_SUCCESS,
+          form: data.user,
+        });
+        dispatch({
+          type: PATCH_USER_SUCCESS,
           form: data.user,
         });
       }
@@ -25,13 +29,16 @@ export function getUser() {
         if (err === "Ошибка: 403") {
           console.log(err);
           deleteCookie("token");
-          localStorage.removeItem("user");
           await updateToken();
           const token = getCookie("token");
           const data = await getUserRequest(token);
           if (data?.success) {
             dispatch({
               type: GET_USER_SUCCESS,
+              form: data.user,
+            });
+            dispatch({
+              type: PATCH_USER_SUCCESS,
               form: data.user,
             });
           } else {

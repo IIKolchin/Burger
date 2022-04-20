@@ -21,25 +21,25 @@ export function Profile() {
   const userForm = useSelector((store) => store.user.form);
   const isUser = useSelector((store) => store.user.isUser);
   const user = useSelector((store) => store.user.form);
-  const [, forceUpdate] = useState(0);
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
 
   useEffect(() => {
     if (user.name && user.email) {
-    const token = getCookie("token")
-      dispatch(wsConnectionStart(token));
-    }
-    return () => {
+    const token = getCookie("token").split("Bearer ")[1]
+     dispatch(wsConnectionStart(token));
+
+     return () => {
       dispatch(wsConnectionClosed());
     };
-  }, []);
+    }
+  }, [user]);
 
   const onChange = (e) => {
     dispatch({
       type: SET_PATCH_USER,
-      payload: { ...form, [e.target.name]: e.target.value },
+      payload: { [e.target.name]: e.target.value },
     });
     setShowButton(true);
   };
@@ -55,10 +55,11 @@ export function Profile() {
   };
 
   const cancel = useCallback(() => {
-    form.name = userForm.name;
-    form.email = userForm.email;
+    dispatch({
+      type: SET_PATCH_USER,
+      payload: { ...form, name: userForm.name, email: userForm.email },
+    });
     setShowButton(false);
-    forceUpdate((n) => !n);
   }, [form]);
 
   const signOut = async () => {

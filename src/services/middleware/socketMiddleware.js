@@ -1,16 +1,13 @@
-import { getCookie } from "../../utils/cookie";
 
 export const socketMiddleware = (wsUrl, wsActions) => {
   return (store) => {
     let socket = null;
-    const token = getCookie("token")?.split("Bearer ")[1];
     return (next) => (action) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const {
         wsInit,
         wsAll,
-        wsSendMessage,
         onOpen,
         onClose,
         onError,
@@ -18,8 +15,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       } = wsActions;
       if (type === wsAll) {
         socket = new WebSocket(`${wsUrl}/all`);
-      } else if (type === wsInit && token) {
-        socket = new WebSocket(`${wsUrl}?token=${token}`);
+      } else if (type === wsInit && payload?.token) {
+        socket = new WebSocket(`${wsUrl}?token=${payload.token}`);
       }
       if (socket) {
         socket.onopen = (event) => {
@@ -41,12 +38,6 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         socket.onclose = (event) => {
           dispatch({ type: onClose, payload: event });
         };
-
-        if (type === wsSendMessage) {
-          const message = token ? { ...payload, token } : { ...payload };
-          message.token = token;
-          socket.send(JSON.stringify(message));
-        }
       }
 
       next(action);

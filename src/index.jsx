@@ -4,15 +4,15 @@ import "./index.css";
 import App from "./components/app/App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { store, history } from "./services/store";
-import { ConnectedRouter } from "connected-react-router";
+import { store } from "./services/store";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ConnectedRouter history={history}>
+      <Router>
         <App />
-      </ConnectedRouter>
+        </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -16,6 +16,7 @@ import { useCallback } from "react";
 export function LoginPage() {
   const form = useSelector((store) => store.authorization.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
+  const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -34,7 +35,7 @@ export function LoginPage() {
     [form, dispatch]
   );
 
-  if (isAuth) {
+  if (isAuth || isUser) {
     return <Redirect to={{ pathname: location.state?.from.pathname || "/" }} />;
   }
 
