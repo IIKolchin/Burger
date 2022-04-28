@@ -4,7 +4,6 @@ import {
   Route,
   useHistory,
   useLocation,
-  useParams,
 } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
@@ -22,19 +21,19 @@ import {
   NotFound404,
   IngredientPage,
   ProfileOrders,
+  FeedPage,
+  OrderInfo,
 } from "../../pages";
 
 export function ModalSwitch() {
-
-  
   const location = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
-  const shortModal = useSelector((state) => state.modal.shortModal);
-  const background = location.state && location.state.background;
+  const action = history.action === "PUSH" || history.action === "REPLACE";
+  const background = action && location.state && location.state.background;
   const data = useSelector((store) => store.items.data);
   const isItems = useSelector((store) => store.items.dataRequest);
   const isError = useSelector((store) => store.items.dataFailed);
-  const history = useHistory();
 
   const handleHide = () => {
     dispatch({ type: HIDE_MODAL });
@@ -62,6 +61,10 @@ export function ModalSwitch() {
           <ResetPasswordPage />
         </Route>
 
+        <Route path="/feed" exact>
+          <FeedPage />
+        </Route>
+
         <ProtectedRoute path="/profile" exact>
           <Profile />
         </ProtectedRoute>
@@ -70,12 +73,20 @@ export function ModalSwitch() {
           <ProfileOrders />
         </ProtectedRoute>
 
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
+        <ProtectedRoute path="/profile/orders/:id" exact>
+          <OrderInfo />
+        </ProtectedRoute>
 
         <Route path="/ingredients/:id" exact>
           <IngredientPage />
+        </Route>
+
+        <Route path="/feed/:id" exact>
+          <OrderInfo />
+        </Route>
+
+        <Route path="/" exact>
+          <HomePage />
         </Route>
 
         <Route>
@@ -86,15 +97,32 @@ export function ModalSwitch() {
         <Route
           path="/ingredients/:id"
           children={
-            <Modal
-              header="Детали ингредиента"
-              shortModal={shortModal}
-              handleHide={handleHide}
-            >
+            <Modal header="Детали ингредиента" handleHide={handleHide}>
               <IngredientDetails />
             </Modal>
           }
         />
+      )}
+
+      {background && (
+        <>
+          <Route
+            path="/feed/:id"
+            children={
+              <Modal handleHide={handleHide}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            children={
+              <Modal handleHide={handleHide}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+        </>
       )}
     </>
   );

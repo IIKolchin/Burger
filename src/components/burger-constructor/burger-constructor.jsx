@@ -24,6 +24,7 @@ import {
   RESET_CONSTRUCTOR,
 } from "../../services/actions/constructor";
 import { useHistory } from "react-router-dom";
+import { Loader } from "../loader/loader";
 
 
 function BurgerConstructor() {
@@ -41,6 +42,7 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((store) => store.user.isUser);
+  const orderRequest = useSelector((store) => store.orderDetails.orderRequest)
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
@@ -95,6 +97,7 @@ function BurgerConstructor() {
     if (user) {
       dispatch(getOrder(id));
       dispatch({ type: SHOW_ORDER });
+      
     } else {
       history.replace({ pathname: "/login" });
     }
@@ -112,6 +115,13 @@ function BurgerConstructor() {
 
     return total ? total : 0;
   }, [items]);
+
+
+if (orderRequest) {
+  return (
+    <Loader />
+  )
+}
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>

@@ -1,0 +1,43 @@
+.container {
+  width: 580px;
+  margin: 100px 0 0 60px;
+}
+
+.status {
+  width: 272px;
+}
+
+.group {
+  display: flex;
+}
+
+.heading {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.ul {
+  list-style: none;
+  margin-top: 24px;
+  padding: 0;
+  height: 304px;
+  display: flex;
+}
+
+.column:first-of-type {
+  margin-right: 20px;
+}
+
+.li {
+  color: #00cccc;
+}
+
+.number {
+  margin-bottom: 60px;
+  text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25),
+    0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}

@@ -13,7 +13,6 @@ const initialState = {
   },
   userRequest: false,
   userFailed: false,
-  isUser: false,
 };
 
 export const patchUserReducer = (state = initialState, action) => {
@@ -30,7 +29,7 @@ export const patchUserReducer = (state = initialState, action) => {
         ...state,
         userFailed: false,
         userRequest: false,
-        // form: action.form,
+        form: {...state.form, ...action.form}
       };
     }
     case PATCH_USER_FAILED: {
@@ -38,13 +37,12 @@ export const patchUserReducer = (state = initialState, action) => {
         ...state,
         userFailed: true,
         userRequest: false,
-        isUser: false,
       };
     }
     case SET_PATCH_USER: {
       return {
         ...state,
-        form: action.payload,
+        form: {...state.form, ...action.payload}
       };
     }
 

@@ -14,10 +14,9 @@ import { Redirect } from "react-router-dom";
 import { useCallback } from "react";
 
 export function LoginPage() {
-  
   const form = useSelector((store) => store.authorization.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
-  const login = sessionStorage.getItem("login");
+  const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -36,12 +35,8 @@ export function LoginPage() {
     [form, dispatch]
   );
 
-  if (isAuth) {
+  if (isAuth || isUser) {
     return <Redirect to={{ pathname: location.state?.from.pathname || "/" }} />;
-  }
-
-  if (login) {
-    return <Redirect to={{ pathname: "/" }} />;
   }
 
   return (

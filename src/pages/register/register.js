@@ -13,9 +13,8 @@ import { SET_REGISTER } from "../../services/actions/register";
 import { Redirect } from "react-router-dom";
 
 export function RegisterPage() {
-  
   const form = useSelector((store) => store.register.form);
-  const login = sessionStorage.getItem("login");
+  const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +35,7 @@ export function RegisterPage() {
     dispatch(register(form));
   };
 
-  if (login) {
+  if (isUser) {
     return (
       <Redirect
         to={{

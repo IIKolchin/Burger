@@ -1,6 +1,7 @@
 .container {
   width: 1240px;
   margin: 0 auto;
+  display: flex;
 }
 
 .nav {
@@ -43,14 +44,23 @@
 }
 
 .input {
-  position: absolute;
-  top: 320px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 120px;
+  margin-left: 60px;
 }
 
-.button {
-  position: absolute;
-  top: 425px;
-  left: 51.5%;
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.order {
+  margin-left: 60px;
+  margin-top: 40px;
+  width: 900px;
+  height: 909px;
+  overflow-y: scroll;
+}
+.link {
+  text-decoration: none;
+  color: inherit;
 }

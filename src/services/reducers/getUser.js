@@ -11,7 +11,6 @@ const userInitialState = {
   },
   userRequest: false,
   userFailed: false,
-
   isUser: false,
 };
 

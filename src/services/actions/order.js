@@ -1,4 +1,5 @@
 import { URL, checkResponse } from "../../utils/data";
+import { getCookie } from "../../utils/cookie";
 
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
@@ -18,6 +19,7 @@ export function getOrder(id) {
       }),
       headers: {
         "Content-Type": "application/json",
+        'Authorization': getCookie('token')
       },
     })
       .then(checkResponse)

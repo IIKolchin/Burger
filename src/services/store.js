@@ -1,10 +1,8 @@
 import thunk from "redux-thunk";
-import { createBrowserHistory } from "history";
 import { compose, createStore, applyMiddleware } from "redux";
 import { rootReducer } from "./reducers/index";
-import { routerMiddleware } from "connected-react-router";
-
-export const history = createBrowserHistory();
+import { socketMiddleware } from "../services/middleware/socketMiddleware";
+import { wsUrl, wsActions, wsUserActions } from "../utils/socket";
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -12,7 +10,11 @@ const composeEnhancers =
     : compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, routerMiddleware(history))
+  applyMiddleware(
+    thunk,
+    socketMiddleware(wsUrl, wsActions),
+    socketMiddleware(wsUrl, wsUserActions)
+  )
 );
 
-export const store = createStore(rootReducer(history), enhancer);
+export const store = createStore(rootReducer, enhancer);

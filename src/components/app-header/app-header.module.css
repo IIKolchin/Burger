@@ -29,6 +29,7 @@
   list-style: none;
   margin: 0;
 }
+
 .constructor {
   display: flex;
   margin-top: 32px;
@@ -39,10 +40,12 @@
 }
 
 .logo {
-  margin: 19px 310px 12px 130px;
+  margin: 19px 300px 12px 128px;
+
 }
 
 .profile {
+  
   display: flex;
   margin-top: 32px;
 }

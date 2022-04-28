@@ -1,0 +1,57 @@
+.container {
+  background-color: #1c1c21;
+  border-radius: 40px;
+  margin-bottom: 16px;
+}
+
+.group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.name {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  margin-bottom: 0;
+}
+
+.ingredients {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.items {
+  display: flex;
+}
+
+.price {
+  display: flex;
+}
+
+.number {
+  margin-right: 9px;
+}
+
+.status {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 8px 0 24px 24px;
+}
+
+.other {
+  position: relative;
+  font-weight: 400;
+  font-size: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 56px;
+  z-index: 2;
+  margin-top: 4px;
+  margin-left: -60px;
+  background-color: rgba(28, 28, 33, 0.6);
+}

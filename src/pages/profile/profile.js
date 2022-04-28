@@ -2,38 +2,47 @@ import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutRequest } from "../../services/actions/logout";
+import { patchUser, SET_PATCH_USER } from "../../services/actions/patchUser";
 import {
-  patchUserRequest,
-  SET_PATCH_USER,
-} from "../../services/actions/patchUser";
-
+  wsConnectionStart,
+  wsConnectionClosed,
+} from "../../services/actions/wsActions";
+import { getCookie } from "../../utils/cookie";
 
 export function Profile() {
-
   const dispatch = useDispatch();
-  const [showButton, setShowButton] = useState(false)
+  const [showButton, setShowButton] = useState(false);
   const form = useSelector((store) => store.patchUser.form);
   const userForm = useSelector((store) => store.user.form);
-  const isAuth = useSelector((store) => store.authorization.isAuth);
-  const login = sessionStorage.getItem("login");
-  const [, forceUpdate] = useState(0);
+  const isUser = useSelector((store) => store.user.isUser);
+  const user = useSelector((store) => store.user.form);
   const inputRefName = React.useRef(null);
   const inputRefEmail = React.useRef(null);
   const inputRefPassword = React.useRef(null);
 
+  useEffect(() => {
+    if (user.name && user.email) {
+    const token = getCookie("token").split("Bearer ")[1]
+     dispatch(wsConnectionStart(token));
+
+     return () => {
+      dispatch(wsConnectionClosed());
+    };
+    }
+  }, [user]);
 
   const onChange = (e) => {
     dispatch({
       type: SET_PATCH_USER,
-      payload: { ...form, [e.target.name]: e.target.value },
+      payload: { [e.target.name]: e.target.value },
     });
-    setShowButton(true)
-  }
+    setShowButton(true);
+  };
 
   const onIconClickName = () => {
     setTimeout(() => inputRefName.current.focus(), 0);
@@ -46,32 +55,22 @@ export function Profile() {
   };
 
   const cancel = useCallback(() => {
-    form.name = userForm.name;
-    form.email = userForm.email;
-    setShowButton(false)
-    forceUpdate((n) => !n);
-  },[form]);
+    dispatch({
+      type: SET_PATCH_USER,
+      payload: { ...form, name: userForm.name, email: userForm.email },
+    });
+    setShowButton(false);
+  }, [form]);
 
   const signOut = async () => {
-   dispatch(logoutRequest());
+    dispatch(logoutRequest());
   };
 
   const logout = useCallback(() => {
-   signOut()
-   
+    signOut();
   }, [signOut]);
 
-  if (!isAuth) {
-    return (
-      <Redirect
-        to={{
-          pathname: "/login",
-        }}
-      />
-    );
-  }
-
-  if (!login) {
+  if (!isUser) {
     return (
       <Redirect
         to={{
@@ -83,35 +82,37 @@ export function Profile() {
 
   const formSubmit = (e) => {
     e.preventDefault();
-    dispatch(patchUserRequest(form));
-    setShowButton(false)
-  }
+    dispatch(patchUser(form));
+    setShowButton(false);
+  };
 
   return (
     <div className={styles.container}>
-      <nav className={styles.nav}>
-        <NavLink
-          to={{ pathname: `/profile` }}
-          exact
-          className={styles.a + " mb-8"}
-          activeClassName={styles.activeLink}
-        >
-          Профиль
-        </NavLink>
-        <NavLink
-          to={{ pathname: `/profile/orders` }}
-          exact
-          className={styles.a + " mb-8"}
-        >
-          История заказов
-        </NavLink>
-        <button onClick={logout} className={styles.exit}>
-          Выход
-        </button>
-      </nav>
-      <p className={styles.p + " mt-20"}>
-        В этом разделе вы можете изменить свои персональные данные
-      </p>
+      <div>
+        <nav className={styles.nav}>
+          <NavLink
+            to={{ pathname: `/profile` }}
+            exact
+            className={styles.a + " mb-8"}
+            activeClassName={styles.activeLink}
+          >
+            Профиль
+          </NavLink>
+          <NavLink
+            to={{ pathname: `/profile/orders` }}
+            exact
+            className={styles.a + " mb-8"}
+          >
+            История заказов
+          </NavLink>
+          <button onClick={logout} className={styles.exit}>
+            Выход
+          </button>
+        </nav>
+        <p className={styles.p + " mt-20"}>
+          В этом разделе вы можете изменить свои персональные данные
+        </p>
+      </div>
 
       <form onSubmit={formSubmit} className={styles.input}>
         <div className="mb-6">
@@ -162,20 +163,16 @@ export function Profile() {
           />
         </div>
         {showButton && (
-          <div className=" mt-6 mr-2">
+          <div className={styles.buttons + " mt-6 mr-2"}>
             <Button type="primary" size="medium">
               Сохранить
+            </Button>
+            <Button onClick={cancel} type="primary" size="medium">
+              Отмена
             </Button>
           </div>
         )}
       </form>
-      { showButton && (
-        <div className={styles.button}>
-          <Button onClick={cancel} type="primary" size="medium">
-            Отмена
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

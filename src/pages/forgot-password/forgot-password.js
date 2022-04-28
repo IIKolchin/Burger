@@ -12,8 +12,7 @@ import {
 } from "../../services/actions/forgotPassword";
 
 export function ForgotPasswordPage() {
-  
-  const login = sessionStorage.getItem("login");
+  const isUser = useSelector((store) => store.user.isUser);
   const form = useSelector((store) => store.forgotPassword.form);
   const dispatch = useDispatch();
   const forgotPasswordSuccess = useSelector(
@@ -32,7 +31,7 @@ export function ForgotPasswordPage() {
     dispatch(forgotPassword(form.email));
   };
 
-  if (login) {
+  if (isUser) {
     return (
       <Redirect
         to={{
