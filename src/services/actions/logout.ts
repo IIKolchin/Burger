@@ -1,14 +1,30 @@
 import { URL } from "../../utils/data";
 import { deleteCookie } from "../../utils/cookie";
-import { GET_AUTHORIZATION_FAILED } from "../actions/authorization";
-import { GET_USER_FAILED } from "../actions/getUser";
+import { GET_AUTHORIZATION_FAILED } from "./authorization";
+import { GET_USER_FAILED } from "./getUser";
+import { AppDispatch, AppThunk } from '../types';
 
-export const LOGOUT_REQUEST = "LOGOUT_REQUEST";
-export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
-export const LOGOUT_FAILED = "LOGOUT_FAILED";
+export const LOGOUT_REQUEST: "LOGOUT_REQUEST" = "LOGOUT_REQUEST";
+export const LOGOUT_SUCCESS: "LOGOUT_SUCCESS" = "LOGOUT_SUCCESS";
+export const LOGOUT_FAILED: "LOGOUT_FAILED" = "LOGOUT_FAILED";
 
-export function logoutRequest() {
-  return async function (dispatch) {
+export interface ILogoutAction {
+  readonly type: typeof LOGOUT_REQUEST;
+}
+export interface ILogoutSuccessAction {
+  readonly type: typeof LOGOUT_SUCCESS;
+}
+export interface ILogoutFailedAction {
+  readonly type: typeof LOGOUT_FAILED;
+}
+
+export type TLogoutActions = 
+| ILogoutAction
+| ILogoutSuccessAction
+| ILogoutFailedAction
+
+export const logoutRequest: AppThunk = () => {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
     });

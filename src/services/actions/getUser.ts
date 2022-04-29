@@ -1,13 +1,29 @@
 import { updateTokenRequest, getUserRequest } from "../../utils/data";
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
-import { PATCH_USER_SUCCESS } from "./patchUser"
+import { PATCH_USER_SUCCESS } from "./patchUser";
+import { AppDispatch, AppThunk } from '../types';
 
-export const GET_USER_REQUEST = "GET_USER_REQUEST";
-export const GET_USER_SUCCESS = "GET_USER_SUCCESS";
-export const GET_USER_FAILED = "GET_USER_FAILED";
+export const GET_USER_REQUEST: "GET_USER_REQUEST" = "GET_USER_REQUEST";
+export const GET_USER_SUCCESS: "GET_USER_SUCCESS" = "GET_USER_SUCCESS";
+export const GET_USER_FAILED: "GET_USER_FAILED" = "GET_USER_FAILED";
 
-export function getUser() {
-  return async function (dispatch) {
+export interface IGetUserAction {
+  readonly type: typeof GET_USER_REQUEST;
+}
+export interface IGetUserSuccessAction {
+  readonly type: typeof GET_USER_SUCCESS;
+}
+export interface IGetUserFailedAction {
+  readonly type: typeof GET_USER_FAILED;
+}
+
+export type TGetUserActions = 
+| IGetUserAction
+| IGetUserSuccessAction
+| IGetUserFailedAction
+
+export const getUser: AppThunk = () => {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
     });

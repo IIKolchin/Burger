@@ -40,6 +40,20 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
+// const forgotPasswordRequest = async (form) => {
+//   const res = await fetch(`${URL}password-reset`, {
+//     method: "POST",
+//     body: JSON.stringify({
+//       email: form,
+//     }),
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   const data = await checkResponse(res);
+//   return data;
+// }
+
 const getUserRequest = async (token) => {
   const res = await fetch(`${URL}auth/user`, {
     method: "GET",
@@ -77,6 +91,23 @@ const updateTokenRequest = async (token) => {
   return data;
 };
 
+const getOrderRequest = async (id) => {
+  const res = await fetch(`${URL}orders`, {
+    method: "POST",
+      body: JSON.stringify({
+    ingredients: id,
+  }),
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: getCookie("token"),
+  },
+})
+  const data = await checkResponse(res);
+  return data;
+};
+
+
+
 const getDateOrder = (date) => {
   const dateCreatedAt = new Date(date);
   const day = isToday(dateCreatedAt)
@@ -101,4 +132,5 @@ export {
   getUserRequest,
   updateTokenRequest,
   patchUserRequest,
+  getOrderRequest,
 };
