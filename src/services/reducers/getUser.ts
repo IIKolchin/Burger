@@ -2,9 +2,19 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILED,
+  TGetUserActions,
 } from "../actions/getUser";
+import { TUser } from "../types/data";
 
-const userInitialState = {
+type TGetUserState = {
+  form: TUser;
+  userRequest: boolean;
+  userFailed: boolean;
+  isUser: boolean;
+};
+
+
+const userInitialState: TGetUserState = {
   form: {
     email: "",
     name: "",
@@ -14,7 +24,7 @@ const userInitialState = {
   isUser: false,
 };
 
-export const userReducer = (state = userInitialState, action) => {
+export const userReducer = (state = userInitialState, action: TGetUserActions): TGetUserState => {
   switch (action.type) {
     case GET_USER_REQUEST: {
       return {

@@ -2,6 +2,7 @@ import { updateTokenRequest, getUserRequest } from "../../utils/data";
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 import { PATCH_USER_SUCCESS } from "./patchUser";
 import { AppDispatch, AppThunk } from '../types';
+import { TUser } from "../types/data";
 
 export const GET_USER_REQUEST: "GET_USER_REQUEST" = "GET_USER_REQUEST";
 export const GET_USER_SUCCESS: "GET_USER_SUCCESS" = "GET_USER_SUCCESS";
@@ -12,6 +13,7 @@ export interface IGetUserAction {
 }
 export interface IGetUserSuccessAction {
   readonly type: typeof GET_USER_SUCCESS;
+  form: TUser
 }
 export interface IGetUserFailedAction {
   readonly type: typeof GET_USER_FAILED;

@@ -1,6 +1,7 @@
 import { URL, checkResponse, getOrderRequest } from "../../utils/data";
 import { getCookie } from "../../utils/cookie";
 import { AppDispatch, AppThunk } from "../types";
+import { TOrder } from "../types/data";
 
 export const GET_ORDER_REQUEST: "GET_ORDER_REQUEST" = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS: "GET_ORDER_SUCCESS" = "GET_ORDER_SUCCESS";
@@ -13,6 +14,7 @@ export interface IGetOrderAction {
 }
 export interface IGetOrderSuccessAction {
   readonly type: typeof GET_ORDER_SUCCESS;
+  order: TOrder;
 }
 export interface IGetOrderFailedAction {
   readonly type: typeof GET_ORDER_FAILED;
@@ -50,6 +52,7 @@ export const getOrder: AppThunk = (id: string) => {
     // })
       // .then(checkResponse)
       .then((res) => {
+        console.log(res)
         if (res && res.success) {
           dispatch({
             type: GET_ORDER_SUCCESS,

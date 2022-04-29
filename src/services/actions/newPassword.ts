@@ -1,5 +1,6 @@
 import { URL, checkResponse } from "../../utils/data";
 import { AppDispatch, AppThunk } from '../types';
+import { TUser } from "../types/data";
 
 export const GET_NEW_PASSWORD_REQUEST: "GET_NEW_PASSWORD_REQUEST" = "GET_NEW_PASSWORD_REQUEST";
 export const GET_NEW_PASSWORD_SUCCESS: "GET_NEW_PASSWORD_SUCCESS" = "GET_NEW_PASSWORD_SUCCESS";
@@ -17,6 +18,7 @@ export interface IGetNewPasswordFailedAction {
 }
 export interface ISetNewPasswordAction {
   readonly type: typeof SET_NEW_PASSWORD;
+  payload: TUser;
 }
 
 export type TGetNewPasswordActions =

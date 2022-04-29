@@ -3,9 +3,17 @@ import {
   GET_REGISTER_SUCCESS,
   GET_REGISTER_FAILED,
   SET_REGISTER,
+  TRegisterActions,
 } from "../actions/register";
+import { TUser } from "../types/data";
 
-const registerInitialState = {
+type TRegisterState = {
+  form: TUser;
+  registerRequest: boolean;
+  registerFailed: boolean;
+}
+
+const registerInitialState: TRegisterState = {
   form: {
     email: "",
     name: "",
@@ -15,7 +23,7 @@ const registerInitialState = {
   registerFailed: false,
 };
 
-export const registerReducer = (state = registerInitialState, action) => {
+export const registerReducer = (state = registerInitialState, action: TRegisterActions): TRegisterState => {
   switch (action.type) {
     case GET_REGISTER_REQUEST: {
       return {

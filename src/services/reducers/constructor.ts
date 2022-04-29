@@ -5,17 +5,27 @@ import {
   UPDATE_POSITION_ITEM,
   GENERATE_ID,
   RESET_CONSTRUCTOR,
+  TConstructorActions,
 } from "../actions/constructor";
+import { TConstructorItem, TIngredients } from "../types/data";
 
-const initialConstructorState = {
+type TConstructorState = {
+  constructor: TIngredients[];
+  generateId: string[];
+  bun: TIngredients;
+  ingredient: object;
+  // countBun: string[]
+}
+
+const initialConstructorState: TConstructorState = {
   constructor: [],
   generateId: [],
   bun: {},
   ingredient: {},
-  countBun: [],
+  // countBun: [],
 };
 
-export const constructorReducer = (state = initialConstructorState, action) => {
+export const constructorReducer = (state = initialConstructorState, action: TConstructorActions): TConstructorState => {
   switch (action.type) {
     case ADD_ITEM: {
       return {
@@ -41,7 +51,7 @@ export const constructorReducer = (state = initialConstructorState, action) => {
       return {
         ...state,
         bun: action.payload,
-        countBun: action.id,
+        // countBun: action.id,
       };
     }
     case UPDATE_POSITION_ITEM: {

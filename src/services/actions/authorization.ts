@@ -19,6 +19,7 @@ export interface IGetAutorizationFailedAction {
 }
 export interface ISetAutorizationAction {
   readonly type: typeof SET_AUTHORIZATION;
+  payload: object
 }
 
 export type TAutorizationActions =

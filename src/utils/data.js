@@ -40,20 +40,6 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка: ${res.status}`);
 };
 
-// const forgotPasswordRequest = async (form) => {
-//   const res = await fetch(`${URL}password-reset`, {
-//     method: "POST",
-//     body: JSON.stringify({
-//       email: form,
-//     }),
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   });
-//   const data = await checkResponse(res);
-//   return data;
-// }
-
 const getUserRequest = async (token) => {
   const res = await fetch(`${URL}auth/user`, {
     method: "GET",

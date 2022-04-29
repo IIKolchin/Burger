@@ -2,6 +2,7 @@ import { patchUserRequest } from "../../utils/data";
 import { updateToken } from "./getUser";
 import { GET_USER_SUCCESS } from "./getUser";
 import { AppDispatch, AppThunk } from "../types";
+import { TUser } from "../types/data";
 
 export const PATCH_USER_REQUEST: "PATCH_USER_REQUEST" = "PATCH_USER_REQUEST";
 export const PATCH_USER_SUCCESS: "PATCH_USER_SUCCESS" = "PATCH_USER_SUCCESS";
@@ -13,12 +14,14 @@ export interface IPatchUserAction {
 }
 export interface IPatchUserSuccessAction {
   readonly type: typeof PATCH_USER_SUCCESS;
+  form: TUser;
 }
 export interface IPatchUserFailedAction {
   readonly type: typeof PATCH_USER_FAILED;
 }
 export interface ISetPatchUserAction {
   readonly type: typeof SET_PATCH_USER;
+  payload: TUser;
 }
 
 export type TPatchUserActions =

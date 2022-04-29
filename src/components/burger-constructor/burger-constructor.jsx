@@ -44,6 +44,10 @@ function BurgerConstructor() {
   const user = useSelector((store) => store.user.isUser);
   const orderRequest = useSelector((store) => store.orderDetails.orderRequest)
 
+  // console.log(constructor)
+  // console.log(bun)
+  // console.log(generateId)
+
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
     drop(item) {

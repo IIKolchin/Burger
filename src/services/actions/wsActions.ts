@@ -1,3 +1,4 @@
+import { TOrders } from "../types/data";
 
 
 export const WS_CONNECTION_START: "WS_CONNECTION_START" = "WS_CONNECTION_START";
@@ -27,11 +28,11 @@ export interface IwsClosedAction {
 }
 export interface IwsGetMessageAction {
   readonly type: typeof WS_GET_MESSAGE;
-  readonly payload: object
+  readonly payload: TOrders
 }
 export interface IwsGetAllMessageAction {
   readonly type: typeof WS_GET_ALL_MESSAGE;
-  readonly payload: object
+  readonly payload: TOrders
 }
 
 export type TWsActions =
@@ -74,14 +75,14 @@ export const wsConnectionClosed = (): IwsClosedAction => {
   };
 };
 
-export const wsGetAllMessage = (message: object): IwsGetAllMessageAction => {
+export const wsGetAllMessage = (message: TOrders): IwsGetAllMessageAction => {
   return {
     type: WS_GET_ALL_MESSAGE,
     payload: message,
   };
 };
 
-export const wsGetMessage = (message: object): IwsGetMessageAction => {
+export const wsGetMessage = (message: TOrders): IwsGetMessageAction => {
   return {
     type: WS_GET_MESSAGE,
     payload: message,

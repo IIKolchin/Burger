@@ -3,9 +3,17 @@ import {
   PATCH_USER_SUCCESS,
   PATCH_USER_FAILED,
   SET_PATCH_USER,
+  TPatchUserActions,
 } from "../actions/patchUser";
+import { TUser } from "../types/data";
 
-const initialState = {
+type TPatchUserState = {
+  form: TUser;
+  userRequest: boolean;
+  userFailed: boolean;
+}
+
+const initialState: TPatchUserState = {
   form: {
     email: "",
     name: "",
@@ -15,7 +23,7 @@ const initialState = {
   userFailed: false,
 };
 
-export const patchUserReducer = (state = initialState, action) => {
+export const patchUserReducer = (state = initialState, action: TPatchUserActions): TPatchUserState => {
   switch (action.type) {
     case PATCH_USER_REQUEST: {
       return {

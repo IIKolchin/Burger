@@ -6,7 +6,7 @@ import {
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../utils/data";
 import { useDrag } from "react-dnd";
-import { SHOW_MODAL } from "../../services/actions/modalIngredient";
+// import { SHOW_MODAL } from "../../services/actions/modalIngredient";
 import { useSelector, useDispatch } from "react-redux";
 
 function Ingredient({ children, data }) {
@@ -19,13 +19,13 @@ function Ingredient({ children, data }) {
   const dispatch = useDispatch();
   const id = data._id;
 
-  const handleShow = () => {
-    dispatch({
-      type: SHOW_MODAL,
-      id,
-      payload: dataItems.find((el) => el._id === id),
-    });
-  };
+  // const handleShow = () => {
+  //   dispatch({
+  //     type: SHOW_MODAL,
+  //     id,
+  //     payload: dataItems.find((el) => el._id === id),
+  //   });
+  // };
 
   const [{ isDrag }, dragRef] = useDrag({
     type: data.type,
@@ -40,7 +40,7 @@ function Ingredient({ children, data }) {
       <li
         id={data._id}
         className={styles.li}
-        onClick={handleShow}
+        // onClick={handleShow}
         ref={dragRef}
       >
         {children}

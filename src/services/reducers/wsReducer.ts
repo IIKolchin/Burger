@@ -4,15 +4,23 @@ import {
   WS_CONNECTION_CLOSED,
   WS_GET_ALL_MESSAGE,
   WS_GET_MESSAGE,
+  TWsActions,
 } from "../actions/wsActions";
+import { TOrders } from "../types/data";
 
-const initialState = {
+type TWsState = {
+  wsConnected: Boolean;
+  messages: TOrders | object;
+  orders: TOrders | object;
+}
+
+const initialState: TWsState = {
   wsConnected: false,
   messages: {},
   orders: {},
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (state = initialState, action: TWsActions): TWsState => {
   switch (action.type) {
     case WS_CONNECTION_SUCCESS:
       return {
@@ -40,7 +48,6 @@ export const wsReducer = (state = initialState, action) => {
     case WS_GET_MESSAGE:
       return {
         ...state,
-
         orders: action.payload,
       };
 

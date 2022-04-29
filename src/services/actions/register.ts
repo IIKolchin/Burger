@@ -13,12 +13,14 @@ export interface IGetRegisterAction {
 }
 export interface IGetRegisteSuccessrAction {
   readonly type: typeof GET_REGISTER_SUCCESS;
+  form: TUser;
 }
 export interface IGetRegisterfailedAction {
   readonly type: typeof GET_REGISTER_FAILED;
 }
 export interface ISetRegisterAction {
   readonly type: typeof SET_REGISTER;
+  payload: TUser;
 }
 
 export type TRegisterActions =

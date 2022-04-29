@@ -1,5 +1,6 @@
 import { URL, checkResponse } from "../../utils/data";
 import { AppDispatch, AppThunk } from '../types';
+import { TIngredients } from "../types/data";
 
 export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS"  = "GET_INGREDIENTS_SUCCESS";
@@ -10,6 +11,7 @@ export interface IGetIngredientsAction {
 }
 export interface IGetIngredientsSuccessAction {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
+  data: TIngredients[];
 }
 export interface IGetIngredientsFailedAction {
   readonly type: typeof GET_INGREDIENTS_FAILED;

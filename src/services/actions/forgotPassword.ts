@@ -24,6 +24,7 @@ export interface IForgotPasswordFailedAction {
 }
 export interface ISetForgotPasswordAction {
   readonly type: typeof SET_FORGOT_PASSWORD;
+  payload: TUser;
 }
 
 export type TForgotPasswordActions =

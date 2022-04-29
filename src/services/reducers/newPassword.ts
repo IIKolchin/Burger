@@ -3,19 +3,29 @@ import {
   GET_NEW_PASSWORD_SUCCESS,
   GET_NEW_PASSWORD_FAILED,
   SET_NEW_PASSWORD,
+  TGetNewPasswordActions,
+  
 } from "../actions/newPassword";
+import { TUser } from "../types/data";
 
-const newPasswordInitialState = {
+type TNewPasswordState = {
+  form: TUser;
+  isNewPasswordSuccess: boolean;
+  newPasswordRequest: boolean;
+  newPasswordFailed: boolean;
+}
+
+const newPasswordInitialState: TNewPasswordState = {
   form: {
     password: "",
-    token: "",
+    // token: "",
   },
   isNewPasswordSuccess: false,
   newPasswordRequest: false,
   newPasswordFailed: false,
 };
 
-export const newPasswordReducer = (state = newPasswordInitialState, action) => {
+export const newPasswordReducer = (state = newPasswordInitialState, action: TGetNewPasswordActions): TNewPasswordState => {
   switch (action.type) {
     case GET_NEW_PASSWORD_REQUEST: {
       return {

@@ -3,23 +3,32 @@ import {
   GET_AUTHORIZATION_SUCCESS,
   GET_AUTHORIZATION_FAILED,
   SET_AUTHORIZATION,
+  TAutorizationActions
 } from "../actions/authorization";
+import { TUser } from "../types/data";
 
-const authorizationInitialState = {
+
+type TAuthorizationState = {
+  form: TUser;
+  authorizationRequest: boolean;
+  authorizationFailed: boolean;
+  isAuth: boolean;
+}
+
+const authorizationInitialState: TAuthorizationState = {
   form: {
     email: "",
     password: "",
   },
   authorizationRequest: false,
   authorizationFailed: false,
-  accessToken: "",
   isAuth: false,
 };
 
 export const authorizationReducer = (
   state = authorizationInitialState,
-  action
-) => {
+  action: TAutorizationActions
+): TAuthorizationState => {
   switch (action.type) {
     case GET_AUTHORIZATION_REQUEST: {
       return {
