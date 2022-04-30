@@ -6,9 +6,9 @@ import {
 import styles from "./login.module.css";
 import { Link, useLocation } from "react-router-dom";
 import {
-  loginRequest,
+  login,
   SET_AUTHORIZATION,
-} from "../../services/actions/authorization";
+} from "../../services/actions/user";
 import { useSelector, useDispatch } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useCallback } from "react";
@@ -30,7 +30,7 @@ export function LoginPage() {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      dispatch(loginRequest(form));
+      dispatch(login(form));
     },
     [form, dispatch]
   );

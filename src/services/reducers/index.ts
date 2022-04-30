@@ -3,13 +3,15 @@ import { ingredientsReducer } from "./ingredients";
 import { orderReducer } from "./order";
 import { constructorReducer } from "./constructor";
 import { modalIngredientReducer } from "./modalIngredient";
-import { registerReducer } from "./register";
-import { authorizationReducer } from "./authorization";
-import { logoutReducer } from "./logout";
-import { newPasswordReducer } from "./newPassword";
-import { userReducer } from "./getUser";
-import { patchUserReducer } from "./patchUser";
-import { forgotPasswordReducer } from "./forgotPassword";
+import {
+  registerReducer,
+  authorizationReducer,
+  logoutReducer,
+  newPasswordReducer,
+  userReducer,
+  patchUserReducer,
+  forgotPasswordReducer,
+} from "./user";
 import { wsReducer } from "./wsReducer";
 
 export const rootReducer = combineReducers({

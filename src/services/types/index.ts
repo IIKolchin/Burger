@@ -1,16 +1,22 @@
 import { ThunkAction } from 'redux-thunk';
 import { Action, ActionCreator } from 'redux';
 import { store } from "../store";
-import { TAutorizationActions } from "../actions/authorization";
-import { TForgotPasswordActions } from "../actions/forgotPassword";
 import { TConstructorActions } from "../actions/constructor"
+import { TIngredientsActions } from '../actions/ingredients';
+import { IHideModalAction } from "../actions/modalIngredient"
+import { TOrderActions } from '../actions/order';
+import { TWsActions } from '../actions/wsActions';
+import { TUserActions } from '../actions/user';
 
 
 
-type TApplicationActions = 
-| TAutorizationActions
+export type TApplicationActions = 
+| TUserActions
 | TConstructorActions
-| TForgotPasswordActions
+| TIngredientsActions
+| IHideModalAction
+| TOrderActions
+| TWsActions
 
 
 export type RootState = ReturnType<typeof store.getState>;

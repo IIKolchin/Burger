@@ -9,6 +9,22 @@ export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" = "WS_CONNECTION_CLOSE
 export const WS_GET_MESSAGE: "WS_GET_MESSAGE" = "WS_GET_MESSAGE";
 export const WS_GET_ALL_MESSAGE: "WS_GET_ALL_MESSAGE" = "WS_GET_ALL_MESSAGE";
 
+export const wsActions = {
+  wsAll: WS_CONNECTION_ALL_START,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_ALL_MESSAGE
+};
+
+export const wsUserActions = {
+  wsInit: WS_CONNECTION_START,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_MESSAGE
+};
+
 
 export interface IwsAction {
   readonly type: typeof WS_CONNECTION_START;

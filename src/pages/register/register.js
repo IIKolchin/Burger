@@ -8,8 +8,7 @@ import React, { useEffect } from "react";
 import styles from "../login/login.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { register } from "../../services/actions/register";
-import { SET_REGISTER } from "../../services/actions/register";
+import { register, SET_REGISTER } from "../../services/actions/user";
 import { Redirect } from "react-router-dom";
 
 export function RegisterPage() {

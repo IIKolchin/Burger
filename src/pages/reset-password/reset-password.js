@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   SET_NEW_PASSWORD,
   getNewPassword,
-} from "../../services/actions/newPassword";
+} from "../../services/actions/user";
 import { Redirect } from "react-router-dom";
 
 export function ResetPasswordPage() {

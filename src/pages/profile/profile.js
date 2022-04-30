@@ -6,8 +6,8 @@ import React, { useCallback, useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutRequest } from "../../services/actions/logout";
-import { patchUser, SET_PATCH_USER } from "../../services/actions/patchUser";
+import { logout } from "../../services/actions/user";
+import { patchUser, SET_PATCH_USER } from "../../services/actions/user";
 import {
   wsConnectionStart,
   wsConnectionClosed,
@@ -63,10 +63,10 @@ export function Profile() {
   }, [form]);
 
   const signOut = async () => {
-    dispatch(logoutRequest());
+    dispatch(logout());
   };
 
-  const logout = useCallback(() => {
+  const logoutUser = useCallback(() => {
     signOut();
   }, [signOut]);
 
@@ -105,7 +105,7 @@ export function Profile() {
           >
             История заказов
           </NavLink>
-          <button onClick={logout} className={styles.exit}>
+          <button onClick={logoutUser} className={styles.exit}>
             Выход
           </button>
         </nav>

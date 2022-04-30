@@ -1,4 +1,4 @@
-import { URL, checkResponse, getOrderRequest } from "../../utils/data";
+import { URL, checkResponse, getOrderRequest } from "../../utils/api";
 import { getCookie } from "../../utils/cookie";
 import { AppDispatch, AppThunk } from "../types";
 import { TOrder } from "../types/data";

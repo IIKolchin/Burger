@@ -3,8 +3,8 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/data";
+// import PropTypes from "prop-types";
+// import { dataPropTypes } from "../../utils/data";
 import { useDrag } from "react-dnd";
 // import { SHOW_MODAL } from "../../services/actions/modalIngredient";
 import { useSelector, useDispatch } from "react-redux";
@@ -56,9 +56,9 @@ function Ingredient({ children, data }) {
   );
 }
 
-Ingredient.propTypes = {
-  children: PropTypes.element,
-  data: dataPropTypes.isRequired,
-};
+// Ingredient.propTypes = {
+//   children: PropTypes.element,
+//   data: dataPropTypes.isRequired,
+// };
 
 export default Ingredient;

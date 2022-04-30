@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   forgotPassword,
   SET_FORGOT_PASSWORD,
-} from "../../services/actions/forgotPassword";
+} from "../../services/actions/user";
 
 export function ForgotPasswordPage() {
   const isUser = useSelector((store) => store.user.isUser);

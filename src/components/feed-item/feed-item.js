@@ -4,8 +4,8 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from "react-redux";
 import { ImageFeed } from "../image-feed/image-feed";
 import { getDateOrder } from "../../utils/data";
-import PropTypes from "prop-types";
-import { dataOrderPropTypes } from "../../utils/data";
+// import PropTypes from "prop-types";
+// import { dataOrderPropTypes } from "../../utils/data";
 
 export function FeedItem({ status, data }) {
   const style = { width: status ? 844 : 584 };
@@ -89,7 +89,7 @@ export function FeedItem({ status, data }) {
   );
 }
 
-FeedItem.propTypes = {
-  status: PropTypes.string,
-  data: dataOrderPropTypes.isRequired,
-};
+// FeedItem.propTypes = {
+//   status: PropTypes.string,
+//   data: dataOrderPropTypes.isRequired,
+// };

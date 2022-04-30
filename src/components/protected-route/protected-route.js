@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../services/actions/getUser";
+import { getUser } from "../../services/actions/user";
 
 export function ProtectedRoute({ children, ...rest }) {
   const dispatch = useDispatch();

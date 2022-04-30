@@ -1,5 +1,5 @@
 import styles from "./image-feed.module.css";
-import { dataPropTypes } from "../../utils/data";
+// import { dataPropTypes } from "../../utils/data";
 
 export function ImageFeed({ data }) {
   return (
@@ -15,6 +15,6 @@ export function ImageFeed({ data }) {
   );
 }
 
-ImageFeed.propTypes = {
-  data: dataPropTypes.isRequired,
-};
+// ImageFeed.propTypes = {
+//   data: dataPropTypes.isRequired,
+// };

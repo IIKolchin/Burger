@@ -1,4 +1,4 @@
-import { URL, checkResponse } from "../../utils/data";
+import { URL, checkResponse } from "../../utils/api";
 import { AppDispatch, AppThunk } from '../types';
 import { TIngredients } from "../types/data";
 

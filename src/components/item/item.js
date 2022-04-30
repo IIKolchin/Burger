@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import PropTypes from "prop-types";
-import { dataPropTypes } from "../../utils/data";
+// import PropTypes from "prop-types";
+// import { dataPropTypes } from "../../utils/data";
 import {
   ConstructorElement,
   DragIcon,
@@ -70,10 +70,10 @@ function Item({ data, index, updateItem }) {
   );
 }
 
-Item.propTypes = {
-  data: dataPropTypes.isRequired,
-  index: PropTypes.number.isRequired,
-  updateItem: PropTypes.func.isRequired,
-};
+// Item.propTypes = {
+//   data: dataPropTypes.isRequired,
+//   index: PropTypes.number.isRequired,
+//   updateItem: PropTypes.func.isRequired,
+// };
 
 export default Item;
