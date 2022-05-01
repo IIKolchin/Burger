@@ -1,11 +1,12 @@
-import React from "react";
+import React, { DetailedHTMLProps, FC, HTMLAttributes } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "../ingredient/ingredient";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 
-function BurgerIngredients() {
+
+const BurgerIngredients: FC = (): JSX.Element => {
 
   const data = useSelector((store) => store.items.data);
   const buns = data.filter((item) => item.type === "bun");
@@ -26,7 +27,7 @@ function BurgerIngredients() {
     setCurrent("three");
   };
 
-  const handleScroll = (e) => {
+  const handleScroll = (e: React.ChangeEvent<HTMLInputElement>): void => {
     let element = e.target;
     if (element.scrollTop > 0 && element.scrollTop < 290) {
       set1();
@@ -58,7 +59,7 @@ function BurgerIngredients() {
           </Tab>
         </a>
       </div>
-      <div className={styles.ingredients + " mt-10"} onScroll={handleScroll}>
+      <div className={styles.ingredients + " mt-10"} onScroll={() => handleScroll}>
         <h2 className={styles.subtitle + " mb-6"} id={"1"}>
           Булки
         </h2>
@@ -113,7 +114,7 @@ function BurgerIngredients() {
                   state: { background: location },
                 }}
               >
-                <Ingredient data={data} />
+                <Ingredient data={data}  />
               </Link>
             );
           })}

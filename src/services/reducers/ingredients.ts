@@ -7,12 +7,12 @@ import {
 import { TIngredients } from "../types/data";
 
 type TIngredientState = {
-  data: TIngredients[];
+  data: Array<TIngredients>;
   dataRequest: boolean;
   dataFailed: boolean;
 }
 
-const initialState = {
+const initialState: TIngredientState = {
   data: [],
   dataRequest: false,
   dataFailed: false,

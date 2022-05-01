@@ -7,7 +7,11 @@ import { IHideModalAction } from "../actions/modalIngredient"
 import { TOrderActions } from '../actions/order';
 import { TWsActions } from '../actions/wsActions';
 import { TUserActions } from '../actions/user';
-
+import {
+  TypedUseSelectorHook,
+  useDispatch as dispatchHook,
+  useSelector as selectorHook
+} from 'react-redux';
 
 
 export type TApplicationActions = 
@@ -24,3 +28,6 @@ export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
   ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
+
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>(); 

@@ -8,19 +8,21 @@ import {
   WS_GET_ALL_MESSAGE,
 } from "../actions/wsActions";
 
+
 export type TIngredients = {
-  readonly calories?: number;
-  readonly carbohydrates?: number;
-  readonly fat?: number;
-  readonly image?: string;
-  readonly image_large?: string;
-  readonly image_mobile?: string;
-  readonly name?: string;
-  readonly price?: number;
-  readonly proteins?: number;
-  readonly type?: string;
-  readonly __v?: number;
-  readonly _id?: string;
+  readonly calories: number;
+  readonly carbohydrates: number;
+  readonly fat: number;
+  readonly image: string;
+  readonly image_large: string;
+  readonly image_mobile: string;
+  readonly name: string;
+  readonly price: number;
+  readonly proteins: number;
+  readonly type: string;
+  readonly __v: number;
+  readonly _id: string;
+  readonly id?: string;
 };
 
 export type TConstructorItem = {
@@ -29,7 +31,6 @@ export type TConstructorItem = {
   readonly name: string;
   readonly image: string;
   readonly type?: string;
-  readonly uniqueId: string;
   readonly index: string | number;
 };
 

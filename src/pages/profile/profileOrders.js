@@ -6,7 +6,7 @@ import {
   NavLink,
   useLocation,
 } from "react-router-dom";
-import { logoutRequest } from "../../services/actions/logout";
+import { logout } from "../../services/actions/user";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useCallback, useEffect } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
@@ -18,10 +18,10 @@ export function ProfileOrders() {
   const data = useSelector((store) => store?.ws?.orders);
 
   const signOut = async () => {
-    dispatch(logoutRequest());
+    dispatch(logout());
   };
 
-  const logout = useCallback(() => {
+  const logoutUser = useCallback(() => {
     signOut();
   }, []);
 
@@ -56,7 +56,7 @@ export function ProfileOrders() {
             >
               История заказов
             </NavLink>
-            <button onClick={logout} className={styles.exit}>
+            <button onClick={logoutUser} className={styles.exit}>
               Выход
             </button>
           </nav>

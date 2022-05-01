@@ -11,7 +11,7 @@ export interface IGetIngredientsAction {
 }
 export interface IGetIngredientsSuccessAction {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  data: TIngredients[];
+  readonly data: Array<TIngredients>;
 }
 export interface IGetIngredientsFailedAction {
   readonly type: typeof GET_INGREDIENTS_FAILED;

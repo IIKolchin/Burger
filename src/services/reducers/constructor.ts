@@ -10,18 +10,18 @@ import {
 import { TConstructorItem, TIngredients } from "../types/data";
 
 type TConstructorState = {
-  constructor: TIngredients[];
+  constructor: ReadonlyArray<TIngredients>;  
   generateId: string[];
-  bun: TIngredients;
-  ingredient: object;
+  bun: TIngredients | null;
+  ingredient: TIngredients | null;
   // countBun: string[]
 }
 
 const initialConstructorState: TConstructorState = {
   constructor: [],
   generateId: [],
-  bun: {},
-  ingredient: {},
+  bun: null,
+  ingredient: null,
   // countBun: [],
 };
 
@@ -64,7 +64,7 @@ export const constructorReducer = (state = initialConstructorState, action: TCon
       return {
         ...state,
         constructor: [],
-        bun: {},
+        bun: null,
       };
     }
 

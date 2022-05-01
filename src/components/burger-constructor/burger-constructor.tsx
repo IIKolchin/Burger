@@ -9,7 +9,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import { useDrop } from "react-dnd";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import Item from "../item/item";
 import {
   SHOW_ORDER,
@@ -25,6 +25,7 @@ import {
 } from "../../services/actions/constructor";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../loader/loader";
+import { TIngredients } from "../../services/types/data";
 
 
 function BurgerConstructor() {
@@ -38,26 +39,26 @@ function BurgerConstructor() {
   const order = useSelector((store) => store.orderDetails.order);
   const ingredients = ["sauce", "main"];
   const items = [bun, bun, ...constructor];
-  const id = items.map((item) => item._id);
+  const id = items.map((item) => item?._id);
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((store) => store.user.isUser);
   const orderRequest = useSelector((store) => store.orderDetails.orderRequest)
 
-  // console.log(constructor)
+  // console.log(data)
   // console.log(bun)
   // console.log(generateId)
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
-    drop(item) {
+    drop(item: TIngredients) {
       dispatch({
         type: GENERATE_ID,
         payload: uuidv4(),
       });
       dispatch({
         type: ADD_ITEM,
-        ...item,
+        // ...item,
         payload: data.find((el) => el._id === item.id),
       });
     },
@@ -68,10 +69,10 @@ function BurgerConstructor() {
 
   const [{ bunHover }, drop] = useDrop({
     accept: "bun",
-    drop(item) {
+    drop(item: TIngredients) {
       dispatch({
         type: ADD_BUN,
-        ...item,
+        // ...item,
         payload: data.find((el) => el._id === item.id),
       });
     },
@@ -115,7 +116,7 @@ function BurgerConstructor() {
   const totalPrice = useMemo(() => {
     let total = 0;
 
-    items.map((item) => (total += item.price || 0));
+    items.map((item) => (total += item?.price || 0));
 
     return total ? total : 0;
   }, [items]);
@@ -130,7 +131,7 @@ if (orderRequest) {
   return (
     <section className={styles.section + " mt-25 ml-10"}>
       <div className={styles.component} ref={drop} style={{ borderColor }}>
-        {bun.type && (
+        {bun?.type && (
           <div className="ml-8">
             <ConstructorElement
               type="top"
@@ -142,7 +143,7 @@ if (orderRequest) {
           </div>
         )}
 
-        <div className={styles.constructor} ref={dropTarget}>
+        <div className={styles.el} ref={dropTarget}>
           {constructor.map((data, index) => {
             return (
               <Item
@@ -155,7 +156,7 @@ if (orderRequest) {
           })}
         </div>
 
-        {bun.type && (
+        {bun?.type && (
           <div className="ml-8">
             <ConstructorElement
               type="bottom"
@@ -176,7 +177,7 @@ if (orderRequest) {
         </Button>
       </div>
 
-      {showOrder && order && bun.type && user && (
+      {showOrder && order && bun?.type && user && (
         <Modal handleHide={handleHide}>
           <OrderDetails order={order} />
         </Modal>

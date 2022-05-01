@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./app-header.module.css";
 import {
   Logo,
@@ -19,7 +18,7 @@ function AppHeader() {
             activeClassName={styles.activeLink}
             exact
           >
-            <li className={styles.constructor}>
+            <li className={styles.li}>
               <BurgerIcon
                 type={
                   window.location.pathname === "/" ? "primary" : "secondary"
@@ -38,7 +37,7 @@ function AppHeader() {
             activeClassName={styles.activeLink}
             exact
           >
-            <li className={styles.constructor}>
+            <li className={styles.li}>
               <div className={styles.burger}>
                 <ListIcon
                   type={

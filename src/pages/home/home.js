@@ -4,20 +4,16 @@ import styles from "./home.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { useDispatch } from "react-redux";
-import { getUserRequest } from "../../services/actions/getUser";
+import { getUser } from "../../services/actions/user";
 import React, { useEffect } from "react";
 
 
 export function HomePage() {
 
-  const dispatch = useDispatch();
-
-  // const getUser = () => {
-  //   dispatch(getUserRequest());
-  // };
+  // const dispatch = useDispatch();
 
   // useEffect(() => {
-  //   getUser();
+  //   dispatch(getUser());
   // }, [dispatch]);
 
   return (
