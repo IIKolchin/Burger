@@ -45,7 +45,7 @@ const Ingredient: FC<TIngredientProps> = ({ data }) => {
   });
 
   return (
-    !isDrag && (
+    !isDrag ? (
       <li
         id={data._id}
         className={styles.li}
@@ -61,7 +61,7 @@ const Ingredient: FC<TIngredientProps> = ({ data }) => {
         <p className={styles.text + " mb-6"}>{data.name}</p>
         {count ? <Counter count={count} size="default" /> : null}
       </li>
-    )
+    ) : null
   );
 }
 

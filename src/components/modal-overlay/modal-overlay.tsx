@@ -1,8 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
 
-function ModalOverlay(props) {
+type TModalOverlay = {
+  handleHide: () => void
+}
+
+const ModalOverlay: FC<TModalOverlay> = (props) => {
   
   return <div className={styles.overlay} onClick={props.handleHide}></div>;
 }

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { FC, useRef } from "react";
 // import PropTypes from "prop-types";
 // import { dataPropTypes } from "../../utils/data";
 import {
@@ -6,13 +6,26 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./item.module.css";
-import { useDrag, useDrop } from "react-dnd";
+import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
 import { DELETE_ITEM } from "../../services/actions/constructor";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/types/index";
+import { TIngredients } from "../../services/types/data";
 
-function Item({ data, index, updateItem }) {
+type TItemProps = {
+  data: TIngredients;
+  index: number;
+  updateItem: (dragIndex: number, hoverIndex: number) => void;
+}
+
+type TDropItem = {
+index: number;
+
+}
+
+const Item: FC<TItemProps> =({ data, index, updateItem }) => {
 
   const dispatch = useDispatch();
+  const ref = useRef<HTMLDivElement>(null);
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
     item: { index },
@@ -23,7 +36,7 @@ function Item({ data, index, updateItem }) {
 
   const [, dropRef] = useDrop({
     accept: "item",
-    hover(item, monitor) {
+    hover(item: any, monitor: DropTargetMonitor)  {
       if (!ref.current) {
         return;
       }
@@ -35,18 +48,20 @@ function Item({ data, index, updateItem }) {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
 
       updateItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
-    },
+    }
   });
+  
 
-  const ref = useRef(null);
+  
   const dragDropRef = dragRef(dropRef(ref));
+
 
   const opacity = isDragging ? 0.5 : 1;
 

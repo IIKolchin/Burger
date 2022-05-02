@@ -1,13 +1,19 @@
 import styles from "./feed-item.module.css";
-import React, { useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/index";
 import { ImageFeed } from "../image-feed/image-feed";
 import { getDateOrder } from "../../utils/data";
+import { TIngredients, TOrder } from "../../services/types/data";
 // import PropTypes from "prop-types";
 // import { dataOrderPropTypes } from "../../utils/data";
 
-export function FeedItem({ status, data }) {
+type TFeedItemProps = {
+  status: string;
+  data: TOrder;
+}
+
+export const FeedItem: FC<TFeedItemProps> = ({ status, data }) => {
   const style = { width: status ? 844 : 584 };
   const color = {
     color: data.status === "done" ? "#00CCCC" : "#F2F2F3",
@@ -81,7 +87,7 @@ export function FeedItem({ status, data }) {
           </span>
 
           <div className={styles.icon}>
-            <CurrencyIcon />
+            <CurrencyIcon type='primary'/>
           </div>
         </div>
       </div>

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import { HIDE_MODAL } from "../../services/actions/modalIngredient";
 import AppHeader from "../app-header/app-header";
 import { ProtectedRoute } from "../protected-route/protected-route";
@@ -25,8 +25,18 @@ import {
   OrderInfo,
 } from "../../pages";
 
+type TLocationState = {
+  background: {
+    pathname: string;
+    state: {};
+    search: string;
+    hash: string;
+    // readonly key: string;
+  };
+};
+
 export function ModalSwitch() {
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const history = useHistory();
   const dispatch = useDispatch();
   const action = history.action === "PUSH" || history.action === "REPLACE";
@@ -39,6 +49,8 @@ export function ModalSwitch() {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
+
+  // console.log(location.state.background)
 
   return (
     <>

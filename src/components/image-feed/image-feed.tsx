@@ -1,7 +1,13 @@
+import { FC } from "react";
+import { TIngredients } from "../../services/types/data";
 import styles from "./image-feed.module.css";
 // import { dataPropTypes } from "../../utils/data";
 
-export function ImageFeed({ data }) {
+type TImageFeedProps = {
+  data: TIngredients | undefined
+}
+
+export const ImageFeed: FC<TImageFeedProps> = ({ data })  => {
   return (
     <div className={styles.item}>
       {data && (
