@@ -16,21 +16,20 @@ import {
   CLOSE_ORDER,
   getOrder,
 } from "../../services/actions/order";
+import { DELETE_ITEM } from "../../services/actions/constructor";
 import {
   ADD_ITEM,
   ADD_BUN,
   GENERATE_ID,
   UPDATE_POSITION_ITEM,
   RESET_CONSTRUCTOR,
+  // deleteConstructorIngredient,
 } from "../../services/actions/constructor";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../loader/loader";
 import { TIngredients } from "../../services/types/data";
 
-
 function BurgerConstructor() {
-
-
   const data = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
@@ -43,11 +42,7 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((store) => store.user.isUser);
-  const orderRequest = useSelector((store) => store.orderDetails.orderRequest)
-
-  // console.log(data)
-  // console.log(bun)
-  // console.log(generateId)
+  const orderRequest = useSelector((store) => store.orderDetails.orderRequest);
 
   const [{ ingredientHover }, dropTarget] = useDrop({
     accept: ingredients,
@@ -102,7 +97,6 @@ function BurgerConstructor() {
     if (user) {
       dispatch(getOrder(id));
       dispatch({ type: SHOW_ORDER });
-      
     } else {
       history.replace({ pathname: "/login" });
     }
@@ -121,12 +115,16 @@ function BurgerConstructor() {
     return total ? total : 0;
   }, [items]);
 
+  if (orderRequest) {
+    return <Loader />;
+  }
 
-if (orderRequest) {
-  return (
-    <Loader />
-  )
-}
+  const onDelete = (index: number) => {
+    dispatch({
+      type: DELETE_ITEM,
+      index,
+    });
+  };
 
   return (
     <section className={styles.section + " mt-25 ml-10"}>
@@ -151,6 +149,7 @@ if (orderRequest) {
                 index={index}
                 data={data}
                 updateItem={updateItem}
+                deleteItem={() => onDelete(index)}
               />
             );
           })}

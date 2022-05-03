@@ -15,14 +15,12 @@ type TItemProps = {
   data: TIngredients;
   index: number;
   updateItem: (dragIndex: number, hoverIndex: number) => void;
+  deleteItem: () => void
 }
 
-// type TDropItem = {
-// index: number;
 
-// }
 
-const Item: FC<TItemProps> =({ data, index, updateItem }) => {
+const Item: FC<TItemProps> =({ data, index, updateItem, deleteItem }) => {
 
   const dispatch = useDispatch();
   const ref = useRef<HTMLDivElement>(null);
@@ -60,28 +58,28 @@ const Item: FC<TItemProps> =({ data, index, updateItem }) => {
   
 
   
-  const dragDropRef = dragRef(dropRef(ref));
+ dragRef(dropRef(ref));
 
 
   const opacity = isDragging ? 0.5 : 1;
 
 
 
-  const onDelete = (e: any)  => {
-    e.target.dispatch({
-      type: DELETE_ITEM,
-      index,
-    });
-  };
+  // const onDelete = ()  => {
+  //   dispatch({
+  //     type: DELETE_ITEM,
+  //     index,
+  //   });
+  // };
 
   return (
-    <div className={styles.group} ref={() => dragDropRef} style={{ opacity }}>
+    <div className={styles.group} ref={ref} style={{ opacity }}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={data.name}
         price={data.price}
         thumbnail={data.image}
-        handleClose={() => onDelete}
+        handleClose={deleteItem}
       />
     </div>
   );

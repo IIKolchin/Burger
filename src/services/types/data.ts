@@ -8,7 +8,6 @@ import {
   WS_GET_ALL_MESSAGE,
 } from "../actions/wsActions";
 
-
 export type TIngredients = {
   readonly calories: number;
   readonly carbohydrates: number;
@@ -23,6 +22,7 @@ export type TIngredients = {
   readonly __v: number;
   readonly _id: string;
   readonly id?: string;
+  count?: string;
 };
 
 export type TConstructorItem = {
@@ -38,18 +38,19 @@ export type TUser = {
   readonly password?: string;
   readonly email?: string;
   readonly name?: string;
+  token?: string
 };
 
 export type TOrder = {
-  readonly createdAt: string;
-  readonly ingredients: ReadonlyArray<string>;
-  readonly name: string;
-  readonly number: number;
-  readonly owner: object;
-  readonly price: number;
-  readonly status: string;
-  readonly updatedAt: string;
-  readonly _id: string;
+  createdAt: string;
+  ingredients: Array<string>;
+  name: string;
+  number: number;
+  owner: object;
+  price: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
 };
 
 export type TOrders = {
@@ -66,4 +67,9 @@ export type TWSAction = {
   readonly onClose: typeof WS_CONNECTION_CLOSED;
   readonly onError: typeof WS_CONNECTION_ERROR;
   readonly onMessage: typeof WS_GET_MESSAGE | typeof WS_GET_ALL_MESSAGE;
+};
+
+
+export type TGetBurgerCount = {
+  count: { [name: string]: number };
 };

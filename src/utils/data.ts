@@ -7,33 +7,11 @@ import {
   isYesterday,
 } from "date-fns";
 import { ru } from "date-fns/locale";
-import { TUser } from "../services/types/data";
+import { TGetBurgerCount, TIngredients, TUser } from "../services/types/data";
 import { AppThunk } from "../services/types";
 
 // const URL = "https://norma.nomoreparties.space/api/";
 
-// const dataPropTypes = PropTypes.shape({
-//   _id: PropTypes.string,
-//   type: PropTypes.string,
-//   image: PropTypes.string,
-//   price: PropTypes.number,
-//   name: PropTypes.string,
-//   image_large: PropTypes.string,
-//   calories: PropTypes.number,
-//   proteins: PropTypes.number,
-//   fat: PropTypes.number,
-//   carbohydrates: PropTypes.number,
-// });
-
-// const dataOrderPropTypes = PropTypes.shape({
-//   createdAt: PropTypes.string,
-//   ingredients: PropTypes.array,
-//   name: PropTypes.string,
-//   number: PropTypes.number,
-//   status: PropTypes.string,
-//   updatedAt: PropTypes.string,
-//   _id: PropTypes.string,
-// });
 
 // const checkResponse = (res) => {
 //   if (res.ok) {
@@ -95,8 +73,19 @@ import { AppThunk } from "../services/types";
 // };
 
 
+export const ingredientsCount = (arr: Array<TIngredients>) =>
+  arr?.reduce(
+    (prev: TGetBurgerCount, curr: TIngredients) => {
+      const id = curr?._id;
+      prev.count[id] = (prev.count[id] || 0) + 1;
+      return prev;
+    },
+    { count: {} }
+  );
 
-const getDateOrder = (date: string) => {
+
+
+export const getDateOrder = (date: string) => {
   const dateCreatedAt = new Date(date);
   const day = isToday(dateCreatedAt)
     ? "Сегодня"
@@ -107,18 +96,6 @@ const getDateOrder = (date: string) => {
         addSuffix: true,
         locale: ru,
       });
-  const hour = format(dateCreatedAt, "p 'i-'O", {locale: ru});
-  return `${day}, ${hour}`    
-};
-
-export {
-  // URL,
-  // dataPropTypes,
-  // dataOrderPropTypes,
-  // checkResponse,
-  getDateOrder,
-  // getUserRequest,
-  // updateTokenRequest,
-  // patchUserRequest,
-  // getOrderRequest,
+  const hour = format(dateCreatedAt, "p 'i-'O", { locale: ru });
+  return `${day}, ${hour}`;
 };

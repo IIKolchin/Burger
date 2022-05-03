@@ -5,7 +5,12 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "../../services/types/index";
 import { getUser } from "../../services/actions/user";
 
-export const ProtectedRoute: FC = ({ children, ...rest }) => {
+type TprotectedRouteProps = {
+  path: string;
+  exact: boolean;
+}
+
+export const ProtectedRoute: FC<TprotectedRouteProps> = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const isUser = useSelector((store) => store.user.isUser);
   const [isUserLoaded, setUserLoaded] = useState(false);

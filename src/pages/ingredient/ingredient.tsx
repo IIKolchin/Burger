@@ -1,6 +1,6 @@
 import styles from "./ingredient.module.css";
 import IngredientDetails from "../../components/ingredient-details/ingredient-details";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/index";
 
 export function IngredientPage() {
   

@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "../login/login.module.css";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import {
   SET_NEW_PASSWORD,
   getNewPassword,
@@ -22,14 +22,14 @@ export function ResetPasswordPage() {
     (store) => store.forgotPassword.forgotPasswordSuccess
   );
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: SET_NEW_PASSWORD,
       payload: { ...form, [e.target.name]: e.target.value },
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(getNewPassword(form));
   };
@@ -71,7 +71,7 @@ export function ResetPasswordPage() {
         type={"text"}
         placeholder={"Введите новый пароль"}
         onChange={onChange}
-        value={form.password}
+        value={`${form.password}`}
         name={"password"}
         error={false}
         errorText={"Ошибка"}
@@ -82,7 +82,7 @@ export function ResetPasswordPage() {
           type={"text"}
           placeholder={"Введите код из письма"}
           onChange={onChange}
-          value={form.token}
+          value={`${form.token}`}
           name={"token"}
           error={false}
           errorText={"Ошибка"}

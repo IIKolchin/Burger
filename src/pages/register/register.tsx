@@ -7,7 +7,7 @@ import {
 import React, { useEffect } from "react";
 import styles from "../login/login.module.css";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import { register, SET_REGISTER } from "../../services/actions/user";
 import { Redirect } from "react-router-dom";
 
@@ -16,20 +16,20 @@ export function RegisterPage() {
   const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    form.name = "";
-    form.email = "";
-    form.password = "";
-  }, []);
+  // useEffect(() => {
+  //   form.name = "";
+  //   form.email = "";
+  //   form.password = "";
+  // }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: SET_REGISTER,
       payload: { ...form, [e.target.name]: e.target.value },
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(register(form));
   };
@@ -52,16 +52,16 @@ export function RegisterPage() {
           type={"text"}
           placeholder={"Имя"}
           onChange={onChange}
-          value={form.name}
+          value={`${form.name}`}
           name={"name"}
           size={"default"}
         />
       </div>
-      <EmailInput onChange={onChange} value={form.email} name={"email"} />
+      <EmailInput onChange={onChange} value={`${form.email}`} name={"email"} />
       <div className="mt-6 mb-6">
         <PasswordInput
           onChange={onChange}
-          value={form.password}
+          value={`${form.password}`}
           name={"password"}
         />
       </div>

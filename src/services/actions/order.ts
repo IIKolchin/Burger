@@ -52,7 +52,6 @@ export const getOrder: AppThunk = (id: string) => {
     // })
       // .then(checkResponse)
       .then((res) => {
-        console.log(res)
         if (res && res.success) {
           dispatch({
             type: GET_ORDER_SUCCESS,

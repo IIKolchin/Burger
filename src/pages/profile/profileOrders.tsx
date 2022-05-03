@@ -7,7 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { logout } from "../../services/actions/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import React, { useCallback, useEffect } from "react";
 import { FeedItem } from "../../components/feed-item/feed-item";
 

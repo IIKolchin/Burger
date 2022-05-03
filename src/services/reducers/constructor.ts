@@ -45,6 +45,7 @@ export const constructorReducer = (state = initialConstructorState, action: TCon
         constructor: [...state.constructor].filter(
           (item, index) => index !== action.index
         ),
+        
       };
     }
     case ADD_BUN: {

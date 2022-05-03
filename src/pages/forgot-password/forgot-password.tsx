@@ -5,7 +5,7 @@ import {
 import styles from "../login/login.module.css";
 import { Link, useHistory } from "react-router-dom";
 import { Redirect } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import {
   forgotPassword,
   SET_FORGOT_PASSWORD,
@@ -19,14 +19,14 @@ export function ForgotPasswordPage() {
     (store) => store.forgotPassword.forgotPasswordSuccess
   );
 
-  const change = (e) => {
+  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: SET_FORGOT_PASSWORD,
       payload: { ...form, [e.target.name]: e.target.value },
     });
   };
 
-  const submit = (e) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(forgotPassword(form.email));
   };
@@ -55,7 +55,7 @@ export function ForgotPasswordPage() {
     <form onSubmit={submit} className={styles.container}>
       <h2 className={styles.heading}>Восстановление пароля</h2>
       <div className="mb-6">
-        <EmailInput onChange={change} value={form.email} name={"email"} />
+        <EmailInput onChange={change} value={`${form.email}`} name={"email"} />
       </div>
       <Button type="primary" size="medium">
         Восстановить

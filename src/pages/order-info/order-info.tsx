@@ -1,21 +1,24 @@
 import styles from "./order-info.module.css";
 import { getCookie } from "../../utils/cookie";
 import { useMemo, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
   BrowserRouter as Router,
   useParams,
 } from "react-router-dom";
-import { getDateOrder } from "../../utils/data";
+import { getDateOrder, ingredientsCount } from "../../utils/data";
 import {
   wsConnectionAllStart,
   wsConnectionClosed,
   wsConnectionStart,
 } from "../../services/actions/wsActions";
+import { TIngredients } from "../../services/types/data";
+
+
 
 export function OrderInfo() {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const items = useSelector((store) => store.ws.messages);
   const userItems = useSelector((store) => store.ws.orders);
@@ -23,15 +26,18 @@ export function OrderInfo() {
   const data = items?.find((el) => el._id === id)
     ? items?.find((el) => el._id === id)
     : userItems?.find((el) => el._id === id);
+  
 
 
   useEffect(() => {
-    const token = getCookie("token").split("Bearer ")[1]
-    dispatch(wsConnectionStart(token));
-    dispatch(wsConnectionAllStart());
-    return () => {
-      dispatch(wsConnectionClosed());
-    };
+    const token = getCookie("token")?.split("Bearer ")[1]
+    if (token) {
+      dispatch(wsConnectionStart(token));
+      dispatch(wsConnectionAllStart());
+      return () => {
+        dispatch(wsConnectionClosed());
+      };
+    }
   }, []);
 
   const status =
@@ -49,9 +55,9 @@ export function OrderInfo() {
 
   const ingredient =
     items &&
-    data?.ingredients.map((i) => {
-      return allIngredients.find((item) => item._id === i);
-    });
+    data?.ingredients.map((i) => allIngredients.find((item) => item._id === i));
+
+  // const ingredient = data && getIngredient(data.ingredients, allIngredients)
 
   const ingredientUnique = ingredient?.filter(
     (item, pos, arr) => arr.lastIndexOf(item) === pos
@@ -59,20 +65,25 @@ export function OrderInfo() {
 
   const ingredientSort =
     items &&
-    ingredientUnique?.sort((a, b) => {
+    ingredientUnique?.sort((a: any, b: any) => {
       if (a.type === "bun") return -1;
       if (b.type === "bun") return 1;
       return a.type.localeCompare(b.type);
     });
 
+    // const ingredients =  ingredientsCount(ingredient) 
+
   const ingredients = ingredient?.reduce(
-    (prev, curr) => {
+    (prev: any, curr: any) => {
       const id = curr?._id;
       prev.count[id] = (prev.count[id] || 0) + 1;
       return prev;
     },
     { count: {} }
   );
+
+console.log(ingredients)
+console.log(ingredient)
 
   const totalPrice = useMemo(() => {
     let total = 0;
@@ -109,9 +120,9 @@ export function OrderInfo() {
                         styles.quantity + " text text_type_digits-default"
                       }
                     >
-                      {`${ingredients?.count[data._id]} x ${data.price}`}
+                      {data && `${ingredients?.count[data._id]} x ${data.price}`}
                     </p>
-                    <CurrencyIcon />
+                    <CurrencyIcon type="primary" />
                   </div>
                 </li>
               );
@@ -130,7 +141,7 @@ export function OrderInfo() {
               <p className={styles.quantity + " text text_type_digits-default"}>
                 {totalPrice}
               </p>
-              <CurrencyIcon />
+              <CurrencyIcon type="primary"/>
             </div>
           </div>
         </section>

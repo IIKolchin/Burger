@@ -9,18 +9,34 @@ import {
   login,
   SET_AUTHORIZATION,
 } from "../../services/actions/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import { Redirect } from "react-router-dom";
 import { useCallback } from "react";
+
+type TLocationState = {
+  background: {
+    pathname: string;
+    state: {
+      from : Location
+    };
+    search: string;
+    hash: string;
+    // from: { pathname: string }
+    // from : Location
+    // readonly key: string;
+  };
+};
 
 export function LoginPage() {
   const form = useSelector((store) => store.authorization.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
-  const location = useLocation();
+  // const location = useLocation();
+  const { state } = useLocation<{ from: string }>();
 
-  const onChange = (e) => {
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: SET_AUTHORIZATION,
       payload: { ...form, [e.target.name]: e.target.value },
@@ -36,17 +52,17 @@ export function LoginPage() {
   );
 
   if (isAuth || isUser) {
-    return <Redirect to={{ pathname: location.state?.from.pathname || "/" }} />;
+    return <Redirect to={ state?.from || "/" } />;
   }
 
   return (
     <form onSubmit={onSubmit} className={styles.container}>
       <h2 className={styles.heading}>Вход</h2>
-      <EmailInput onChange={onChange} value={form.email} name={"email"} />
+      <EmailInput onChange={onChange} value={`${form.email}`} name={"email"} />
       <div className="mt-6 mb-6">
         <PasswordInput
           onChange={onChange}
-          value={form.password}
+          value={`${form.password}`}
           name={"password"}
         />
       </div>

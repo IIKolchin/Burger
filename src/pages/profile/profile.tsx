@@ -5,7 +5,7 @@ import {
 import React, { useCallback, useState, useEffect } from "react";
 import styles from "./profile.module.css";
 import { Link, Redirect, NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/index";
 import { logout } from "../../services/actions/user";
 import { patchUser, SET_PATCH_USER } from "../../services/actions/user";
 import {
@@ -21,22 +21,25 @@ export function Profile() {
   const userForm = useSelector((store) => store.user.form);
   const isUser = useSelector((store) => store.user.isUser);
   const user = useSelector((store) => store.user.form);
-  const inputRefName = React.useRef(null);
-  const inputRefEmail = React.useRef(null);
-  const inputRefPassword = React.useRef(null);
+  const inputRefName = React.useRef<HTMLDivElement>(null);
+  const inputRefEmail = React.useRef<HTMLDivElement>(null);
+  const inputRefPassword = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user.name && user.email) {
-    const token = getCookie("token").split("Bearer ")[1]
-     dispatch(wsConnectionStart(token));
+    const token = getCookie("token")?.split("Bearer ")[1]
+    if(token) {
+      dispatch(wsConnectionStart(token));
 
-     return () => {
-      dispatch(wsConnectionClosed());
-    };
+      return () => {
+       dispatch(wsConnectionClosed());
+     };
+    }
+
     }
   }, [user]);
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: SET_PATCH_USER,
       payload: { [e.target.name]: e.target.value },
@@ -45,13 +48,13 @@ export function Profile() {
   };
 
   const onIconClickName = () => {
-    setTimeout(() => inputRefName.current.focus(), 0);
+    setTimeout(() => inputRefName.current?.focus(), 0);
   };
   const onIconClickEmail = () => {
-    setTimeout(() => inputRefEmail.current.focus(), 0);
+    setTimeout(() => inputRefEmail.current?.focus(), 0);
   };
   const onIconClickPassword = () => {
-    setTimeout(() => inputRefPassword.current.focus(), 0);
+    setTimeout(() => inputRefPassword.current?.focus(), 0);
   };
 
   const cancel = useCallback(() => {
@@ -80,7 +83,7 @@ export function Profile() {
     );
   }
 
-  const formSubmit = (e) => {
+  const formSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(patchUser(form));
     setShowButton(false);
@@ -120,12 +123,12 @@ export function Profile() {
             type={"text"}
             placeholder={"Имя"}
             onChange={onChange}
-            value={form.name}
+            value={`${form.name}`}
             name={"name"}
             size={"default"}
             icon={"EditIcon"}
             onIconClick={onIconClickName}
-            ref={inputRefName}
+            ref={() => inputRefName}
             error={false}
             errorText={"Ошибка"}
           />
@@ -136,12 +139,12 @@ export function Profile() {
             type={"email"}
             placeholder={"Логин"}
             onChange={onChange}
-            value={form.email}
+            value={`${form.email}`}
             name={"email"}
             size={"default"}
             icon={"EditIcon"}
             onIconClick={onIconClickEmail}
-            ref={inputRefEmail}
+            ref={() => inputRefEmail}
             error={false}
             errorText={"Ошибка"}
           />
@@ -152,12 +155,12 @@ export function Profile() {
             type={"password"}
             placeholder={"Пароль"}
             onChange={onChange}
-            value={form.password}
+            value={`${form.password}`}
             name={"password"}
             size={"default"}
             icon={"EditIcon"}
             onIconClick={onIconClickPassword}
-            ref={inputRefPassword}
+            ref={() => inputRefPassword}
             error={false}
             errorText={"Ошибка"}
           />
