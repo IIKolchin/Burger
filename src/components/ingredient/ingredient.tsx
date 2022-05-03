@@ -3,38 +3,21 @@ import {
   CurrencyIcon,
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-// import PropTypes from "prop-types";
-// import { dataPropTypes } from "../../utils/data";
 import { useDrag } from "react-dnd";
-// import { SHOW_MODAL } from "../../services/actions/modalIngredient";
-import { useSelector, useDispatch } from "../../services/types/index";
+import { useSelector } from "../../services/types/index";
 import { FC } from "react";
 import { TIngredients } from "../../services/types/data";
 
 type TIngredientProps = {
   data: TIngredients;
-  // children: React.HTMLAttributes<HTMLElement>;
 };
 
 const Ingredient: FC<TIngredientProps> = ({ data }) => {
-
-  // const dataItems = useSelector((store) => store.items.data);
   const constructor = useSelector((store) => store.element.constructor);
   const bun = useSelector((store) => store.element.bun);
   const burgerItems = [bun, bun, ...constructor];
   const count = burgerItems.filter((item) => item?._id === data?._id).length;
-  const dispatch = useDispatch();
   const id = data._id;
-
-//  console.log(data)
-
-  // const handleShow = () => {
-  //   dispatch({
-  //     type: SHOW_MODAL,
-  //     id,
-  //     payload: dataItems.find((el) => el._id === id),
-  //   });
-  // };
 
   const [{ isDrag }, dragRef] = useDrag({
     type: data.type,
@@ -44,30 +27,17 @@ const Ingredient: FC<TIngredientProps> = ({ data }) => {
     }),
   });
 
-  return (
-    !isDrag ? (
-      <li
-        id={data._id}
-        className={styles.li}
-        // onClick={handleShow}
-        ref={dragRef}
-      >
-        {/* {children} */}
-        <img className="ml-4 mr-4" src={data.image} alt={data.name} />
-        <div className={styles.price}>
-          <p className="text text_type_digits-default mr-2">{data.price}</p>
-          <CurrencyIcon type="primary"/>
-        </div>
-        <p className={styles.text + " mb-6"}>{data.name}</p>
-        {count ? <Counter count={count} size="default" /> : null}
-      </li>
-    ) : null
-  );
-}
-
-// Ingredient.propTypes = {
-//   children: PropTypes.element,
-//   data: dataPropTypes.isRequired,
-// };
+  return !isDrag ? (
+    <li id={data._id} className={styles.li} ref={dragRef}>
+      <img className="ml-4 mr-4" src={data.image} alt={data.name} />
+      <div className={styles.price}>
+        <p className="text text_type_digits-default mr-2">{data.price}</p>
+        <CurrencyIcon type="primary" />
+      </div>
+      <p className={styles.text + " mb-6"}>{data.name}</p>
+      {count ? <Counter count={count} size="default" /> : null}
+    </li>
+  ) : null;
+};
 
 export default Ingredient;

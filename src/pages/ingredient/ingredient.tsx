@@ -3,7 +3,6 @@ import IngredientDetails from "../../components/ingredient-details/ingredient-de
 import { useSelector } from "../../services/types/index";
 
 export function IngredientPage() {
-  
   const data = useSelector((store) => store.items.data);
   const isItems = useSelector((store) => store.items.dataRequest);
   const isError = useSelector((store) => store.items.dataFailed);

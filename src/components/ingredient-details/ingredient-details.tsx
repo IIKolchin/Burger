@@ -4,7 +4,6 @@ import { useSelector } from "../../services/types/index";
 import { BrowserRouter as Router, useParams } from "react-router-dom";
 
 function IngredientDetails() {
-
   const { id } = useParams<{ id: string }>();
   const items = useSelector((store) => store.items.data);
   const data = items.find((el) => el._id === id);

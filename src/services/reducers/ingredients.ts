@@ -10,7 +10,7 @@ type TIngredientState = {
   data: Array<TIngredients>;
   dataRequest: boolean;
   dataFailed: boolean;
-}
+};
 
 const initialState: TIngredientState = {
   data: [],
@@ -18,7 +18,10 @@ const initialState: TIngredientState = {
   dataFailed: false,
 };
 
-export const ingredientsReducer= (state = initialState, action: TIngredientsActions): TIngredientState => {
+export const ingredientsReducer = (
+  state = initialState,
+  action: TIngredientsActions
+): TIngredientState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

@@ -56,7 +56,7 @@ function AppHeader() {
               <Logo />
             </li>
           </Link>
-          
+
           <NavLink
             to={{ pathname: "/profile" }}
             className={styles.link + " text text_type_main-default"}

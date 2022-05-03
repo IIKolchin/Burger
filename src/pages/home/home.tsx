@@ -3,19 +3,8 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 import styles from "./home.module.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { useDispatch } from "react-redux";
-import { getUser } from "../../services/actions/user";
-import React, { useEffect } from "react";
-
 
 export function HomePage() {
-
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   dispatch(getUser());
-  // }, [dispatch]);
-
   return (
     <main className={styles.main}>
       <DndProvider backend={HTML5Backend}>

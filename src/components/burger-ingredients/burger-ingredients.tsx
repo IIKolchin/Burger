@@ -1,13 +1,11 @@
-import React, { DetailedHTMLProps, FC, HTMLAttributes } from "react";
+import React, { FC } from "react";
 import styles from "./burger-ingredients.module.css";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Ingredient from "../ingredient/ingredient";
 import { useSelector } from "../../services/types";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 
-
 const BurgerIngredients: FC = (): JSX.Element => {
-
   const data = useSelector((store) => store.items.data);
   const buns = data.filter((item) => item.type === "bun");
   const sauces = data.filter((item) => item.type === "sauce");
@@ -18,16 +16,14 @@ const BurgerIngredients: FC = (): JSX.Element => {
   const set1 = () => {
     setCurrent("one");
   };
-
   const set2 = () => {
     setCurrent("two");
   };
-
   const set3 = () => {
     setCurrent("three");
   };
 
-  const handleScroll = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleScroll = (e: any): void => {
     let element = e.target;
     if (element.scrollTop > 0 && element.scrollTop < 290) {
       set1();
@@ -59,7 +55,10 @@ const BurgerIngredients: FC = (): JSX.Element => {
           </Tab>
         </a>
       </div>
-      <div className={styles.ingredients + " mt-10"} onScroll={() => handleScroll}>
+      <div
+        className={styles.ingredients + " mt-10"}
+        onScroll={handleScroll}
+      >
         <h2 className={styles.subtitle + " mb-6"} id={"1"}>
           Булки
         </h2>
@@ -114,7 +113,7 @@ const BurgerIngredients: FC = (): JSX.Element => {
                   state: { background: location },
                 }}
               >
-                <Ingredient data={data}  />
+                <Ingredient data={data} />
               </Link>
             );
           })}
@@ -122,6 +121,6 @@ const BurgerIngredients: FC = (): JSX.Element => {
       </div>
     </section>
   );
-}
+};
 
 export default BurgerIngredients;

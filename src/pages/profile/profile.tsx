@@ -21,21 +21,17 @@ export function Profile() {
   const userForm = useSelector((store) => store.user.form);
   const isUser = useSelector((store) => store.user.isUser);
   const user = useSelector((store) => store.user.form);
-  const inputRefName = React.useRef<HTMLDivElement>(null);
-  const inputRefEmail = React.useRef<HTMLDivElement>(null);
-  const inputRefPassword = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (user.name && user.email) {
-    const token = getCookie("token")?.split("Bearer ")[1]
-    if(token) {
-      dispatch(wsConnectionStart(token));
+      const token = getCookie("token")?.split("Bearer ")[1];
+      if (token) {
+        dispatch(wsConnectionStart(token));
 
-      return () => {
-       dispatch(wsConnectionClosed());
-     };
-    }
-
+        return () => {
+          dispatch(wsConnectionClosed());
+        };
+      }
     }
   }, [user]);
 
@@ -45,16 +41,6 @@ export function Profile() {
       payload: { [e.target.name]: e.target.value },
     });
     setShowButton(true);
-  };
-
-  const onIconClickName = () => {
-    setTimeout(() => inputRefName.current?.focus(), 0);
-  };
-  const onIconClickEmail = () => {
-    setTimeout(() => inputRefEmail.current?.focus(), 0);
-  };
-  const onIconClickPassword = () => {
-    setTimeout(() => inputRefPassword.current?.focus(), 0);
   };
 
   const cancel = useCallback(() => {
@@ -127,8 +113,6 @@ export function Profile() {
             name={"name"}
             size={"default"}
             icon={"EditIcon"}
-            onIconClick={onIconClickName}
-            ref={() => inputRefName}
             error={false}
             errorText={"Ошибка"}
           />
@@ -143,8 +127,6 @@ export function Profile() {
             name={"email"}
             size={"default"}
             icon={"EditIcon"}
-            onIconClick={onIconClickEmail}
-            ref={() => inputRefEmail}
             error={false}
             errorText={"Ошибка"}
           />
@@ -159,8 +141,6 @@ export function Profile() {
             name={"password"}
             size={"default"}
             icon={"EditIcon"}
-            onIconClick={onIconClickPassword}
-            ref={() => inputRefPassword}
             error={false}
             errorText={"Ошибка"}
           />

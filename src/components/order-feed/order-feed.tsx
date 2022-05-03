@@ -2,12 +2,8 @@ import styles from "./order-feed.module.css";
 import { FeedItem } from "../feed-item/feed-item";
 import { useSelector } from "../../services/types/index";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
-import { TOrder } from "../../services/types/data";
-
-
 
 export function OrderFeed() {
-
   const location = useLocation();
   const data = useSelector((store) => store.ws.messages);
 
@@ -26,7 +22,7 @@ export function OrderFeed() {
                     state: { background: location },
                   }}
                 >
-                  <FeedItem data={data}/>
+                  <FeedItem data={data} />
                 </Link>
               );
             })

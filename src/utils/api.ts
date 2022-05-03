@@ -1,11 +1,7 @@
 import { getCookie } from "./cookie";
 import { TUser } from "../services/types/data";
 
-
-
-
 const URL = "https://norma.nomoreparties.space/api/";
-
 
 const checkResponse = (res: Response) => {
   if (res.ok) {
@@ -29,7 +25,7 @@ const authorizationRequest = async (form: TUser) => {
 const getUserRequest = async (token: string | undefined) => {
   const res = await fetch(`${URL}auth/user`, {
     method: "GET",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
       authorization: token as string,
     },
@@ -90,18 +86,18 @@ const getNewPasswordRequest = async (form: TUser) => {
 };
 
 const forgotPasswordRequest = async (form: TUser) => {
-    const res = await     fetch(`${URL}password-reset`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: form,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-    const data = await checkResponse(res);
-    return data;
-  };
+  const res = await fetch(`${URL}password-reset`, {
+    method: "POST",
+    body: JSON.stringify({
+      email: form,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await checkResponse(res);
+  return data;
+};
 
 const registerRequest = async (form: TUser) => {
   const res = await fetch(`${URL}auth/register`, {
@@ -141,5 +137,5 @@ export {
   logoutRequest,
   getNewPasswordRequest,
   registerRequest,
-  forgotPasswordRequest
+  forgotPasswordRequest,
 };

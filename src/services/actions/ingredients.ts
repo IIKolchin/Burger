@@ -1,10 +1,13 @@
 import { URL, checkResponse } from "../../utils/api";
-import { AppDispatch, AppThunk } from '../types';
+import { AppDispatch, AppThunk } from "../types";
 import { TIngredients } from "../types/data";
 
-export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" = "GET_INGREDIENTS_REQUEST";
-export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS"  = "GET_INGREDIENTS_SUCCESS";
-export const GET_INGREDIENTS_FAILED: "GET_INGREDIENTS_FAILED" = "GET_INGREDIENTS_FAILED";
+export const GET_INGREDIENTS_REQUEST: "GET_INGREDIENTS_REQUEST" =
+  "GET_INGREDIENTS_REQUEST";
+export const GET_INGREDIENTS_SUCCESS: "GET_INGREDIENTS_SUCCESS" =
+  "GET_INGREDIENTS_SUCCESS";
+export const GET_INGREDIENTS_FAILED: "GET_INGREDIENTS_FAILED" =
+  "GET_INGREDIENTS_FAILED";
 
 export interface IGetIngredientsAction {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -18,9 +21,9 @@ export interface IGetIngredientsFailedAction {
 }
 
 export type TIngredientsActions =
-| IGetIngredientsAction
-| IGetIngredientsSuccessAction
-| IGetIngredientsFailedAction
+  | IGetIngredientsAction
+  | IGetIngredientsSuccessAction
+  | IGetIngredientsFailedAction;
 
 export const getIngredients: AppThunk = () => {
   return function (dispatch: AppDispatch) {
@@ -48,4 +51,4 @@ export const getIngredients: AppThunk = () => {
         });
       });
   };
-}
+};

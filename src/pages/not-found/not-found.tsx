@@ -3,7 +3,6 @@ import styles from "./not-found.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 export function NotFound404() {
-  
   return (
     <div className={styles.content}>
       <div className={styles.container}>

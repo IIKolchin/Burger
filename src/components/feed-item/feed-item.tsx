@@ -4,14 +4,12 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { useSelector } from "../../services/types/index";
 import { ImageFeed } from "../image-feed/image-feed";
 import { getDateOrder } from "../../utils/data";
-import { TIngredients, TOrder } from "../../services/types/data";
-// import PropTypes from "prop-types";
-// import { dataOrderPropTypes } from "../../utils/data";
+import { TOrder } from "../../services/types/data";
 
 type TFeedItemProps = {
   status?: string;
   data: TOrder;
-}
+};
 
 export const FeedItem: FC<TFeedItemProps> = ({ status, data }) => {
   const style = { width: status ? 844 : 584 };
@@ -30,11 +28,15 @@ export const FeedItem: FC<TFeedItemProps> = ({ status, data }) => {
       : "";
 
   const ingredients = useMemo(() => {
-  return  data.ingredients.length && items.length ? data.ingredients.map((id) => {
-    return items.find((item) => item._id === id)
-    
-  }).filter((data) => data !== undefined).slice(0, 6) : []
-  },[data.ingredients, items])
+    return data.ingredients.length && items.length
+      ? data.ingredients
+          .map((id) => {
+            return items.find((item) => item._id === id);
+          })
+          .filter((data) => data !== undefined)
+          .slice(0, 6)
+      : [];
+  }, [data.ingredients, items]);
 
   const otherIngredients =
     data.ingredients.slice(6).length !== 0
@@ -87,15 +89,10 @@ export const FeedItem: FC<TFeedItemProps> = ({ status, data }) => {
           </span>
 
           <div className={styles.icon}>
-            <CurrencyIcon type='primary'/>
+            <CurrencyIcon type="primary" />
           </div>
         </div>
       </div>
     </div>
   );
-}
-
-// FeedItem.propTypes = {
-//   status: PropTypes.string,
-//   data: dataOrderPropTypes.isRequired,
-// };
+};

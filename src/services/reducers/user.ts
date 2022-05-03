@@ -113,7 +113,6 @@ const logoutInitialState: TLogoutState = {
 const newPasswordInitialState: TNewPasswordState = {
   form: {
     password: "",
-    // token: "",
   },
   isNewPasswordSuccess: false,
   newPasswordRequest: false,

@@ -16,12 +16,6 @@ export function RegisterPage() {
   const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   form.name = "";
-  //   form.email = "";
-  //   form.password = "";
-  // }, []);
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
       type: SET_REGISTER,

@@ -1,28 +1,20 @@
 import React, { FC, useRef } from "react";
-// import PropTypes from "prop-types";
-// import { dataPropTypes } from "../../utils/data";
 import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./item.module.css";
-import { DragSourceMonitor, DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
-import { DELETE_ITEM } from "../../services/actions/constructor";
-import { useDispatch } from "../../services/types/index";
+import { DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
 import { TIngredients } from "../../services/types/data";
 
 type TItemProps = {
   data: TIngredients;
   index: number;
   updateItem: (dragIndex: number, hoverIndex: number) => void;
-  deleteItem: () => void
-}
+  deleteItem: () => void;
+};
 
-
-
-const Item: FC<TItemProps> =({ data, index, updateItem, deleteItem }) => {
-
-  const dispatch = useDispatch();
+const Item: FC<TItemProps> = ({ data, index, updateItem, deleteItem }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [{ isDragging }, dragRef] = useDrag({
     type: "item",
@@ -34,7 +26,7 @@ const Item: FC<TItemProps> =({ data, index, updateItem, deleteItem }) => {
 
   const [, dropRef] = useDrop({
     accept: "item",
-    hover(item: any, monitor: DropTargetMonitor)  {
+    hover(item: any, monitor: DropTargetMonitor) {
       if (!ref.current) {
         return;
       }
@@ -53,24 +45,12 @@ const Item: FC<TItemProps> =({ data, index, updateItem, deleteItem }) => {
 
       updateItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
-    }
+    },
   });
-  
 
-  
- dragRef(dropRef(ref));
-
+  dragRef(dropRef(ref));
 
   const opacity = isDragging ? 0.5 : 1;
-
-
-
-  // const onDelete = ()  => {
-  //   dispatch({
-  //     type: DELETE_ITEM,
-  //     index,
-  //   });
-  // };
 
   return (
     <div className={styles.group} ref={ref} style={{ opacity }}>
@@ -83,12 +63,6 @@ const Item: FC<TItemProps> =({ data, index, updateItem, deleteItem }) => {
       />
     </div>
   );
-}
-
-// Item.propTypes = {
-//   data: dataPropTypes.isRequired,
-//   index: PropTypes.number.isRequired,
-//   updateItem: PropTypes.func.isRequired,
-// };
+};
 
 export default Item;

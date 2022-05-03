@@ -5,10 +5,7 @@ import {
 import styles from "../login/login.module.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "../../services/types/index";
-import {
-  SET_NEW_PASSWORD,
-  getNewPassword,
-} from "../../services/actions/user";
+import { SET_NEW_PASSWORD, getNewPassword } from "../../services/actions/user";
 import { Redirect } from "react-router-dom";
 
 export function ResetPasswordPage() {

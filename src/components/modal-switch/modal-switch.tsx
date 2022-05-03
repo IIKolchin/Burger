@@ -31,7 +31,6 @@ type TLocationState = {
     state: {};
     search: string;
     hash: string;
-    // readonly key: string;
   };
 };
 
@@ -49,8 +48,6 @@ export function ModalSwitch() {
     dispatch({ type: HIDE_MODAL });
     history.goBack();
   };
-
-  // console.log(location.state.background)
 
   return (
     <>

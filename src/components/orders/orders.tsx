@@ -2,14 +2,11 @@ import styles from "./orders.module.css";
 import { useSelector } from "../../services/types/index";
 
 export function Orders() {
-
   const data = useSelector((store) => store.ws.messages);
   const total = useSelector((store) => store.ws.total);
   const totalToday = useSelector((store) => store.ws.totalToday);
 
-  const done = data
-    ? data?.filter((item) => item.status === "done")
-    : null;
+  const done = data ? data?.filter((item) => item.status === "done") : null;
   const pending = data
     ? data?.filter((item) => item.status === "pending")
     : null;

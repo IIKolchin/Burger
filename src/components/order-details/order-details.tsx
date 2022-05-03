@@ -1,15 +1,12 @@
 import React, { FC } from "react";
 import styles from "./order-details.module.css";
-// import PropTypes from "prop-types";
 import { TOrder } from "../../services/types/data";
 
-
 type TOrderProps = {
-  order: TOrder
-}
+  order: TOrder;
+};
 
-const OrderDetails: FC<TOrderProps> = ({ order })  => {
-
+const OrderDetails: FC<TOrderProps> = ({ order }) => {
   return (
     <div className={styles.container}>
       <p className={styles.number + " text text_type_digits-large mt-20"}>
@@ -25,12 +22,6 @@ const OrderDetails: FC<TOrderProps> = ({ order })  => {
       </p>
     </div>
   );
-}
-
-// OrderDetails.propTypes = {
-//   order: PropTypes.shape({
-//     number: PropTypes.number.isRequired,
-//   }),
-// };
+};
 
 export default OrderDetails;

@@ -7,14 +7,13 @@ import {
   RESET_CONSTRUCTOR,
   TConstructorActions,
 } from "../actions/constructor";
-import { TConstructorItem, TIngredients } from "../types/data";
+import { TIngredients } from "../types/data";
 
 type TConstructorState = {
   constructor: ReadonlyArray<TIngredients>;  
   generateId: string[];
   bun: TIngredients | null;
   ingredient: TIngredients | null;
-  // countBun: string[]
 }
 
 const initialConstructorState: TConstructorState = {
@@ -22,7 +21,6 @@ const initialConstructorState: TConstructorState = {
   generateId: [],
   bun: null,
   ingredient: null,
-  // countBun: [],
 };
 
 export const constructorReducer = (state = initialConstructorState, action: TConstructorActions): TConstructorState => {
@@ -52,7 +50,6 @@ export const constructorReducer = (state = initialConstructorState, action: TCon
       return {
         ...state,
         bun: action.payload,
-        // countBun: action.id,
       };
     }
     case UPDATE_POSITION_ITEM: {

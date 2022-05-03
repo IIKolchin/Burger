@@ -23,7 +23,6 @@ import {
   GENERATE_ID,
   UPDATE_POSITION_ITEM,
   RESET_CONSTRUCTOR,
-  // deleteConstructorIngredient,
 } from "../../services/actions/constructor";
 import { useHistory } from "react-router-dom";
 import { Loader } from "../loader/loader";
@@ -53,7 +52,6 @@ function BurgerConstructor() {
       });
       dispatch({
         type: ADD_ITEM,
-        // ...item,
         payload: data.find((el) => el._id === item.id),
       });
     },
@@ -67,7 +65,6 @@ function BurgerConstructor() {
     drop(item: TIngredients) {
       dispatch({
         type: ADD_BUN,
-        // ...item,
         payload: data.find((el) => el._id === item.id),
       });
     },

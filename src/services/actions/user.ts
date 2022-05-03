@@ -1,6 +1,4 @@
 import {
-  URL,
-  checkResponse,
   getUserRequest,
   updateTokenRequest,
   forgotPasswordRequest,
@@ -212,7 +210,6 @@ export const login: AppThunk = (form) => {
       if (data && data.success) {
         setCookie("token", data.accessToken);
         localStorage.setItem("token", data.refreshToken);
-        // dispatch(getUser());
         dispatch({
           type: GET_AUTHORIZATION_SUCCESS,
         });
@@ -299,9 +296,6 @@ export const patchUser: AppThunk = (form) => {
               type: PATCH_USER_SUCCESS,
               form: data.user,
             });
-            // dispatch({
-            //   type: GET_USER_SUCCESS,
-            // });
           }
         }
       } catch (err) {

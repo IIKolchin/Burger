@@ -1,19 +1,9 @@
-
-
 type TCookieProps = {
   expires?: any;
   domain?: string;
   secure?: boolean;
-  path?: string
-
- 
-} & { [name: string]: string | Date | number | boolean; }
-
-
-// export type TCookieProps = {
-//   [name: string]: string | Date | number | boolean;
-// };
-
+  path?: string;
+} & { [name: string]: string | Date | number | boolean };
 
 export function getCookie(name: string) {
   const matches = document.cookie.match(
@@ -26,10 +16,14 @@ export function getCookie(name: string) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name: string, value: string | number | boolean, props?: TCookieProps) {
+export function setCookie(
+  name: string,
+  value: string | number | boolean,
+  props?: TCookieProps
+) {
   props = {
-    path: '/',
-    ...props
+    path: "/",
+    ...props,
   };
   let exp = props.expires;
   if (typeof exp == "number" && exp) {
@@ -53,5 +47,5 @@ export function setCookie(name: string, value: string | number | boolean, props?
 }
 
 export function deleteCookie(name: string) {
-    setCookie(name, false, { expires: -1 });
-  }
+  setCookie(name, false, { expires: -1 });
+}

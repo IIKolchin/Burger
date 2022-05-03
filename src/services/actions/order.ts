@@ -39,18 +39,6 @@ export const getOrder: AppThunk = (id: string) => {
       type: GET_ORDER_REQUEST,
     });
     getOrderRequest(id)
-
-    // fetch(`${URL}orders`, {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     ingredients: id,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: getCookie("token"),
-    //   },
-    // })
-      // .then(checkResponse)
       .then((res) => {
         if (res && res.success) {
           dispatch({

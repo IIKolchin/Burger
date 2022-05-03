@@ -3,19 +3,13 @@ import { getCookie } from "../../utils/cookie";
 import { useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "../../services/types/index";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import {
-  BrowserRouter as Router,
-  useParams,
-} from "react-router-dom";
-import { getDateOrder, ingredientsCount } from "../../utils/data";
+import { BrowserRouter as Router, useParams } from "react-router-dom";
+import { getDateOrder } from "../../utils/data";
 import {
   wsConnectionAllStart,
   wsConnectionClosed,
   wsConnectionStart,
 } from "../../services/actions/wsActions";
-import { TIngredients } from "../../services/types/data";
-
-
 
 export function OrderInfo() {
   const { id } = useParams<{ id: string }>();
@@ -26,11 +20,9 @@ export function OrderInfo() {
   const data = items?.find((el) => el._id === id)
     ? items?.find((el) => el._id === id)
     : userItems?.find((el) => el._id === id);
-  
-
 
   useEffect(() => {
-    const token = getCookie("token")?.split("Bearer ")[1]
+    const token = getCookie("token")?.split("Bearer ")[1];
     if (token) {
       dispatch(wsConnectionStart(token));
       dispatch(wsConnectionAllStart());
@@ -57,8 +49,6 @@ export function OrderInfo() {
     items &&
     data?.ingredients.map((i) => allIngredients.find((item) => item._id === i));
 
-  // const ingredient = data && getIngredient(data.ingredients, allIngredients)
-
   const ingredientUnique = ingredient?.filter(
     (item, pos, arr) => arr.lastIndexOf(item) === pos
   );
@@ -71,8 +61,6 @@ export function OrderInfo() {
       return a.type.localeCompare(b.type);
     });
 
-    // const ingredients =  ingredientsCount(ingredient) 
-
   const ingredients = ingredient?.reduce(
     (prev: any, curr: any) => {
       const id = curr?._id;
@@ -81,9 +69,6 @@ export function OrderInfo() {
     },
     { count: {} }
   );
-
-console.log(ingredients)
-console.log(ingredient)
 
   const totalPrice = useMemo(() => {
     let total = 0;
@@ -120,7 +105,8 @@ console.log(ingredient)
                         styles.quantity + " text text_type_digits-default"
                       }
                     >
-                      {data && `${ingredients?.count[data._id]} x ${data.price}`}
+                      {data &&
+                        `${ingredients?.count[data._id]} x ${data.price}`}
                     </p>
                     <CurrencyIcon type="primary" />
                   </div>
@@ -141,7 +127,7 @@ console.log(ingredient)
               <p className={styles.quantity + " text text_type_digits-default"}>
                 {totalPrice}
               </p>
-              <CurrencyIcon type="primary"/>
+              <CurrencyIcon type="primary" />
             </div>
           </div>
         </section>

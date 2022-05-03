@@ -1,6 +1,4 @@
-import { TConstructorItem, TIngredients } from "../types/data";
-import { wsActions } from "./wsActions";
-
+import { TIngredients } from "../types/data";
 export const ADD_ITEM: "ADD_ITEM" = "ADD_ITEM";
 export const DELETE_ITEM: "DELETE_ITEM" = "DELETE_ITEM";
 export const ADD_BUN: "ADD_BUN" = "ADD_BUN";
@@ -16,7 +14,6 @@ export interface IAddItemAction {
 export interface IDeleteItemAction {
   readonly type: typeof DELETE_ITEM;
   index: number;
-  // payload: TIngredients
 }
 export interface IAddBunAction {
   readonly type: typeof ADD_BUN;
@@ -26,11 +23,11 @@ export interface IAddBunAction {
 }
 export interface IUpdatepositionAction {
   readonly type: typeof UPDATE_POSITION_ITEM;
-  payload: TIngredients[]
+  payload: TIngredients[];
 }
 export interface IGenerateIdAction {
   readonly type: typeof GENERATE_ID;
-  payload: string
+  payload: string;
 }
 export interface IResetConstructorAction {
   readonly type: typeof RESET_CONSTRUCTOR;
@@ -43,12 +40,3 @@ export type TConstructorActions =
   | IUpdatepositionAction
   | IGenerateIdAction
   | IResetConstructorAction;
-
-
-
-  // export const deleteConstructorIngredient = (
-  //   index: number
-  // ): IDeleteItemAction => ({
-  //   type: DELETE_ITEM,
-  //   index: payload,
-  // });

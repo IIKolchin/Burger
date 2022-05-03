@@ -13,7 +13,7 @@ type TOrderState = {
   showOrder: boolean;
   orderRequest: boolean;
   orderFailed: boolean;
-}
+};
 
 const orderInitialState: TOrderState = {
   order: null,
@@ -22,7 +22,10 @@ const orderInitialState: TOrderState = {
   orderFailed: false,
 };
 
-export const orderReducer = (state = orderInitialState, action: TOrderActions): TOrderState => {
+export const orderReducer = (
+  state = orderInitialState,
+  action: TOrderActions
+): TOrderState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {

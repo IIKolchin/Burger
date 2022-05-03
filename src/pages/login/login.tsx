@@ -5,36 +5,17 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./login.module.css";
 import { Link, useLocation } from "react-router-dom";
-import {
-  login,
-  SET_AUTHORIZATION,
-} from "../../services/actions/user";
+import { login, SET_AUTHORIZATION } from "../../services/actions/user";
 import { useSelector, useDispatch } from "../../services/types/index";
 import { Redirect } from "react-router-dom";
 import { useCallback } from "react";
-
-type TLocationState = {
-  background: {
-    pathname: string;
-    state: {
-      from : Location
-    };
-    search: string;
-    hash: string;
-    // from: { pathname: string }
-    // from : Location
-    // readonly key: string;
-  };
-};
 
 export function LoginPage() {
   const form = useSelector((store) => store.authorization.form);
   const isAuth = useSelector((store) => store.authorization.isAuth);
   const isUser = useSelector((store) => store.user.isUser);
   const dispatch = useDispatch();
-  // const location = useLocation();
   const { state } = useLocation<{ from: string }>();
-
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -52,7 +33,7 @@ export function LoginPage() {
   );
 
   if (isAuth || isUser) {
-    return <Redirect to={ state?.from || "/" } />;
+    return <Redirect to={state?.from || "/"} />;
   }
 
   return (

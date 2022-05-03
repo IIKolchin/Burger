@@ -1,13 +1,12 @@
 import { FC } from "react";
 import { TIngredients } from "../../services/types/data";
 import styles from "./image-feed.module.css";
-// import { dataPropTypes } from "../../utils/data";
 
 type TImageFeedProps = {
-  data: TIngredients | undefined
-}
+  data: TIngredients | undefined;
+};
 
-export const ImageFeed: FC<TImageFeedProps> = ({ data })  => {
+export const ImageFeed: FC<TImageFeedProps> = ({ data }) => {
   return (
     <div className={styles.item}>
       {data && (
@@ -19,8 +18,4 @@ export const ImageFeed: FC<TImageFeedProps> = ({ data })  => {
       )}
     </div>
   );
-}
-
-// ImageFeed.propTypes = {
-//   data: dataPropTypes.isRequired,
-// };
+};
