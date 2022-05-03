@@ -1,11 +1,11 @@
 import { Route } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "../../services/types/index";
 import { getUser } from "../../services/actions/user";
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute: FC = ({ children, ...rest }) => {
   const dispatch = useDispatch();
   const isUser = useSelector((store) => store.user.isUser);
   const [isUserLoaded, setUserLoaded] = useState(false);
@@ -42,7 +42,7 @@ export function ProtectedRoute({ children, ...rest }) {
   );
 }
 
-ProtectedRoute.propTypes = {
-  children: PropTypes.element.isRequired,
-  rest: PropTypes.object,
-};
+// ProtectedRoute.propTypes = {
+//   children: PropTypes.element.isRequired,
+//   rest: PropTypes.object,
+// };

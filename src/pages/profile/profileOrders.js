@@ -66,8 +66,8 @@ export function ProfileOrders() {
         </div>
 
         <div className={styles.order}>
-          {data.orders !== 0 &&
-            data.orders?.map((data) => {
+          {data.length !== 0 &&
+            data?.map((data) => {
               return (
                 <Link
                   key={data._id}

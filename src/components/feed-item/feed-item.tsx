@@ -9,7 +9,7 @@ import { TIngredients, TOrder } from "../../services/types/data";
 // import { dataOrderPropTypes } from "../../utils/data";
 
 type TFeedItemProps = {
-  status: string;
+  status?: string;
   data: TOrder;
 }
 

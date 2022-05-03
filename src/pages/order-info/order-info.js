@@ -20,9 +20,9 @@ export function OrderInfo() {
   const items = useSelector((store) => store.ws.messages);
   const userItems = useSelector((store) => store.ws.orders);
   const allIngredients = useSelector((store) => store.items.data);
-  const data = items.orders?.find((el) => el._id === id)
-    ? items.orders?.find((el) => el._id === id)
-    : userItems.orders?.find((el) => el._id === id);
+  const data = items?.find((el) => el._id === id)
+    ? items?.find((el) => el._id === id)
+    : userItems?.find((el) => el._id === id);
 
 
   useEffect(() => {

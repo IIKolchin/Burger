@@ -6,18 +6,22 @@ import {
   WS_GET_MESSAGE,
   TWsActions,
 } from "../actions/wsActions";
-import { TOrders } from "../types/data";
+import { TOrder, TOrders } from "../types/data";
 
 type TWsState = {
   wsConnected: Boolean;
-  messages: TOrders | object;
-  orders: TOrders | object;
+  messages: Array<TOrder> ;
+  orders: Array<TOrder> ;
+  total: number | null,
+	totalToday: number | null
 }
 
 const initialState: TWsState = {
   wsConnected: false,
-  messages: {},
-  orders: {},
+  messages: [],
+  orders: [],
+  total: null,
+	totalToday: null
 };
 
 export const wsReducer = (state = initialState, action: TWsActions): TWsState => {
@@ -43,12 +47,14 @@ export const wsReducer = (state = initialState, action: TWsActions): TWsState =>
     case WS_GET_ALL_MESSAGE:
       return {
         ...state,
-        messages: action.payload,
+        messages: action.payload.orders,
+        total: action.payload.total,
+				totalToday: action.payload.totalToday
       };
     case WS_GET_MESSAGE:
       return {
         ...state,
-        orders: action.payload,
+        orders: action.payload.orders,
       };
 
     default:

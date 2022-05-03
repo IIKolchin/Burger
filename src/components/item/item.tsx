@@ -17,10 +17,10 @@ type TItemProps = {
   updateItem: (dragIndex: number, hoverIndex: number) => void;
 }
 
-type TDropItem = {
-index: number;
+// type TDropItem = {
+// index: number;
 
-}
+// }
 
 const Item: FC<TItemProps> =({ data, index, updateItem }) => {
 
@@ -65,21 +65,23 @@ const Item: FC<TItemProps> =({ data, index, updateItem }) => {
 
   const opacity = isDragging ? 0.5 : 1;
 
-  const onDelete = () => {
-    dispatch({
+
+
+  const onDelete = (e: any)  => {
+    e.target.dispatch({
       type: DELETE_ITEM,
       index,
     });
   };
 
   return (
-    <div className={styles.group} ref={dragDropRef} style={{ opacity }}>
+    <div className={styles.group} ref={() => dragDropRef} style={{ opacity }}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={data.name}
         price={data.price}
         thumbnail={data.image}
-        handleClose={(e) => onDelete(e.target)}
+        handleClose={() => onDelete}
       />
     </div>
   );

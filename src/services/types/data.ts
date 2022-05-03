@@ -53,17 +53,17 @@ export type TOrder = {
 };
 
 export type TOrders = {
-  orders: Array<TOrder>;
-  success: boolean;
-  total: number;
-  totalToday: number;
+  readonly orders: Array<TOrder>;
+  readonly success: boolean;
+  readonly total: number;
+  readonly totalToday: number;
 };
 
 export type TWSAction = {
-  wsInit?: typeof WS_CONNECTION_START;
-  wsAll?: typeof WS_CONNECTION_ALL_START;
-  onOpen: typeof WS_CONNECTION_SUCCESS;
-  onClose: typeof WS_CONNECTION_CLOSED;
-  onError: typeof WS_CONNECTION_ERROR;
-  onMessage: typeof WS_GET_MESSAGE | typeof WS_GET_ALL_MESSAGE;
+  readonly wsInit?: typeof WS_CONNECTION_START;
+  readonly wsAll?: typeof WS_CONNECTION_ALL_START;
+  readonly onOpen: typeof WS_CONNECTION_SUCCESS;
+  readonly onClose: typeof WS_CONNECTION_CLOSED;
+  readonly onError: typeof WS_CONNECTION_ERROR;
+  readonly onMessage: typeof WS_GET_MESSAGE | typeof WS_GET_ALL_MESSAGE;
 };

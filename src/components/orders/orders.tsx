@@ -1,15 +1,17 @@
 import styles from "./orders.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/index";
 
 export function Orders() {
 
   const data = useSelector((store) => store.ws.messages);
+  const total = useSelector((store) => store.ws.total);
+  const totalToday = useSelector((store) => store.ws.totalToday);
 
   const done = data
-    ? data.orders?.filter((item) => item.status === "done")
+    ? data?.filter((item) => item.status === "done")
     : null;
   const pending = data
-    ? data.orders?.filter((item) => item.status === "pending")
+    ? data?.filter((item) => item.status === "pending")
     : null;
 
   return (
@@ -73,13 +75,13 @@ export function Orders() {
       <h3 className={styles.heading}>Выполнено за все время:</h3>
 
       <p className={styles.number + " text text_type_digits-large"}>
-        {data ? data.total : 0}
+        {total ? total : 0}
       </p>
 
       <h3 className={styles.heading}>Выполнено за сегодня:</h3>
 
       <p className={styles.number + " text text_type_digits-large"}>
-        {data ? data.totalToday : 0}
+        {totalToday ? totalToday : 0}
       </p>
     </section>
   );

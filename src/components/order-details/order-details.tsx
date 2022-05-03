@@ -1,8 +1,14 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from "./order-details.module.css";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
+import { TOrder } from "../../services/types/data";
 
-function OrderDetails({ order }) {
+
+type TOrderProps = {
+  order: TOrder
+}
+
+const OrderDetails: FC<TOrderProps> = ({ order })  => {
 
   return (
     <div className={styles.container}>
@@ -21,10 +27,10 @@ function OrderDetails({ order }) {
   );
 }
 
-OrderDetails.propTypes = {
-  order: PropTypes.shape({
-    number: PropTypes.number.isRequired,
-  }),
-};
+// OrderDetails.propTypes = {
+//   order: PropTypes.shape({
+//     number: PropTypes.number.isRequired,
+//   }),
+// };
 
 export default OrderDetails;

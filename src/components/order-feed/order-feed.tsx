@@ -1,7 +1,10 @@
 import styles from "./order-feed.module.css";
 import { FeedItem } from "../feed-item/feed-item";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/index";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import { TOrder } from "../../services/types/data";
+
+
 
 export function OrderFeed() {
 
@@ -12,8 +15,8 @@ export function OrderFeed() {
     <section>
       <h1 className={styles.heading}>Лента заказов</h1>
       <div className={styles.items}>
-        {data.orders !== 0
-          ? data.orders?.map((data) => {
+        {data.length !== 0
+          ? data?.map((data) => {
               return (
                 <Link
                   key={data._id}
@@ -23,7 +26,7 @@ export function OrderFeed() {
                     state: { background: location },
                   }}
                 >
-                  <FeedItem data={data} />
+                  <FeedItem data={data}/>
                 </Link>
               );
             })
