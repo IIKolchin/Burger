@@ -23,8 +23,8 @@ const BurgerIngredients: FC = (): JSX.Element => {
     setCurrent("three");
   };
 
-  const handleScroll = (e: any): void => {
-    let element = e.target;
+  const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
+    let element = e.currentTarget;
     if (element.scrollTop > 0 && element.scrollTop < 290) {
       set1();
     } else if (element.scrollTop > 290 && element.scrollTop < 850) {

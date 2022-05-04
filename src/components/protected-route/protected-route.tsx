@@ -1,15 +1,10 @@
-import { Route } from "react-router-dom";
+import { Route, RouteProps } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "../../services/types/index";
 import { getUser } from "../../services/actions/user";
 
-type TprotectedRouteProps = {
-  path: string;
-  exact: boolean;
-};
-
-export const ProtectedRoute: FC<TprotectedRouteProps> = ({
+export const ProtectedRoute: FC<RouteProps> = ({
   children,
   ...rest
 }) => {
