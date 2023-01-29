@@ -1,17 +1,17 @@
 # Stellar Burgers
 
-## Обзор
-Приложение бургерной, позволяющее зарегистрированным пользователям оформить онлайн-заказ, самостоятельно собрав бургер по своему вкусу. Так же в приложении можно отслеживать готовность заказа, а так же посмотреть все свои заказы. В приложении предусмотрена авторизация пользователей. 
+## Overview
+A burger shop application that allows registered users to place an online order by independently assembling a burger to their liking. You can also track the order readiness in the application, as well as view all your orders. The application provides user authorization.
 
-## Функционал
-* авторизация пользователя
-* перетаскивание ингредиентов для формирования заказа
-* создание заказа
-* просмотр ленты заказов
-* просмотр заказов пользователя
-* защищенные маршруты
+## Functional
+* user authorization
+* dragging ingredients to form an order
+* creating an order
+* view the order feed
+* viewing user orders
+* protected routes
 
-## Используемые технологии
+## Technologies used
 * TypeScript
 * React
 * Redux
@@ -19,11 +19,9 @@
 * WebSocket
 * CSS Modules
 
-# Запуск
+# Launch
 
-В папке проекта вы можете запустить:
+In the project folder you can run:
 ### `npm install && npm start`
-Запускается приложение в режиме разработки.\
-Открывается [http://localhost:3000](http://localhost:3000) чтобы просмотреть его в браузере.
-
-
+The application is launched in development mode.\
+Opens [http://localhost:3000 ](http://localhost:3000 ) to view it in the browser.
